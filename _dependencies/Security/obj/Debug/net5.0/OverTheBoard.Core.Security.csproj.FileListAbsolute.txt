@@ -1,0 +1,15 @@
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\bin\Debug\net5.0\OverTheBoard.Core.Security.deps.json
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\bin\Debug\net5.0\OverTheBoard.Core.Security.runtimeconfig.json
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\bin\Debug\net5.0\OverTheBoard.Core.Security.runtimeconfig.dev.json
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\bin\Debug\net5.0\OverTheBoard.Core.Security.dll
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\bin\Debug\net5.0\ref\OverTheBoard.Core.Security.dll
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\bin\Debug\net5.0\OverTheBoard.Core.Security.pdb
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.csprojAssemblyReference.cache
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.GeneratedMSBuildEditorConfig.editorconfig
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.AssemblyInfoInputs.cache
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.AssemblyInfo.cs
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.csproj.CoreCompileInputs.cache
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.dll
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\ref\OverTheBoard.Core.Security.dll
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.pdb
+D:\Annoor\Apps\OverTheBoard\_dependencies\Security\obj\Debug\net5.0\OverTheBoard.Core.Security.genruntimeconfig.cache
