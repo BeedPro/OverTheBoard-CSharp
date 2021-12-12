@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutHome";
+}
+<header id="gtco-header" class="gtco-cover" role="banner">
+    <div class="gtco-container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-left">
+                <div class="display-t no-top-padding">
+                    <div class="display-tc no-top-padding">
+                        <div class="row">
+                            <div class="col-md-7 text-center header-img animate-box">
+                                <img src="/images/cube-large.png" class="img-responsive" alt="Chess pic">
+                            </div>
+                            <div class="col-md-5 copy animate-box">
+                                <h1>OverTheBoard</h1>
+                                <p>Seasonal Chess for the beast in you, play in tournements to get your rank, improve your chess and dominate the board.</p>
+                                <div class="text-center">
+                                    <p><a asp-controller="Account" asp-action="Login" class="btn btn-white btn-block">Login</a></p>
+                                    <p><a asp-controller="Account" asp-action="Register" class="btn btn-white btn-block">Register</a></p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

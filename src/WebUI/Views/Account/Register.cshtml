@@ -1,0 +1,57 @@
+﻿@model OverTheBoard.WebUI.Models.RegistrationViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutAccount";
+}
+
+
+
+<h1 class="text-center">OverTheBoard</h1>
+<h3>Create an account</h3>
+
+<div asp-validation-summary="All"></div>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="EmailAddress" >Email address</label>
+        <div class="text-info">
+            We need your email so we can sign you in
+        </div>
+        <input asp-for="EmailAddress" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+        <span asp-validation-for="EmailAddress"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmEmailAddress">Confirm your email address</label>
+        <input asp-for="ConfirmEmailAddress" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Confirm your email address">
+        <span asp-validation-for="ConfirmEmailAddress"></span>
+    </div>
+    <div class="form-group">
+        <label class="govuk-label" asp-for="Password">
+            Create your password
+        </label>
+        <div class="text-info">
+            Your password must:
+            <ul class="list-group-horizontal">
+                <li>be at least 8 characters</li>
+                <li>be a mixture of upper and lower case</li>
+                <li>contain a special character (like, ! £ # or &amp;)</li>
+                <li>not include commonly used passwords</li>
+            </ul>
+        </div>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Confirm your password</label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control"  placeholder="Confirm your password">
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-white btn-block">Register</button>
+    </div>
+    <div class="form-group">
+        <div class="text-left">
+            Already have an account? <a class="text-color" href="/Account/Login">Login</a>
+        </div>
+    </div>
+</form>
