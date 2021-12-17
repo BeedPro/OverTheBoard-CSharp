@@ -48,31 +48,22 @@
 
                 <div class="row">
                     <div class="col-sm-2 col-xs-12">
-                        <div><a href="/"><img src="/images/logo.png" alt="OverTheBoard Logo"></a>&nbsp;&nbsp;<strong>OverTheBoard</strong></div>
+                        <div><a asp-controller="Home" asp-action="Dashboard"><img src="/images/logo.png" alt="OverTheBoard Logo"></a>&nbsp;&nbsp;<strong>OverTheBoard</strong></div>
                     </div>
                     <div class="col-lg-10 text-xl-left menu-1">
                         <ul>
-                            <li><a href="#">Home</a></li>
+                            <li><a asp-controller="Home" asp-action="Dashboard">Home</a></li>
                             <li><a href="#">Play</a></li>
                             <li><a href="#">Leaderboard</a></li>
                             <li><a href="#">Analysis</a></li>
+                            <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>
-
             </div>
         </nav>
         @RenderBody()
-        <footer id="gtco-footer" class="gtco-section" role="contentinfo">
-            <div class="gtco-container">
-                <div class="row row-pb-md">
-                    <div class="col-md-8 col-md-offset-2 gtco-cta text-center">
-                        <h3>OverTheBoard</h3>
-                        <p>Chess is a highly competitive area for people to get into, hence OTB has been made in order to give you the feel of the very competitive experience of Chess with some normal game like tournement systems to make the jump easier.</p>
-                    </div>
-                </div>
-
-            </div>
+        <footer id="gtco-footer-no-padding" class="gtco-section" role="contentinfo">
             <div class="gtco-copyright">
                 <div class="gtco-container">
                     <div class="row">

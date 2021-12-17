@@ -668,6 +668,106 @@ h1, h2, h3, h4, h5, h6, figure {
         font-size: 12px;
         font-weight: 700;
     }
+#gtco-footer-no-padding {
+    background: #262626;
+    padding: 0;
+    margin-bottom: 0 !important;
+    width: 100%;
+    float: left;
+}
+
+    #gtco-footer-no-padding a:hover {
+        color: #fff !important;
+    }
+
+    #gtco-footer-no-padding .gtco-cta {
+        margin-bottom: 30px;
+    }
+
+        #gtco-footer-no-padding .gtco-cta h3 {
+            color: #fff;
+            font-size: 30px;
+            font-weight: 300;
+        }
+
+        #gtco-footer-no-padding .gtco-cta .btn-white {
+            padding: 15px 20px !important;
+        }
+
+            #gtco-footer-no-padding .gtco-cta .btn-white.btn-outline:hover {
+                color: #000 !important;
+            }
+
+    #gtco-footer-no-padding .gtco-footer-no-padding-paragraph h3 {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    #gtco-footer-no-padding .gtco-footer-no-padding-link {
+        padding-left: 30px;
+    }
+
+@media screen and (max-width: 768px) {
+    #gtco-footer-no-padding .gtco-footer-no-padding-link {
+        padding-left: 15px;
+    }
+}
+
+#gtco-footer-no-padding .gtco-footer-no-padding-link .gtco-list-link {
+    padding: 0;
+    margin: 0;
+}
+
+    #gtco-footer-no-padding .gtco-footer-no-padding-link .gtco-list-link li {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+        #gtco-footer-no-padding .gtco-footer-no-padding-link .gtco-list-link li a {
+            text-transform: uppercase;
+            font-size: 13px !important;
+        }
+
+#gtco-footer-no-padding .gtco-footer-no-padding-subscribe {
+    padding-left: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    #gtco-footer-no-padding .gtco-footer-no-padding-subscribe {
+        padding-left: 15px;
+    }
+}
+
+#gtco-footer-no-padding .gtco-footer-no-padding-subscribe .form-control {
+    background: #fff !important;
+    border: none !important;
+}
+
+#gtco-footer-no-padding .gtco-footer-no-padding-subscribe .btn {
+    margin-top: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    height: 54px !important;
+    line-height: 1.5;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+#gtco-footer-no-padding .gtco-copyright {
+    background: #1a1a1a;
+    padding: 30px 0;
+    float: left;
+    width: 100%;
+}
+
+    #gtco-footer-no-padding .gtco-copyright p:last-child {
+        margin-bottom: 0;
+    }
 
 #gtco-footer {
     background: #262626;
@@ -769,7 +869,6 @@ h1, h2, h3, h4, h5, h6, figure {
     #gtco-footer .gtco-copyright p:last-child {
         margin-bottom: 0;
     }
-
 .bg-img {
     background-position: center center;
     background-size: cover;
@@ -2197,3 +2296,10 @@ form label {
 .field-validation-error {
     color: red;
 }
+
+.center-button-form {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+

@@ -21,7 +21,13 @@ namespace OverTheBoard.WebUI.Controllers
         }
 
         [Authorize]
-        public IActionResult Privacy()
+        public IActionResult Temp()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Dashboard()
         {
             return View();
         }

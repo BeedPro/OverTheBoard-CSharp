@@ -13,7 +13,15 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="EmailAddress" >Email address</label>
+        <label asp-for="DisplayName">Username</label>
+        <div class="text-info">
+            We need a username so that it can be displayed on your profile
+        </div>
+        <input asp-for="DisplayName" type="text" class="form-control" placeholder="Enter Username">
+        <span asp-validation-for="DisplayName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmailAddress">Email address</label>
         <div class="text-info">
             We need your email so we can sign you in
         </div>
@@ -43,7 +51,7 @@
     </div>
     <div class="form-group">
         <label asp-for="ConfirmPassword">Confirm your password</label>
-        <input asp-for="ConfirmPassword" type="password" class="form-control"  placeholder="Confirm your password">
+        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password">
         <span asp-validation-for="ConfirmPassword"></span>
     </div>
     <div class="form-group">

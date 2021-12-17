@@ -37,8 +37,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            returnUrl ??= Url.Content("~/");
-
+            returnUrl ??= Url.Content("~/Home/Dashboard");
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.EmailAddress) ?? await _userManager.FindByNameAsync(model.EmailAddress);
@@ -105,7 +104,7 @@ namespace OverTheBoard.WebUI.Controllers
 
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("ConfirmRegistration");
+                        return RedirectToAction("Success");
                     }
                     else
                     {
@@ -119,6 +118,16 @@ namespace OverTheBoard.WebUI.Controllers
             }
             return View("Register", model);
         }
-
+        [AllowAnonymous]
+        public async Task<IActionResult> Success()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
