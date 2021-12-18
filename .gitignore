@@ -343,3 +343,4 @@ healthchecksdb
 *.ncrunchproject
 *.ncrunchsolution
 
+*/obj/*
