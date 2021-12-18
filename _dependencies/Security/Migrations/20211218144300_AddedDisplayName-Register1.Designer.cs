@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Core.Security.Data;
 
 namespace OverTheBoard.Core.Security.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    partial class SecurityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211218144300_AddedDisplayName-Register1")]
+    partial class AddedDisplayNameRegister1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

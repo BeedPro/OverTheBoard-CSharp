@@ -94,6 +94,7 @@ namespace OverTheBoard.WebUI.Controllers
                     user = new OverTheBoardUser()
                     {
                         Id = Guid.NewGuid().ToString(),
+                        DisplayName = model.DisplayName,
                         UserName = model.EmailAddress,
                         Email = model.EmailAddress,
                         LockoutEnabled = true,

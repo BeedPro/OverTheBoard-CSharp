@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Core.Security.Data;
 
 namespace OverTheBoard.Core.Security.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    partial class SecurityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211218143935_AddedDisplayName-Register")]
+    partial class AddedDisplayNameRegister
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,10 +156,6 @@ namespace OverTheBoard.Core.Security.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
