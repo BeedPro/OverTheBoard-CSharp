@@ -347,3 +347,4 @@ healthchecksdb
 *\obj\*
 *.vs/
 
+*.suo
