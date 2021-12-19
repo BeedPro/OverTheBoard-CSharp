@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace OverTheBoard.Infrastructure.Services
 {
-    class UnitOfWork : IUnitOfWork
+    public class FileUploader : IFileUploader
     {
         private IHostingEnvironment _hostingEnvironment;
-        public UnitOfWork(IHostingEnvironment hostingEnvironment)
+        public FileUploader(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        public async void UploadImage(IFormFile file)
+        public async Task<string> UploadImage(IFormFile file)
         {
             long totalBytes = file.Length;
             string filename = file.FileName.Trim('"');
@@ -34,6 +34,7 @@ namespace OverTheBoard.Infrastructure.Services
                     }
                 }
             }
+            return filename;
         }
 
         private string GetPathAndFileName(string filename)
@@ -45,7 +46,7 @@ namespace OverTheBoard.Infrastructure.Services
 
         private string EnsureFileName(string filename)
         {
-            string path = _hostingEnvironment.WebRootPath + "\\uploads\\";
+            string path = _hostingEnvironment.WebRootPath + "\\Uploads\\";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 

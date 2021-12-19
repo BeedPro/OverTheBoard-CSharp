@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace OverTheBoard.Infrastructure.Services
 {
-    public interface IUnitOfWork
+    public interface IFileUploader
     {
-        void UploadImage(IFormFile file);
+        Task<string> UploadImage(IFormFile file);
     }
 }

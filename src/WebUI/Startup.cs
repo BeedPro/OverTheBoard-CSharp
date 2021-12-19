@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OverTheBoard.Infrastructure.Services;
 
 namespace OverTheBoard.WebUI
 {
@@ -20,6 +21,7 @@ namespace OverTheBoard.WebUI
         {
             services.AddControllersWithViews();
             services.AddSecurity();
+            services.AddScoped<IFileUploader, FileUploader>();
             
         }
 
