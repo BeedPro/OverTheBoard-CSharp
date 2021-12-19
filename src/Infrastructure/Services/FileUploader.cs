@@ -20,9 +20,10 @@ namespace OverTheBoard.Infrastructure.Services
         {
             long totalBytes = file.Length;
             string filename = file.FileName.Trim('"');
-            filename = EnsureFileName(filename);
+            var path = EnsureFileName(filename);
+
             byte[] buffer = new byte[16 * 1024];
-            using (FileStream output = File.Create(GetPathAndFileName(filename)))
+            using (FileStream output = File.Create(path))
             {
                 using (Stream input = file.OpenReadStream())
                 {
@@ -37,18 +38,22 @@ namespace OverTheBoard.Infrastructure.Services
             return filename;
         }
 
-        private string GetPathAndFileName(string filename)
+        private string GetPathAndFileName(string path)
         {
-            if (filename.Contains("\\"))
-                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
-            return filename;
+            if (path.Contains("\\"))
+                path = path.Substring(path.LastIndexOf("\\") + 1);
+
+            return path;
         }
 
         private string EnsureFileName(string filename)
         {
-            string path = _hostingEnvironment.WebRootPath + "\\Uploads\\";
+            string path = _hostingEnvironment.ContentRootPath + "\\Uploads\\";
+            
             if (!Directory.Exists(path))
+            {
                 Directory.CreateDirectory(path);
+            }
 
             return path + filename;
         }
