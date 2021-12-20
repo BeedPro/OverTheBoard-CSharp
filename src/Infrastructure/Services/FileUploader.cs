@@ -48,8 +48,9 @@ namespace OverTheBoard.Infrastructure.Services
 
         private string EnsureFileName(string filename)
         {
-            string path = _hostingEnvironment.ContentRootPath + "\\Uploads\\DisplayImages\\";
-            
+            //string path = _hostingEnvironment.ContentRootPath + "\\Uploads\\DisplayImages\\";
+            string path = _hostingEnvironment.WebRootPath + "\\uploads\\DisplayImages\\";
+
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

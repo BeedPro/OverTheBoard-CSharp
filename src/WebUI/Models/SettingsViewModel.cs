@@ -7,6 +7,6 @@ namespace OverTheBoard.WebUI.Models
 {
     public class SettingsViewModel
     {
-        public String DisplayImagePath { get; set; }
+        public string DisplayImagePath { get; set; }
     }
 }

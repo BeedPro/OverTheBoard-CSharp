@@ -22,14 +22,24 @@ namespace OverTheBoard.WebUI.Controllers
             _fileUploader = fileUploader;
             _userManager = userManager;
         }
-        public IActionResult Index()
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index(DashboardViewModel model)
         {
-            return View();
+            //string path = "C:/Users/Beed/source/repos/BeedPro/OverTheBoard/src/WebUI/Uploads/DisplayImages/";
+            string path = "";
+            var user = await _userManager.GetUserAsync(User);
+            model.DisplayName = user.DisplayName;
+            model.DisplayImagePath = $"{path}{user.DisplayImagePath}";
+            return View(model);
         }
         [HttpGet]
-        public IActionResult Settings()
+        public async Task<IActionResult> Settings(SettingsViewModel model)
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            model.DisplayImagePath = user.DisplayImagePath;
+            return View(model);
         }
 
         [HttpPost]
@@ -38,8 +48,9 @@ namespace OverTheBoard.WebUI.Controllers
             var filename = await _fileUploader.UploadImage(file);
             var user = await _userManager.GetUserAsync(User);
             user.DisplayImagePath = filename;
+            model.DisplayImagePath = filename;
             await _userManager.UpdateAsync(user);
-            return View();
+            return View(model);
         }
 
     }

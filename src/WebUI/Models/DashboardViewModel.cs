@@ -7,5 +7,7 @@ namespace OverTheBoard.WebUI.Models
 {
     public class DashboardViewModel
     {
+        public string DisplayImagePath { get; set; }
+        public string DisplayName { get; set; }
     }
 }

@@ -12,9 +12,7 @@
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="DisplayImagePath">Profile Picture</label>
-                @*<div class="text-info">
-                We need a username so that it can be displayed on your profile
-            </div>*@
+                <img src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
                 <input type="file" name="file" />
                 <span asp-validation-for="DisplayImagePath"></span>
             </div>

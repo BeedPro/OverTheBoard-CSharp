@@ -1,4 +1,4 @@
-﻿
+﻿@model OverTheBoard.WebUI.Models.DashboardViewModel
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_Layout";
@@ -8,6 +8,7 @@
 <header id="gtco-header" class="gtco-cover" role="banner">
     <div class="gtco-container">
         <h2>Dashboard</h2>
-            
+        <h3>@Model.DisplayName</h3>
+        <img src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
     </div>
 </header>
