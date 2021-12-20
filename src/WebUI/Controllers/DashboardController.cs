@@ -49,8 +49,16 @@ namespace OverTheBoard.WebUI.Controllers
         {
             var filename = await _fileUploader.UploadImage(file);
             var user = await _userManager.GetUserAsync(User);
-            user.DisplayImagePath = filename;
-            model.DisplayImagePath = filename;
+            if (filename != null)
+            {
+                user.DisplayImagePath = filename;
+                model.DisplayImagePath = filename;
+                
+            }
+            else
+            {
+                model.DisplayImagePath = user.DisplayImagePath;
+            }
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
             await _userManager.UpdateAsync(user);

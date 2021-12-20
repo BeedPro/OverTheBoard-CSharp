@@ -18,24 +18,31 @@ namespace OverTheBoard.Infrastructure.Services
         }
         public async Task<string> UploadImage(IFormFile file)
         {
-            long totalBytes = file.Length;
-            string filename = file.FileName.Trim('"');
-            var path = EnsureFileName(filename);
-
-            byte[] buffer = new byte[16 * 1024];
-            using (FileStream output = File.Create(path))
+            if (file != null)
             {
-                using (Stream input = file.OpenReadStream())
+                long totalBytes = file.Length;
+                string filename = file.FileName.Trim('"');
+                var path = EnsureFileName(filename);
+
+                byte[] buffer = new byte[16 * 1024];
+                using (FileStream output = File.Create(path))
                 {
-                    int readBytes;
-                    while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                    using (Stream input = file.OpenReadStream())
                     {
-                        await output.WriteAsync(buffer, 0, readBytes);
-                        totalBytes += readBytes;
+                        int readBytes;
+                        while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            await output.WriteAsync(buffer, 0, readBytes);
+                            totalBytes += readBytes;
+                        }
                     }
                 }
+                return filename;
             }
-            return filename;
+            else
+            {
+                return null;
+            }
         }
 
         private string GetPathAndFileName(string path)
