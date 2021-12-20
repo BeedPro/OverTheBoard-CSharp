@@ -64,5 +64,12 @@ namespace OverTheBoard.WebUI.Controllers
             await _userManager.UpdateAsync(user);
             return View(model);
         }
+        [HttpPost]
+        public async Task<IActionResult> ChangeDisplayName(SettingsViewModel model, string NewDisplayName)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            user.DisplayName = NewDisplayName;
+            return View(model);
+        }
     }
 }

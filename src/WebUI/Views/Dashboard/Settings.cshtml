@@ -28,8 +28,12 @@
                             </div>
                         </div>
                         <hr class="my-4" />
-                        <br>
-                        <br>
+                        <div class="form-group">
+                            <label asp-for="DisplayName">Username</label>
+                            <input asp-for="DisplayName" type="text" class="form-control" placeholder="@Model.DisplayName" />
+                            <span asp-validation-for="DisplayName"></span>
+                        </div>
+                        <hr class="my-4" />
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -58,6 +62,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr class="my-4" />
                         <div class="form-group">
                             <button type="submit" class="btn btn-white btn-block">Save</button>
                         </div>
