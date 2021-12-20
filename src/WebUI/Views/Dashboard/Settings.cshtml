@@ -5,20 +5,76 @@
 }
 
 <header id="gtco-header" class="gtco-cover" role="banner">
-    <div class="gtco-container">
-        <h1>@ViewData["Title"]</h1>
-        <p>This is a Settings page</p>
-        <a asp-controller="Account" asp-action="Logout">Logout</a>
-        <form method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label asp-for="DisplayImagePath">Profile Picture</label>
-                <img src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
-                <input type="file" name="file" />
-                <span asp-validation-for="DisplayImagePath"></span>
+    <div class="gtco-container" >
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+                <h2 class="h3 mb-4 page-title">Settings</h2>
+                <div class="my-4">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="row mt-5 align-items-center">
+                            <div class="col-md-3 text-center mb-5">
+                                <div class="avatar avatar-xl">
+                                    <label for="image">
+                                        <img id="OriginalDisplayImage" src="~/uploads/DisplayImages/@Model.DisplayImagePath" class="avatar-img rounded-circle" />
+                                        <img id="output" class="avatar-img rounded-circle" />
+                                        <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" onchange="loadFileOnUploadImage(event)" />
+                                        <span asp-validation-for="DisplayImagePath"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col align-items-center text-center">
+                                <h1>@Model.DisplayName</h1>
+                                <label>@Model.Email</label>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <br>
+                        <br>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputPassword4">Old Password</label>
+                                    <input type="password" class="form-control" id="inputPassword5" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword5">New Password</label>
+                                    <input type="password" class="form-control" id="inputPassword5" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword6">Confirm Password</label>
+                                    <input type="password" class="form-control" id="inputPassword6" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2">Password requirements</p>
+                                <div class="text-info">
+                                    To make a new password the password must:
+                                    <ul class="list-group-horizontal">
+                                        <li>be at least 8 characters</li>
+                                        <li>be a mixture of upper and lower case</li>
+                                        <li>contain a special character (like, ! £ # or &amp;)</li>
+                                        <li>not include commonly used passwords</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-white btn-block">Save</button>
+                        </div>
+                    </form>
+                    <p><a asp-controller="Account" asp-action="Logout" class="btn btn-white btn-block">Logout</a></p>
+                </div>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-white btn-block">Save</button>
-            </div>
-        </form>
+        </div>
+
     </div>
+
+    <script>
+        var loadFileOnUploadImage = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            var originalImage = document.getElementById('OriginalDisplayImage');
+            originalImage.style.display = "none";
+        };
+    </script>
 </header>

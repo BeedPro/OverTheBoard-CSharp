@@ -39,6 +39,8 @@ namespace OverTheBoard.WebUI.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             model.DisplayImagePath = user.DisplayImagePath;
+            model.Email = user.Email;
+            model.DisplayName = user.DisplayName;
             return View(model);
         }
 
@@ -49,9 +51,10 @@ namespace OverTheBoard.WebUI.Controllers
             var user = await _userManager.GetUserAsync(User);
             user.DisplayImagePath = filename;
             model.DisplayImagePath = filename;
+            model.Email = user.Email;
+            model.DisplayName = user.DisplayName;
             await _userManager.UpdateAsync(user);
             return View(model);
         }
-
     }
 }

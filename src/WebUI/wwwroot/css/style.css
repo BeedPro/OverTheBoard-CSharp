@@ -2303,3 +2303,31 @@ form label {
     margin-right: 25%;
 }
 
+.avatar-xl img {
+    width: 110px;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.text-muted {
+    color: #aeb0b4 !important;
+}
+
+.text-muted {
+    font-weight: 300;
+}
+
+.clickable-image {
+    cursor: pointer;
+}
+
+.no-display {
+    display: none !important;
+}

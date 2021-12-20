@@ -1,7 +1,5 @@
 ;(function () {
-	
 	'use strict';
-
 	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
@@ -22,6 +20,7 @@
 
 	};
 
+	
 
 	var offcanvasMenu = function() {
 
@@ -344,7 +343,6 @@
 			} , { offset: '90%' } );
 		}
 	};
-
 	
 	$(function(){
 		mobileMenuOutsideClick();
@@ -358,6 +356,7 @@
 		loaderPage();
 		counterWayPoint();
 		changeWayPoint();
+
 	});
 
 
