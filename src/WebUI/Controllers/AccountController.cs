@@ -37,7 +37,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            returnUrl ??= Url.Content("~/Home/Dashboard");
+            returnUrl ??= Url.Content("~/Dashboard/");
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.EmailAddress) ?? await _userManager.FindByNameAsync(model.EmailAddress);

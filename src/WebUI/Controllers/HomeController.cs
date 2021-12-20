@@ -15,14 +15,11 @@ namespace OverTheBoard.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IFileUploader _fileUploader;
-        private readonly UserManager<OverTheBoardUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, IFileUploader fileUploader, UserManager<OverTheBoardUser> userManager)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _fileUploader = fileUploader;
-            _userManager = userManager;
+
         }
 
         [AllowAnonymous]
@@ -33,30 +30,7 @@ namespace OverTheBoard.WebUI.Controllers
         public IActionResult Temp()
         {
             return View();
-        }
-
-
-        public IActionResult Dashboard()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Settings()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Settings(SettingsViewModel model, IFormFile file)
-        {
-            var filename = await _fileUploader.UploadImage(file);
-            var user = await _userManager.GetUserAsync(User);
-            user.DisplayImagePath = filename;
-            await _userManager.UpdateAsync(user);
-            return View();
-        }
-
+        }      
 
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
