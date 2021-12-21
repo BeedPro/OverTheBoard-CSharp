@@ -14,5 +14,7 @@ namespace OverTheBoard.Core.Security.Data
         public string DisplayName { get; set; }
         [StringLength(100)]
         public string DisplayImagePath { get; set; }
+        [StringLength(100)]
+        public string DisplayNameId { get; set; }
     }
 }

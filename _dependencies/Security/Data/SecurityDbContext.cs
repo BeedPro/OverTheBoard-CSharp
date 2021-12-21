@@ -12,7 +12,7 @@ namespace OverTheBoard.Core.Security.Data
     public class SecurityDbContext : IdentityDbContext<OverTheBoardUser>
     {
         public string DbPath { get; private set; }
-
+        
         public SecurityDbContext(DbContextOptions<SecurityDbContext> options)
             : base(options)
         {

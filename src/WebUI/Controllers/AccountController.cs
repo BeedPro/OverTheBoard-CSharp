@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OverTheBoard.Core.Security.Data;
 using OverTheBoard.WebUI.Models;
@@ -14,15 +16,19 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly SignInManager<OverTheBoardUser> _signInManager;
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly ILogger<AccountController> _logger;
+        private readonly SecurityDbContext _securityDbContext;
 
         public AccountController(
             SignInManager<OverTheBoardUser> signInManager,
             UserManager<OverTheBoardUser> userManager,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            SecurityDbContext securityDbContext
+            )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _securityDbContext = securityDbContext;
         }
         [HttpGet]
         public IActionResult Login()
@@ -96,10 +102,12 @@ namespace OverTheBoard.WebUI.Controllers
                 {
                     // Defines a new user
                     var userId = Guid.NewGuid().ToString();
+                    var uniqueDisplayNameAndId = await GenerateUniqueDisplayName(model.DisplayName);
                     user = new OverTheBoardUser()
                     {
                         Id = userId,
-                        DisplayName = model.DisplayName,
+                        DisplayName = uniqueDisplayNameAndId.Item1,
+                        DisplayNameId = uniqueDisplayNameAndId.Item2,
                         UserName = model.EmailAddress,
                         Email = model.EmailAddress,
                         DisplayImagePath = "defaultDisplayPic.jpeg",
@@ -125,6 +133,24 @@ namespace OverTheBoard.WebUI.Controllers
             }
             return View("Register", model);
         }
+
+        private async Task<Tuple<string, string>> GenerateUniqueDisplayName(string displayName, string number=null)
+        {
+            Random random = new Random();
+            if (string.IsNullOrEmpty(number))
+            {
+                number = random.Next(0, 9999).ToString().PadLeft(4, '0');
+            }
+            var user = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.DisplayName == displayName && e.DisplayNameId == number);
+
+            while ( user != null)
+            {
+                number = random.Next(0, 9999).ToString().PadLeft(4, '0');
+                user = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.DisplayName == displayName && e.DisplayNameId == number);
+            }
+            return Tuple.Create(displayName, number);
+        }
+
         [AllowAnonymous]
         public IActionResult Success()
         {
