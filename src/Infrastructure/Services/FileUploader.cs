@@ -24,7 +24,13 @@ namespace OverTheBoard.Infrastructure.Services
                 string fileExtention = Path.GetExtension(file.FileName.Trim('"'));
                 var filename = $"{userId}{fileExtention}";
                 var path = EnsureFileName(filename);
-                
+                var rootPath = _hostingEnvironment.WebRootPath + "\\uploads\\DisplayImages\\Users\\";
+                string filesToDelete = @$"*{userId}*";   // Only delete DOC files containing "DeleteMe" in their filenames
+                string[] displayImagesOfUser = Directory.GetFiles(rootPath, filesToDelete);
+                foreach (string displayImage in displayImagesOfUser)
+                {
+                    File.Delete(displayImage);
+                }
                 byte[] buffer = new byte[16 * 1024];
                 using (FileStream output = File.Create(path))
                 {
