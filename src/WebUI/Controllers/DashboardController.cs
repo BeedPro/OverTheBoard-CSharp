@@ -29,6 +29,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(DashboardViewModel model)
         {
+            // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
             string path = "";
             var user = await _userManager.GetUserAsync(User);
             model.DisplayName = user.DisplayName;
@@ -38,6 +39,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Settings(SettingsViewModel model)
         {
+            // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
             var user = await _userManager.GetUserAsync(User);
             model.DisplayImagePath = user.DisplayImagePath;
             model.Email = user.Email;
@@ -81,6 +83,7 @@ namespace OverTheBoard.WebUI.Controllers
                 }
             }
 
+            // Sets the Email an DisplayName of the model to be output in the SettingsView
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
             await _userManager.UpdateAsync(user);

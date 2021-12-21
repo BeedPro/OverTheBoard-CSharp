@@ -46,12 +46,6 @@ namespace OverTheBoard.WebUI.Controllers
                     var checkResult = await _signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
                     if (checkResult.Succeeded)
                     {
-                        //if (!await _userManager.IsEmailConfirmedAsync(user))
-                        //{
-                        //    var idToken = _encodingService.GetHexFromString(model.EmailAddress);
-                        //    return RedirectToAction("Success", "Registration", new { token = idToken, toverify = true });
-                        //}
-
                         var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, lockoutOnFailure: true);
                         if (result.Succeeded)
                         {
@@ -91,6 +85,7 @@ namespace OverTheBoard.WebUI.Controllers
                 }
                 else
                 {
+                    // Defines a new user
                     user = new OverTheBoardUser()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -121,7 +116,7 @@ namespace OverTheBoard.WebUI.Controllers
             return View("Register", model);
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Success()
+        public async Task<IActionResult> Success(SuccessViewModel model)
         {
             return View();
         }
