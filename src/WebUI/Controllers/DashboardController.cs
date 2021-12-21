@@ -29,7 +29,6 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(DashboardViewModel model)
         {
-            //string path = "C:/Users/Beed/source/repos/BeedPro/OverTheBoard/src/WebUI/Uploads/DisplayImages/";
             string path = "";
             var user = await _userManager.GetUserAsync(User);
             model.DisplayName = user.DisplayName;
@@ -43,8 +42,6 @@ namespace OverTheBoard.WebUI.Controllers
             model.DisplayImagePath = user.DisplayImagePath;
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
-            model.OldPassword = "lock";
-            model.NewPassword = "lock";
             return View(model);
         }
 
