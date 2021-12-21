@@ -116,7 +116,7 @@ namespace OverTheBoard.WebUI.Controllers
             return View("Register", model);
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Success(SuccessViewModel model)
+        public async Task<IActionResult> Success()
         {
             return View();
         }
