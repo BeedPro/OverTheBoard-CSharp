@@ -16,14 +16,15 @@ namespace OverTheBoard.Infrastructure.Services
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        public async Task<string> UploadImage(IFormFile file)
+        public async Task<string> UploadImage(IFormFile file, string userId)
         {
             if (file != null)
             {
                 long totalBytes = file.Length;
-                string filename = file.FileName.Trim('"');
+                string fileExtention = Path.GetExtension(file.FileName.Trim('"'));
+                var filename = $"{userId}{fileExtention}";
                 var path = EnsureFileName(filename);
-
+                
                 byte[] buffer = new byte[16 * 1024];
                 using (FileStream output = File.Create(path))
                 {
@@ -56,7 +57,7 @@ namespace OverTheBoard.Infrastructure.Services
         private string EnsureFileName(string filename)
         {
             //string path = _hostingEnvironment.ContentRootPath + "\\Uploads\\DisplayImages\\";
-            string path = _hostingEnvironment.WebRootPath + "\\uploads\\DisplayImages\\";
+            string path = _hostingEnvironment.WebRootPath + "\\uploads\\DisplayImages\\Users\\";
 
             if (!Directory.Exists(path))
             {

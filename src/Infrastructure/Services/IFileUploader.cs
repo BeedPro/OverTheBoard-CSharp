@@ -9,6 +9,6 @@ namespace OverTheBoard.Infrastructure.Services
 {
     public interface IFileUploader
     {
-        Task<string> UploadImage(IFormFile file);
+        Task<string> UploadImage(IFormFile file, string userId);
     }
 }

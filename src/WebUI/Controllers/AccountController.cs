@@ -86,9 +86,10 @@ namespace OverTheBoard.WebUI.Controllers
                 else
                 {
                     // Defines a new user
+                    var userId = Guid.NewGuid().ToString();
                     user = new OverTheBoardUser()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = userId,
                         DisplayName = model.DisplayName,
                         UserName = model.EmailAddress,
                         Email = model.EmailAddress,

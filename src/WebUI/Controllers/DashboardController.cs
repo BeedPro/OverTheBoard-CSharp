@@ -50,14 +50,13 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Settings(SettingsViewModel model, IFormFile file)
         {
-            var filename = await _fileUploader.UploadImage(file);
             var user = await _userManager.GetUserAsync(User);
-            
+            var filename = await _fileUploader.UploadImage(file, user.Id);
             //Checks if the display image pic has been uploaded to the site
             if (filename != null)
             {
-                user.DisplayImagePath = filename;
-                model.DisplayImagePath = filename;
+                user.DisplayImagePath = $"Users\\{filename}";
+                model.DisplayImagePath = $"Users\\{filename}";
 
             }
 
@@ -72,14 +71,16 @@ namespace OverTheBoard.WebUI.Controllers
             {
                 user.DisplayName = model.DisplayName;
             }
-
-            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+            if (model.OldPassword != null && model.NewPassword != null)
             {
-                if (user != null)
+                var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return View(model);
+                    if (user != null)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return View(model);
+                    }
                 }
             }
 
