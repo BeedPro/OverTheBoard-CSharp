@@ -37,8 +37,9 @@ namespace OverTheBoard.WebUI.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> Settings(SettingsViewModel model)
+        public async Task<IActionResult> Settings()
         {
+            SettingsViewModel model = new SettingsViewModel();
             // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
             var user = await _userManager.GetUserAsync(User);
             model.DisplayImagePath = user.DisplayImagePath;

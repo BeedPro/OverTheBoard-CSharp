@@ -2331,3 +2331,7 @@ img {
 .no-display {
     display: none !important;
 }
+
+.text-white-important{
+    color: white !important;
+}

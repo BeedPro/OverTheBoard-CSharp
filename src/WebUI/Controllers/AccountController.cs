@@ -25,9 +25,13 @@ namespace OverTheBoard.WebUI.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login()
         {
-
+            // Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/Dashboard");
+            }
             return View();
         }
         
@@ -64,8 +68,13 @@ namespace OverTheBoard.WebUI.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Register(string returnUrl)
+        public IActionResult Register()
         {
+            // Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/Dashboard");
+            }
             return View(new RegistrationViewModel());
         }
 
@@ -117,7 +126,7 @@ namespace OverTheBoard.WebUI.Controllers
             return View("Register", model);
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Success()
+        public IActionResult Success()
         {
             return View();
         }

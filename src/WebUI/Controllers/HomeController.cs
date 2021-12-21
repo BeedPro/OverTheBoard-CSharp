@@ -15,16 +15,22 @@ namespace OverTheBoard.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<OverTheBoardUser> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SignInManager<OverTheBoardUser> signInManager)
         {
             _logger = logger;
-
+            _signInManager = signInManager;
         }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
+            // Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/Dashboard");
+            }
             return View();
         }
         public IActionResult Temp()
