@@ -17,10 +17,12 @@ namespace OverTheBoard.WebUI.Controllers
     {
         private readonly IFileUploader _fileUploader;
         private readonly UserManager<OverTheBoardUser> _userManager;
-        public DashboardController(IFileUploader fileUploader, UserManager<OverTheBoardUser> userManager)
+        private readonly SignInManager<OverTheBoardUser> _signInManager;
+        public DashboardController(IFileUploader fileUploader, UserManager<OverTheBoardUser> userManager, SignInManager<OverTheBoardUser> signInManager)
         {
             _fileUploader = fileUploader;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -41,6 +43,8 @@ namespace OverTheBoard.WebUI.Controllers
             model.DisplayImagePath = user.DisplayImagePath;
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
+            model.OldPassword = "lock";
+            model.NewPassword = "lock";
             return View(model);
         }
 
@@ -49,26 +53,42 @@ namespace OverTheBoard.WebUI.Controllers
         {
             var filename = await _fileUploader.UploadImage(file);
             var user = await _userManager.GetUserAsync(User);
+            
+            //Checks if the display image pic has been uploaded to the site
             if (filename != null)
             {
                 user.DisplayImagePath = filename;
                 model.DisplayImagePath = filename;
-                
+
             }
+
             else
             {
                 model.DisplayImagePath = user.DisplayImagePath;
             }
 
-            if(model.DisplayName != null)
+            // TO-DO: Check if the username is in database
+            //Checks and then changes the DisplayName
+            if (model.DisplayName != null)
             {
                 user.DisplayName = model.DisplayName;
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                if (user != null)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return View(model);
+                }
             }
 
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
             await _userManager.UpdateAsync(user);
             return View(model);
+            
         }
     }
 }

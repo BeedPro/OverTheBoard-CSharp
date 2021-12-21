@@ -37,16 +37,19 @@
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="inputPassword4">Old Password</label>
-                                    <input type="password" class="form-control" id="inputPassword5" />
+                                    <label asp-for="OldPassword">Old Password</label>
+                                    <input asp-for="OldPassword" type="password" class="form-control" id="inputPassword5" />
+                                    <span asp-validation-for="OldPassword"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword5">New Password</label>
-                                    <input type="password" class="form-control" id="inputPassword5" />
+                                    <label asp-for="NewPassword">New Password</label>
+                                    <input asp-for="NewPassword" type="password" class="form-control" id="inputPassword5" />
+                                    <span asp-validation-for="NewPassword"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword6">Confirm Password</label>
-                                    <input type="password" class="form-control" id="inputPassword6" />
+                                    <label asp-for="ConfirmNewPassword">Confirm Password</label>
+                                    <input asp-for="ConfirmNewPassword" type="password" class="form-control" id="inputPassword6" />
+                                    <span asp-validation-for="ConfirmNewPassword"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
