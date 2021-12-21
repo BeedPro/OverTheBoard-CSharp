@@ -59,16 +59,15 @@ namespace OverTheBoard.WebUI.Controllers
             {
                 model.DisplayImagePath = user.DisplayImagePath;
             }
+
+            if(model.DisplayName != null)
+            {
+                user.DisplayName = model.DisplayName;
+            }
+
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
             await _userManager.UpdateAsync(user);
-            return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> ChangeDisplayName(SettingsViewModel model, string NewDisplayName)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            user.DisplayName = NewDisplayName;
             return View(model);
         }
     }
