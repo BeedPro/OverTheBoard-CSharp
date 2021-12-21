@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             <div class="col align-items-center text-center">
-                                <h1>@Model.DisplayName</h1>
+                                <div id="selectText" onclick="copyData(selectText)" class="displayName clickable"><h1>@Model.DisplayName#@Model.DisplayNameId</h1></div>
                                 <label>@Model.Email</label>
                             </div>
                         </div>
@@ -63,12 +63,13 @@
                                         <li>not include commonly used passwords</li>
                                     </ul>
                                 </div>
+                                <div class="form-group">
+                                    <br>
+                                    <button type="submit" class="btn btn-white btn-block">Save all changes</button>
+                                </div>
                             </div>
                         </div>
                         <hr class="my-4" />
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-white btn-block">Save</button>
-                        </div>
                     </form>
                     <p><a asp-controller="Account" asp-action="Logout" class="btn btn-white btn-block">Logout</a></p>
                 </div>
@@ -84,5 +85,14 @@
             var originalImage = document.getElementById('OriginalDisplayImage');
             originalImage.style.display = "none";
         };
+
+        function copyData(containerid) {
+            var range = document.createRange();
+            range.selectNode(containerid);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+        }
     </script>
 </header>

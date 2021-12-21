@@ -76,7 +76,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            // Checking if user is logged on and redirecting to Dashboard
+            //Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
                 return LocalRedirect("~/Dashboard");

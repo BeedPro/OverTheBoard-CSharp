@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Core.Security.Data;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
@@ -18,11 +20,13 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly IFileUploader _fileUploader;
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly SignInManager<OverTheBoardUser> _signInManager;
-        public DashboardController(IFileUploader fileUploader, UserManager<OverTheBoardUser> userManager, SignInManager<OverTheBoardUser> signInManager)
+        private readonly SecurityDbContext _securityDbContext;
+        public DashboardController(IFileUploader fileUploader, UserManager<OverTheBoardUser> userManager, SignInManager<OverTheBoardUser> signInManager, SecurityDbContext securityDbContext)
         {
             _fileUploader = fileUploader;
             _userManager = userManager;
             _signInManager = signInManager;
+            _securityDbContext = securityDbContext;
         }
 
 
@@ -45,6 +49,7 @@ namespace OverTheBoard.WebUI.Controllers
             model.DisplayImagePath = user.DisplayImagePath;
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
+            model.DisplayNameId = user.DisplayNameId;
             return View(model);
         }
 
@@ -68,9 +73,13 @@ namespace OverTheBoard.WebUI.Controllers
 
             // TO-DO: Check if the username is in database
             //Checks and then changes the DisplayName
-            if (model.DisplayName != null)
+            if (model.DisplayName != null &&  !await UserClash(model.DisplayName, user.DisplayNameId))
             {
                 user.DisplayName = model.DisplayName;
+            }
+            else
+            {
+                ModelState.AddModelError("DisplayName", "Username clashes with an existing user please enter another username" );
             }
             if (model.OldPassword != null && model.NewPassword != null)
             {
@@ -88,9 +97,20 @@ namespace OverTheBoard.WebUI.Controllers
             // Sets the Email an DisplayName of the model to be output in the SettingsView
             model.Email = user.Email;
             model.DisplayName = user.DisplayName;
+            model.DisplayNameId = user.DisplayNameId;
             await _userManager.UpdateAsync(user);
             return View(model);
             
+        }
+
+        private async Task<bool> UserClash(string displayName, string displayNameId)
+        {
+            var user = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.DisplayName == displayName && e.DisplayNameId == displayNameId);
+            if (user != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

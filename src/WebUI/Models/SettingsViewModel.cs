@@ -11,6 +11,7 @@ namespace OverTheBoard.WebUI.Models
         public string DisplayImagePath { get; set; }
         public string Email { get; set; }
         public string DisplayName { get; set; }
+        public string DisplayNameId { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string OldPassword { get; set; }
