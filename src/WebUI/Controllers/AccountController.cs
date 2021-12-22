@@ -13,6 +13,7 @@ namespace OverTheBoard.WebUI.Controllers
 {
     public class AccountController : Controller
     {
+        // Use Repos instead of dependancy injection
         private readonly SignInManager<OverTheBoardUser> _signInManager;
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly ILogger<AccountController> _logger;
