@@ -15,8 +15,8 @@
                             <div class="col-md-3 text-center mb-5">
                                 <div class="avatar avatar-xl">
                                     <label for="image">
-                                        <img id="OriginalDisplayImage" src="~/uploads/DisplayImages/@Model.DisplayImagePath" class="avatar-img rounded-circle" />
-                                        <img id="output" class="avatar-img rounded-circle" />
+                                        <img id="OriginalDisplayImage" src="~/uploads/DisplayImages/@Model.DisplayImagePath" class="avatar-img" />
+                                        <img id="output" class="avatar-img" />
                                         <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" onchange="loadFileOnUploadImage(event)" />
                                         <span asp-validation-for="DisplayImagePath"></span>
                                     </label>

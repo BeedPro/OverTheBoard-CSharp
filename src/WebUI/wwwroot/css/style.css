@@ -2335,3 +2335,46 @@ img {
 .text-white-important{
     color: white !important;
 }
+
+.small-pfp {
+    width: 100px !important;
+    height: 100px !important;
+
+}
+.small-pfp-correct-position {
+    padding-left: 50px;
+    padding-right: 0px !important;
+    padding-top: 10px;
+}
+.big-pfp {
+    width: 300px !important;
+    height: 300px !important;
+}
+
+.big-pfp-correct-position {
+    padding-top: 10px;
+    padding-left: 40px;
+}
+
+.graph-size {
+    width: 800px;
+    height: 550px;
+}
+
+.padding-100 {
+    padding-bottom: 100px;
+}
+
+.center-button-on-dashboard {
+    margin-top: 100px;
+    margin-right: 250px;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

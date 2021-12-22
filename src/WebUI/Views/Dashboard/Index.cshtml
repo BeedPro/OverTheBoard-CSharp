@@ -4,11 +4,82 @@
     Layout = "_Layout";
 }
 
-
 <header id="gtco-header" class="gtco-cover" role="banner">
-    <div class="gtco-container">
-        <h2>Dashboard</h2>
-        <h3>@Model.DisplayName</h3>
-        <img src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
-    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1 small-pfp-correct-position">
+                <img class="small-pfp" src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
+            </div>
+            <div class="col-md-5">
+                <br />
+                <br />
+                <h3 class="text-center" style="">
+                    @Model.DisplayName
+                </h3>
+                <hr />
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-4 big-pfp-correct-position">
+                <img class="big-pfp" src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <!--This would be the place where the ELO rating graph of the user is outputted, the image is just a placeholder for the graph-->
+            <!--Graph can be made using html and jquery-->
+            <div class="col-md-5 padding-100">
+                <img class="graph-size" src="https://google.github.io/charts/flutter/example/bar_charts/spark_bar_full.png" alt="Place holder graph" />
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <div class="text-center center-button-on-dashboard" >
+                <a href="#" class="btn btn-white btn-block" type="button">Play</a> <br />
+                <a href="#" class="btn btn-white btn-block " type="button">Leaderboard</a><br />
+                <a href="#" class="btn btn-white btn-block" type="button">Analysis</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    <!--<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1 small-pfp-correct-position">
+                <img class="small-pfp" src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
+            </div>
+            <div class="col-md-5">
+                <br />
+                <br />
+                    <h3 class="text-center" style="">
+                        @Model.DisplayName
+                    </h3>
+                <hr />
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-4 big-pfp-correct-position">
+                <img class="big-pfp" src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
+            </div>
+        </div>
+        <div class="row">-->
+    <!--This would be the place where the ELO rating graph of the user is outputted, the image is just a placeholder for the graph-->
+    <!--Graph can be made using html and jquery-->
+    <!--<div class="col-md-8 graph-size-position">
+                <img class="graph-size" src="https://google.github.io/charts/flutter/example/bar_charts/spark_bar_full.png" alt="Place holder graph" />
+            </div>
+            <div class="col-md-4">
+                pas
+            </div>
+        </div>
+    </div>-->
 </header>
+
+@*<img style="position: relative; right:10px" class="small-pfp" src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
+<img class="big-pfp" src="~/uploads/DisplayImages/@Model.DisplayImagePath" />*@
+
+@*<header id="gtco-header" class="gtco-cover" role="banner">
+        <div class="gtco-container">
+            <h2>Dashboard</h2>
+            <h3>@Model.DisplayName</h3>
+            <img src="~/uploads/DisplayImages/@Model.DisplayImagePath" />
+        </div>
+    </header>*@
