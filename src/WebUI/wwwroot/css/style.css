@@ -2390,3 +2390,14 @@ img {
     margin-top: 300px;
     margin-bottom: 297px;
 }
+
+.boardgame-size-and-position {
+    width: 750px !important;
+    height: 750px !important;
+    margin-top: 20px;
+    margin-bottom: 7px;
+}
+
+.margin-top-300 {
+    margin-top: 300px;
+}
