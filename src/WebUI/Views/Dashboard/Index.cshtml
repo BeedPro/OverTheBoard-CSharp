@@ -34,13 +34,9 @@
             <div class="col-md-2"></div>
             <div class="col-md-4">
                 <div class="text-center center-button-on-dashboard">
-                    @* This will be where the button sends the player depending on ranked (for now it has been defaulted to true all the time) *@
-                    @if (true)
-                    {<a asp-controller="Play" asp-action="Unranked" class="btn btn-white btn-block" type="button">Play</a> <br />}
-                    else
-                    { <a asp-controller="Play" asp-action="Brackets" class="btn btn-white btn-block" type="button">Play</a> <br />}
-                    <a href="#" class="btn btn-white btn-block " type="button">Leaderboard</a><br />
-                    <a href="#" class="btn btn-white btn-block" type="button">Analysis</a>
+                    <a asp-controller="Play" asp-action="Index" class="btn btn-white btn-block" type="button">Play</a> <br />
+                    <a asp-controller="Dashboard" asp-action="Leaderboard" class="btn btn-white btn-block " type="button">Leaderboard</a><br />
+                    <a asp-controller="Dashboard" asp-action="Analysis" class="btn btn-white btn-block" type="button">Analysis</a>
                 </div>
             </div>
         </div>

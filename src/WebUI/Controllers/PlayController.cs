@@ -8,6 +8,19 @@ namespace OverTheBoard.WebUI.Controllers
 {
     public class PlayController : Controller
     {
+        public IActionResult Index()
+        {
+            // Checks if player is ranked or not and redirects to the corresponding page
+            // Not Implemented Properly
+            if (true)
+            {
+                return LocalRedirect("~/Play/Unranked");
+            }
+            else
+            {
+                return LocalRedirect("~/Play/Brackets");
+            }
+        }
         public IActionResult Unranked()
         {
             return View();

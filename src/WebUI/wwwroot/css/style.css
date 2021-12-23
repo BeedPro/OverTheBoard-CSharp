@@ -2383,3 +2383,10 @@ img {
     margin-top: 360px;
     margin-bottom: 306px
 }
+
+.center-table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 300px;
+    margin-bottom: 297px;
+}

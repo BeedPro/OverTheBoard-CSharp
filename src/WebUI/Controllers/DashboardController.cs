@@ -103,6 +103,17 @@ namespace OverTheBoard.WebUI.Controllers
             
         }
 
+        public IActionResult Leaderboard()
+        {
+            return View();
+        }
+
+        public IActionResult Analysis()
+        {
+            return View();
+        }
+
+
         private async Task<bool> UserClash(string displayName, string displayNameId)
         {
             var user = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.DisplayName == displayName && e.DisplayNameId == displayNameId);
