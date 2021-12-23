@@ -2378,3 +2378,8 @@ img {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.center-play-index {
+    margin-top: 360px;
+    margin-bottom: 306px
+}

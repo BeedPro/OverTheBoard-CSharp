@@ -8,7 +8,17 @@ namespace OverTheBoard.WebUI.Controllers
 {
     public class PlayController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Unranked()
+        {
+            return View();
+        }
+
+        public IActionResult Brackets()
+        {
+            return View();
+        }
+
+        public IActionResult Game()
         {
             return View();
         }

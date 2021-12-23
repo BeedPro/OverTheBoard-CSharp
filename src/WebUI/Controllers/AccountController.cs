@@ -153,8 +153,24 @@ namespace OverTheBoard.WebUI.Controllers
         }
 
         [AllowAnonymous]
+        public IActionResult EmailVerification()
+        {           
+            //Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/Dashboard");
+            }
+            return View();
+        }
+
+        [AllowAnonymous]
         public IActionResult Success()
         {
+            //Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/Dashboard");
+            }
             return View();
         }
         [HttpGet]
