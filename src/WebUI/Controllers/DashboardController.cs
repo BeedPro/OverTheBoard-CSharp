@@ -102,7 +102,10 @@ namespace OverTheBoard.WebUI.Controllers
             return View(model);
             
         }
-
+        public IActionResult GameHistory()
+        {
+            return View();
+        }
         public IActionResult Leaderboard()
         {
             return View();
