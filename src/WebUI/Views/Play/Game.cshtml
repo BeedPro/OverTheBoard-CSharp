@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "_Layout";
+    Layout = "_LayoutGame";
 }
 
 <header id="gtco-header" class="gtco-cover" role="banner">
@@ -13,35 +13,56 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <img src="/images/cube-large.png" class="img-responsive boardgame-size-and-position" alt="Chess pic">
+                <!--Placeholder for the chess game-->
+                @*<img src="/images/cube-large.png" class="img-responsive boardgame-size-and-position" alt="Chess pic">*@
+                <div id="myBoard" class="boardgame-size-and-position"></div>
+                <label>Status:</label>
+                <div id="status"></div>
+                @*<label>FEN:</label>
+            <div id="fen"></div>*@
+
             </div>
             <div class="col-md-3">
-                <div class="margin-top-300 ">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div >
+                            <h3>
+                                Player One
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 margin-top-300">
+                        <label>PGN:</label>
+                        <div id="pgn"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 margin-top-300">
+                        <h3>
+                            Player Two
+                        </h3>
+                    </div>
+                    
+                </div>
+            </div>
+            @*<div class="col-md-3">
+            <div class="margin-top-300 ">
                 <h3>
                     Player One
-                </h3></div>
-                <ol>
-                    <li class="list-item">
-                        Move 1
-                    </li>
-                    <li class="list-item">
-                        Move 2
-                    </li>
-                    <li class="list-item">
-                        Move 3
-                    </li>
-                    <li class="list-item">
-                        Move 4
-                    </li>
-                    <li class="list-item">
-                        Move 5
-                    </li>
-                    
-                </ol>
-                <h3>
-                    Player Two
                 </h3>
             </div>
+            <label>PGN:</label>
+            <div id="pgn"></div>
+            <h3>
+                Player Two
+            </h3>
+        </div>*@
         </div>
     </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/chessboard/js/chessboard-1.0.0.js"></script>
+    <script src="~/js/game.js"></script>
 </header>
+
