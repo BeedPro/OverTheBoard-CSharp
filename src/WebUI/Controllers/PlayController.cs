@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OverTheBoard.WebUI.Controllers
 {
+    //TODO: [Authorize]
     public class PlayController : Controller
     {
         public IActionResult Index()
