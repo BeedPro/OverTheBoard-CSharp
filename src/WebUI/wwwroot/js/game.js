@@ -36,7 +36,11 @@
             });
             // illegal move
             if (move === null) return 'snapback';
+
+            
             $self.updateStatus();
+            var fen = $self.game.fen();
+            $(document).trigger("chess_move", fen);
         }
 
         $self.onMouseoverSquare = function (square, piece) {
@@ -50,16 +54,16 @@
             if (moves.length === 0) return;
 
             // highlight the square they moused over
-            $self.greySquare(square);
+            //$self.greySquare(square);
 
             // highlight the possible squares for this piece
             for (var i = 0; i < moves.length; i++) {
-                $self.greySquare(moves[i].to);
+                //$self.greySquare(moves[i].to);
             }
         }
 
         $self.onMouseoutSquare = function (square, piece) {
-            $self.removeGreySquares();
+            //$self.removeGreySquares();
         }
 
         $self.onSnapEnd = function () {
@@ -100,6 +104,12 @@
             $($self.settings.pgn).html($self.game.pgn());
         }
 
+        $(document).once("chess_moved", function (event, message) {
+            $self.game.load(message);
+            $self.board.position(message);
+            //$self.updateStatus();
+        });
+
         var config = {
             draggable: true,
             position: 'start',
@@ -115,9 +125,16 @@
         return this;
     };
 
+    $.fn.once = function (a, b) {
+        return this.each(function () {
+            $(this).off(a).on(a, b);
+        });
+    };
+
 }(jQuery));
 
 $(function () {
     $.fn.play();
+    $.fn.chessmove();
 });
 

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OverTheBoard.Infrastructure.Services;
+using OverTheBoard.WebUI.SignalR;
 
 namespace OverTheBoard.WebUI
 {
@@ -22,7 +23,7 @@ namespace OverTheBoard.WebUI
             services.AddControllersWithViews();
             services.AddSecurity();
             services.AddScoped<IFileUploader, FileUploader>();
-            
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +49,8 @@ namespace OverTheBoard.WebUI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChessPieceMoveHub>("/piece-move");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
