@@ -1,110 +1,123 @@
-﻿// NOTE: this example uses the chess.js library:
-// https://github.com/jhlywa/chess.js
+﻿
 
-var board = null
-var game = new Chess()
-var whiteSquareGrey = '#a9a9a9'
-var blackSquareGrey = '#696969'
-var $status = $('#status')
-var $fen = $('#fen')
-var $pgn = $('#pgn')
+(function ($) {
+    $.fn.play = function (options) {
+        var $self = $(this);
 
-function onDragStart(source, piece, position, orientation) {
-    // do not pick up pieces if the game is over
-    if (game.game_over()) return false
 
-    // only pick up pieces for the side to move
-    if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-        (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        return false
-    }
-}
+        $self.settings = $.extend({
+            status: '#status',
+            fen: '#fen',
+            pgn: '#pgn',
+            whiteSquareGrey: '#a9a9a9',
+            blackSquareGrey: '#696969'
+        }, options);
 
-function onDrop(source, target) {
-    // see if the move is legal
-    var move = game.move({
-        from: source,
-        to: target,
-        promotion: 'q' // NOTE: always promote to a queen for example simplicity
-    })
+        $self.board = null;
+        $self.game = new Chess();
 
-    // illegal move
-    if (move === null) return 'snapback'
+        $self.onDragStart = function (source, piece, position, orientation)
+        {
+            if ($self.game.game_over()) return false;
 
-    updateStatus()
-}
-
-function onMouseoverSquare(square, piece) {
-    // get list of possible moves for this square
-    var moves = game.moves({
-        square: square,
-        verbose: true
-    })
-
-    // exit if there are no moves available for this square
-    if (moves.length === 0) return
-
-    // highlight the square they moused over
-    greySquare(square)
-
-    // highlight the possible squares for this piece
-    for (var i = 0; i < moves.length; i++) {
-        greySquare(moves[i].to)
-    }
-}
-
-function onMouseoutSquare(square, piece) {
-    removeGreySquares()
-}
-
-// update the board position after the piece snap
-// for castling, en passant, pawn promotion
-function onSnapEnd() {
-    board.position(game.fen())
-}
-
-function updateStatus() {
-    var status = ''
-
-    var moveColor = 'White'
-    if (game.turn() === 'b') {
-        moveColor = 'Black'
-    }
-
-    // checkmate?
-    if (game.in_checkmate()) {
-        status = 'Game over, ' + moveColor + ' is in checkmate.'
-    }
-
-    // draw?
-    else if (game.in_draw()) {
-        status = 'Game over, drawn position'
-    }
-
-    // game still on
-    else {
-        status = moveColor + ' to move'
-
-        // check?
-        if (game.in_check()) {
-            status += ', ' + moveColor + ' is in check'
+            // only pick up pieces for the side to move
+            if (($self.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+                ($self.game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+                return false;
+            }
         }
-    }
 
-    $status.html(status)
-    $fen.html(game.fen())
-    $pgn.html(game.pgn())
-}
+        $self.onDrop = function (source, target) {
+            // see if the move is legal
+            var move = $self.game.move({
+                from: source,
+                to: target,
+                promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            });
+            // illegal move
+            if (move === null) return 'snapback';
+            $self.updateStatus();
+        }
 
-var config = {
-    draggable: true,
-    position: 'start',
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onMouseoutSquare: onMouseoutSquare,
-    onMouseoverSquare: onMouseoverSquare,
-    onSnapEnd: onSnapEnd
-}
-board = Chessboard('myBoard', config)
+        $self.onMouseoverSquare = function (square, piece) {
+            // get list of possible moves for this square
+            var moves = $self.game.moves({
+                square: square,
+                verbose: true
+            });
 
-updateStatus()
+            // exit if there are no moves available for this square
+            if (moves.length === 0) return;
+
+            // highlight the square they moused over
+            $self.greySquare(square);
+
+            // highlight the possible squares for this piece
+            for (var i = 0; i < moves.length; i++) {
+                $self.greySquare(moves[i].to);
+            }
+        }
+
+        $self.onMouseoutSquare = function (square, piece) {
+            $self.removeGreySquares();
+        }
+
+        $self.onSnapEnd = function () {
+            $self.board.position($self.game.fen());
+        }
+
+        $self.updateStatus = function () {
+
+            var status = '';
+
+            var moveColor = 'White';
+            if ($self.game.turn() === 'b') {
+                moveColor = 'Black';
+            }
+
+            // checkmate?
+            if ($self.game.in_checkmate()) {
+                status = 'Game over, ' + moveColor + ' is in checkmate.';
+            }
+
+            // draw?
+            else if ($self.game.in_draw()) {
+                status = 'Game over, drawn position';
+            }
+
+            // game still on
+            else {
+                status = moveColor + ' to move';
+
+                // check?
+                if ($self.game.in_check()) {
+                    status += ', ' + moveColor + ' is in check';
+                }
+            }
+
+            $($self.settings.status).html(status);
+            $($self.settings.fen).html($self.game.fen());
+            $($self.settings.pgn).html($self.game.pgn());
+        }
+
+        var config = {
+            draggable: true,
+            position: 'start',
+            onDragStart: $self.onDragStart,
+            onDrop: $self.onDrop,
+            onMouseoutSquare: $self.onMouseoutSquare,
+            onMouseoverSquare: $self.onMouseoverSquare,
+            onSnapEnd: $self.onSnapEnd
+        };
+
+        $self.board = Chessboard('myBoard', config);
+
+        return this;
+    };
+
+}(jQuery));
+
+$(function () {
+    $.fn.play();
+});
+
