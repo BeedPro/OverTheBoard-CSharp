@@ -49,6 +49,7 @@ namespace OverTheBoard.WebUI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<QueueHub>("/queue");
                 endpoints.MapHub<ChessPieceMoveHub>("/piece-move");
 
                 endpoints.MapControllerRoute(

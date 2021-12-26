@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<header id="gtco-header" class="gtco-cover" role="banner">
+    <div class="text-center center-play-index">
+
+        @*To check if the user is ranked or not and so disables the Brackets button if they are unranked*@
+        @if (false)
+        {
+            <h3>You are not ranked into a season at this point in time but you may still play with other players who are unranked</h3>
+            <a id="enterQueue" asp-controller="Play" asp-action="Game" class="btn btn-white" type="button">Play</a> <br />
+            <a href="#" class="btn btn-white disabled" type="button">Brackets</a>
+
+        }
+        else
+        {
+            <h3>You are ranked into a season at this point in time but you may still play with other players that is not your league game</h3>
+            <a id="enterQueue" asp-controller="Play" asp-action="Game" class="btn btn-white" type="button">Play</a> <br />
+            <a asp-controller="Play" asp-action="Brackets" class="btn btn-white" type="button">Brackets</a>
+        }
+    </div>
+
+</header>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/queue.js"></script>

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using OverTheBoard.Core.Security.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,21 +9,12 @@ using System.Threading.Tasks;
 
 namespace OverTheBoard.WebUI.Controllers
 {
-    //TODO: [Authorize]
+    [Authorize]
     public class PlayController : Controller
     {
         public IActionResult Index()
         {
-            // Checks if player is ranked or not and redirects to the corresponding page
-            // Not Implemented Properly
-            if (true)
-            {
-                return LocalRedirect("~/Play/Unranked");
-            }
-            else
-            {
-                return LocalRedirect("~/Play/Brackets");
-            }
+            return View();
         }
         public IActionResult Unranked()
         {
@@ -31,7 +25,6 @@ namespace OverTheBoard.WebUI.Controllers
         {
             return View();
         }
-
         public IActionResult Game()
         {
             return View();
