@@ -13,7 +13,7 @@
 
         $self.connection.start()
             .then(function () {
-
+                $('#connectionId').html($self.connection.connectionId);
             })
             .catch(function (err) {
                 return console.error(err.toString());
@@ -23,6 +23,18 @@
             $self.connection.invoke("Send", "user", message).catch(function (err) {
                 return console.error(err.toString());
             });
+        });
+
+        $self.connection.on("Registered", function (message) {
+            $('#connectionId').html(message);
+        });
+
+
+        $('#clickButton').click(function () {
+
+            $self.connection.invoke("Register", "Annoor is good programmer!!!").catch(function (err) {
+                return console.error(err.toString());
+            })
         });
 
         return this;

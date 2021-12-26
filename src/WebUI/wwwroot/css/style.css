@@ -1721,6 +1721,7 @@ form label {
     height: 100%;
     z-index: 9999;
     background: url(../images/loader.gif) center no-repeat #fff;
+    background-color: var(--background);
 }
 
 .js .animate-box {
@@ -2276,6 +2277,10 @@ form label {
     }
 }
 
+body {
+    background: var(--surface);
+    color: var(--on-surface);
+}
 
 .gtco-background {
     background: var(--surface);
