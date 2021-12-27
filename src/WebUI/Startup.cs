@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OverTheBoard.Infrastructure;
+using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.SignalR;
 
@@ -24,6 +26,9 @@ namespace OverTheBoard.WebUI
             services.AddSecurity();
             services.AddScoped<IFileUploader, FileUploader>();
             services.AddSignalR();
+            services.AddQueueing();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

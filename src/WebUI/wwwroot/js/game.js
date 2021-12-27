@@ -6,6 +6,7 @@
 
 
         $self.settings = $.extend({
+            Id: '#divProcessor',
             status: '#status',
             fen: '#fen',
             pgn: '#pgn',
@@ -25,6 +26,12 @@
                 ($self.game.turn() === 'b' && piece.search(/^w/) !== -1)) {
                 return false;
             }
+
+            if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
+                (orientation === 'black' && piece.search(/^w/) !== -1)) {
+                return false;
+            }
+
         }
 
         $self.onDrop = function (source, target) {
@@ -40,7 +47,7 @@
             
             $self.updateStatus();
             var fen = $self.game.fen();
-            $(document).trigger("chess_move", fen);
+            $($self.settings.Id).trigger("chess_move", fen);
         }
 
         $self.onMouseoverSquare = function (square, piece) {
@@ -104,7 +111,12 @@
             $($self.settings.pgn).html($self.game.pgn());
         }
 
-        $(document).once("chess_moved", function (event, message) {
+        $($self.settings.Id).once("chess_init", function (event, message) {
+            $($self.settings.status).html(message);
+            $self.board.orientation(message);
+        });
+
+        $($self.settings.Id).once("chess_moved", function (event, message) {
             $self.game.load(message);
             $self.board.position(message);
             //$self.updateStatus();

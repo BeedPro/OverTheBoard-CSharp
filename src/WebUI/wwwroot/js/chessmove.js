@@ -2,40 +2,47 @@
     $.fn.chessmove = function (options) {
         var $self = $(this);
 
-        $self.settings = $.extend({}, options);
+        $self.settings = $.extend({Id: '#divProcessor'}, options);
+        $self.control = $($self.settings.Id);
 
         $self.connection = new signalR.HubConnectionBuilder().withUrl("/piece-move").build();
-
-        $self.connection.on("Receive", function (user, message) {
-            $(document).trigger("chess_moved", message);
-        });
-
-
         $self.connection.start()
             .then(function () {
-                $('#connectionId').html($self.connection.connectionId);
+                $($self.settings.Id).show();
+            })
+            .then(function () {
+
+                var obj = {
+                    GameId: $self.control.data("instance-id"),
+                    type: $self.control.data("type"),
+                    connectionId: $self.connection.connectionId
+                };
+
+                $self.connection.invoke("Initialise", obj).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
             })
             .catch(function (err) {
+                $($self.settings.Id).show();
                 return console.error(err.toString());
             });
 
-        $(document).once("chess_move", function (event, message) {
+        $self.connection.on("Receive", function (user, message) {
+            $($self.settings.Id).trigger("chess_moved", message);
+        });
+
+        $($self.settings.Id).once("chess_move", function (event, message) {
             $self.connection.invoke("Send", "user", message).catch(function (err) {
                 return console.error(err.toString());
             });
         });
 
-        $self.connection.on("Registered", function (message) {
-            $('#connectionId').html(message);
+        $self.connection.on("Initialised", function (message) {
+            $($self.settings.Id).trigger("chess_init", message);
+            $($self.settings.Id).hide();
         });
 
-
-        $('#clickButton').click(function () {
-
-            $self.connection.invoke("Register", "Annoor is good programmer!!!").catch(function (err) {
-                return console.error(err.toString());
-            })
-        });
 
         return this;
     };
