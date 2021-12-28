@@ -45,8 +45,8 @@ namespace OverTheBoard.WebUI.Controllers
             return RedirectToAction("Game", new { sessionId = Guid.NewGuid().ToString(), type = GameType.Unranked.ToString().ToLower()});
         }
 
-        [HttpGet("game/{sessionId}/{type}")]
-        public IActionResult Game(string sessionId, GameType type)
+        [HttpGet("game/{sessionId}")]
+        public IActionResult Game(string sessionId)
         {
             return View();
         }

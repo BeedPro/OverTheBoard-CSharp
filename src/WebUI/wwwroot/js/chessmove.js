@@ -28,18 +28,18 @@
                 return console.error(err.toString());
             });
 
-        $self.connection.on("Receive", function (user, message) {
-            $($self.settings.Id).trigger("chess_moved", message);
+        $self.connection.on("Receive", function (move) {
+            $($self.settings.Id).trigger("chess_moved", move);
         });
 
-        $($self.settings.Id).once("chess_move", function (event, message) {
-            $self.connection.invoke("Send", "user", message).catch(function (err) {
+        $($self.settings.Id).once("chess_move", function (event, move) {
+            $self.connection.invoke("Send", move).catch(function (err) {
                 return console.error(err.toString());
             });
         });
 
-        $self.connection.on("Initialised", function (message) {
-            $($self.settings.Id).trigger("chess_init", message);
+        $self.connection.on("Initialised", function (move) {
+            $($self.settings.Id).trigger("chess_init", move);
             $($self.settings.Id).hide();
         });
 
@@ -47,3 +47,7 @@
         return this;
     };
 }(jQuery));
+
+$(function () {
+    $.fn.chessmove();
+});

@@ -2,15 +2,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using OverTheBoard.Infrastructure.Queueing;
+using OverTheBoard.ObjectModel;
 
 namespace OverTheBoard.WebUI.SignalR
 {
     public class QueueHub : Hub
     {
-        public async Task Send(string user, string message)
+        private readonly IUnrankedGameQueue _gameQueue;
+        private readonly IGameService _gameService;
+
+        public QueueHub(IUnrankedGameQueue gameQueue, IGameService gameService)
         {
-            await Clients.Others.SendAsync("Receive", user, message);
+            _gameQueue = gameQueue;
+            _gameService = gameService;
+        }
+        public async Task Queue(string connectionId)
+        {
+            var queueItems = _gameQueue.GetQueueGame(new UnrankedGameQueueItem()
+                {UserId = GetUserId(), ConnectionId = connectionId});
+
+            if (queueItems?.Count == 2)
+            {
+                var gameId = Guid.NewGuid().ToString();
+                await _gameService.CreateGameAsync(gameId, queueItems);
+
+                foreach (UnrankedGameQueueItem item in queueItems)
+                {
+                    await Clients.Client(item.ConnectionId).SendAsync("Play", gameId);
+                }
+                
+            }
+        }
+
+        private string GetUserId()
+        {
+            return Context.User
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
     }
 }

@@ -6,8 +6,8 @@
 
         $self.connection = new signalR.HubConnectionBuilder().withUrl("/queue").build();
 
-        $self.connection.on("Receive", function (user, message) {
-            $(document).trigger("queue_user", message);
+        $self.connection.on("Play", function (message) {
+            window.location = "/play/game/" + message;
         });
 
 
@@ -19,12 +19,17 @@
                 return console.error(err.toString());
             });
 
-        $(document).once("queue_user", function (event, message) {
-            $self.connection.invoke("Send", "user", message).catch(function (err) {
+        $('#btnQueue').click(function (event) {
+            $self.connection.invoke("Queue", $self.connection.connectionId).catch(function (err) {
                 return console.error(err.toString());
             });
+            $('#divProgress').show();
+            event.preventDefault();
         });
-
         return this;
     };
 }(jQuery));
+
+$(function () {
+    $.fn.queueuser();
+});

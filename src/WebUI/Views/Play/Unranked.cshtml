@@ -7,6 +7,21 @@
 <header id="gtco-header" class="gtco-cover" role="banner">
     <div class="text-center center-play-index">
         <h3>You are not ranked into a season at this point in time but you may still play with other players who are unranked</h3>
-        <a asp-controller="Play" asp-action="StartUnranked" class="btn btn-white" type="button">Play</a>
+        <a id="btnQueue" class="btn btn-white" type="button">Play</a>
+        <div id="divProgress" style="display: none;">
+            <div class="loading"></div>
+            <div class="loading-text">Waiting for player to join... </div>
+        </div>
     </div>
 </header>
+
+
+
+@section scripts {
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/queue.js"></script>
+}
+
+@section styles{
+    <link href="~/css/style-game.css" rel="stylesheet" />
+}

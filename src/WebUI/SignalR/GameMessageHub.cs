@@ -11,32 +11,41 @@ namespace OverTheBoard.WebUI.SignalR
 {
     public class GameMessageHub : Hub
     {
-        private readonly IQueueSelector _queueSelector;
+        private readonly IGameService _gameService;
 
-        public GameMessageHub(IQueueSelector queueSelector)
+        public GameMessageHub(IGameService gameService)
         {
-            _queueSelector = queueSelector;
+            _gameService = gameService;
         }
 
 
         public async Task Initialise(InitialisationMessage initialisationMessage)
         {
             var userId = GetUserId();
-            var players = _queueSelector.GetQueue(initialisationMessage.Type).GetQueueGame(userId, initialisationMessage);
+            await _gameService.UpdateConnectionAsync(userId, initialisationMessage.GameId, initialisationMessage.ConnectionId);
+            var players = await _gameService.GetPlayersAsync(initialisationMessage.GameId);
             if (players != null)
             {
-                foreach (var player in players)
+                foreach (var player in players.Players)
                 {
-                    await Clients.Client(player.ConnectionId).SendAsync("Initialised", $"{player.Colour}");
+                    var chessMove = new ChessMove(){ Colour = player.Colour};
+                    if (player.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        chessMove.Fen = players.Fen;
+                    }
+
+                    await Clients.Client(player.ConnectionId).SendAsync("Initialised", chessMove);
                 }
 
             }
         }
 
         
-        public async Task Send(string user, string message)
+        public async Task Send(ChessMove move)
         {
-            await Clients.Others.SendAsync("Receive", user, message);
+            var userId = GetUserId();
+            var clientId = await _gameService.MoveAsync(userId, move);
+            await Clients.Client(clientId).SendAsync("Receive", move);
         }
 
         private string GetUserId()
@@ -46,4 +55,5 @@ namespace OverTheBoard.WebUI.SignalR
         }
     }
 
+    
 }

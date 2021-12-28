@@ -14,6 +14,7 @@
             blackSquareGrey: '#696969'
         }, options);
 
+        $self.control = $($self.settings.Id);
         $self.board = null;
         $self.game = new Chess();
 
@@ -46,8 +47,8 @@
 
             
             $self.updateStatus();
-            var fen = $self.game.fen();
-            $($self.settings.Id).trigger("chess_move", fen);
+            var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id") };
+            $($self.settings.Id).trigger("chess_move", move);
         }
 
         $self.onMouseoverSquare = function (square, piece) {
@@ -111,14 +112,18 @@
             $($self.settings.pgn).html($self.game.pgn());
         }
 
-        $($self.settings.Id).once("chess_init", function (event, message) {
-            $($self.settings.status).html(message);
-            $self.board.orientation(message);
+        $($self.settings.Id).once("chess_init", function (event, move) {
+            $($self.settings.status).html(move.colour);
+            $self.board.orientation(move.colour);
+            if (move.fen) {
+                $self.game.load(move.fen);
+                $self.board.position(move.fen);
+            }
         });
 
-        $($self.settings.Id).once("chess_moved", function (event, message) {
-            $self.game.load(message);
-            $self.board.position(message);
+        $($self.settings.Id).once("chess_moved", function (event, move) {
+            $self.game.load(move.fen);
+            $self.board.position(move.fen);
             //$self.updateStatus();
         });
 
@@ -147,6 +152,5 @@
 
 $(function () {
     $.fn.play();
-    $.fn.chessmove();
 });
 

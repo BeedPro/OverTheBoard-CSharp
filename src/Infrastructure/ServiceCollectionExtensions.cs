@@ -18,8 +18,11 @@ namespace OverTheBoard.Infrastructure
         public static IServiceCollection AddQueueing(
             this IServiceCollection services)
         {
-            services.AddSingleton<IGameQueue, UnrankedGameQueue>();
+            services.AddSingleton<IUnrankedGameQueue, UnrankedGameQueue>();
+
             services.AddScoped<IQueueSelector, QueueSelector>();
+
+            services.AddSingleton<IGameService, GameService>();
 
             return services;
         }
