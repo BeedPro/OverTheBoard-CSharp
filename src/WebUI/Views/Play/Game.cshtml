@@ -1,4 +1,6 @@
 ﻿@using OverTheBoard.WebUI.Extensions
+@model OverTheBoard.WebUI.Models.GameViewModel
+
 <header id="gtco-header" class="gtco-cover" role="banner">
     <div class="container-fluid">
         <div class="row">
@@ -19,7 +21,7 @@
                     <div class="col-md-12 ">
                         <div>
                             <h3>
-                                Player One
+                                @Model.OpponentDisplayName
                             </h3>
                         </div>
                     </div>
@@ -33,7 +35,7 @@
                 <div class="row">
                     <div class="col-md-12 margin-top-300">
                         <h3>
-                            Player Two
+                            @Model.CurrentDisplayName
                         </h3>
                     </div>
 
@@ -41,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div id="divProcessor" data-instance-id="@Url.GetRoute("sessionId")" data-type="@Url.GetRoute("type")">
+    <div id="divProcessor" data-instance-id="@Url.GetRoute("gameId")" data-type="@Url.GetRoute("type")">
         <div class="loading"></div>
         <div class="loading-text">Waiting for player to join... </div>
     </div>

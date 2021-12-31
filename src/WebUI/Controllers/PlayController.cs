@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.WebUI.SignalR;
+using OverTheBoard.Infrastructure.Queueing;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using OverTheBoard.WebUI.Models;
 
 namespace OverTheBoard.WebUI.Controllers
 {
@@ -17,10 +21,13 @@ namespace OverTheBoard.WebUI.Controllers
     public class PlayController : Controller
     {
         private readonly IHubContext<GameMessageHub> _gameMessageHubContext;
-
-        public PlayController(IHubContext<GameMessageHub> gameMessageHubContext)
+        private readonly IGameService _gameService;
+        private readonly SecurityDbContext _securityDbContext;
+        public PlayController(IHubContext<GameMessageHub> gameMessageHubContext, IGameService gameService, SecurityDbContext securityDbContext)
         {
             _gameMessageHubContext = gameMessageHubContext;
+            _gameService = gameService;
+            _securityDbContext = securityDbContext;
         }
         public IActionResult Index()
         {
@@ -45,10 +52,21 @@ namespace OverTheBoard.WebUI.Controllers
             return RedirectToAction("Game", new { sessionId = Guid.NewGuid().ToString(), type = GameType.Unranked.ToString().ToLower()});
         }
 
-        [HttpGet("game/{sessionId}")]
-        public IActionResult Game(string sessionId)
+        //TODO Rename sessionId to gameId
+        [HttpGet("game/{gameId}")]
+        public async Task<IActionResult> Game(string gameId)
         {
-            return View();
+            var model = new GameViewModel();
+            var userId = GetUserId();
+            var game =  await _gameService.GetPlayersAsync(gameId);
+            var opponentPlayer = game.Players.FirstOrDefault(e => !e.UserId.Equals(userId));
+            var opponentUser = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.Id == opponentPlayer.UserId);
+            var currentUser = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
+
+            model.CurrentDisplayName = currentUser.DisplayName;
+            model.OpponentDisplayName = opponentUser.DisplayName;
+
+            return View(model);
         }
         
         
@@ -57,6 +75,12 @@ namespace OverTheBoard.WebUI.Controllers
         {
             await _gameMessageHubContext.Clients.All.SendAsync("Registered", $"Instance is {DateTime.Now.ToString()}");
             return Ok(true);
+        }
+
+        private string GetUserId()
+        {
+            return User
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
     }
 
