@@ -4,18 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OverTheBoard.Core.Security.Data;
+using OverTheBoard.Data;
 
-namespace OverTheBoard.Core.Security.Migrations
+namespace OverTheBoard.Data.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    [Migration("20211218144300_AddedDisplayName-Register1")]
-    partial class AddedDisplayNameRegister1
+    [Migration("20220102215448_Initial-Security")]
+    partial class InitialSecurity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("identity")
                 .HasAnnotation("ProductVersion", "5.0.8");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -146,7 +147,7 @@ namespace OverTheBoard.Core.Security.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OverTheBoard.Core.Security.Data.OverTheBoardUser", b =>
+            modelBuilder.Entity("OverTheBoard.Data.Entities.OverTheBoardUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -158,7 +159,15 @@ namespace OverTheBoard.Core.Security.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DisplayImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("DisplayName")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DisplayNameId")
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
@@ -225,7 +234,7 @@ namespace OverTheBoard.Core.Security.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("OverTheBoard.Core.Security.Data.OverTheBoardUser", null)
+                    b.HasOne("OverTheBoard.Data.Entities.OverTheBoardUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -234,7 +243,7 @@ namespace OverTheBoard.Core.Security.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("OverTheBoard.Core.Security.Data.OverTheBoardUser", null)
+                    b.HasOne("OverTheBoard.Data.Entities.OverTheBoardUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -249,7 +258,7 @@ namespace OverTheBoard.Core.Security.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OverTheBoard.Core.Security.Data.OverTheBoardUser", null)
+                    b.HasOne("OverTheBoard.Data.Entities.OverTheBoardUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -258,7 +267,7 @@ namespace OverTheBoard.Core.Security.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("OverTheBoard.Core.Security.Data.OverTheBoardUser", null)
+                    b.HasOne("OverTheBoard.Data.Entities.OverTheBoardUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using OverTheBoard.Core.Security.Data;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OverTheBoard.Data;
+using OverTheBoard.Data.Entities;
 
 namespace OverTheBoard.WebUI.Controllers
 {

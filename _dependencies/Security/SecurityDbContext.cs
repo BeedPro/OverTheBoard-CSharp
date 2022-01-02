@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OverTheBoard.Data.Entities;
 
-namespace OverTheBoard.Core.Security.Data
+namespace OverTheBoard.Data
 {
     public class SecurityDbContext : IdentityDbContext<OverTheBoardUser>
     {
@@ -23,11 +19,14 @@ namespace OverTheBoard.Core.Security.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
 
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.HasDefaultSchema("identity");
         }
+
+
         public DbSet<OverTheBoardUser> OverTheBoardUsers { get; set; }
 
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OverTheBoard.Core.Security.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,7 @@ using OverTheBoard.WebUI.SignalR;
 using OverTheBoard.Infrastructure.Queueing;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using OverTheBoard.Data;
 using OverTheBoard.WebUI.Models;
 
 namespace OverTheBoard.WebUI.Controllers

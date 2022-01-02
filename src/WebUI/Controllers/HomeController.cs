@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OverTheBoard.Core.Security.Data;
+using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 

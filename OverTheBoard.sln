@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6FA96BBE-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.WebUI", "src\WebUI\OverTheBoard.WebUI.csproj", "{A3B6291E-4D63-4BF7-A95D-776EB8A8215D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.Core.Security", "_dependencies\Security\OverTheBoard.Core.Security.csproj", "{99FE5E11-E087-4C1F-9140-134E2456A74C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.Data", "_dependencies\Security\OverTheBoard.Data.csproj", "{99FE5E11-E087-4C1F-9140-134E2456A74C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.Infrastructure", "src\Infrastructure\OverTheBoard.Infrastructure.csproj", "{9F2DE2CA-D047-438F-9F70-30908FA23DE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverTheBoard.ObjectModel", "src\ObjectModel\OverTheBoard.ObjectModel.csproj", "{F0FEED54-C621-40C3-BF4D-E1FA8BCA4FB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.ObjectModel", "src\ObjectModel\OverTheBoard.ObjectModel.csproj", "{F0FEED54-C621-40C3-BF4D-E1FA8BCA4FB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using OverTheBoard.Core.Security.Data;
+using OverTheBoard.Data;
+using OverTheBoard.Data.Entities;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -18,9 +19,12 @@ namespace Microsoft.Extensions.DependencyInjection
             var DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}SecurityDb.db";
 
             services.AddDbContext<SecurityDbContext>(options =>
-                options.UseSqlite(DbPath, b => b.MigrationsAssembly("OverTheBoard.Core.Security")));
+                options.UseSqlite(DbPath, b => b.MigrationsAssembly("OverTheBoard.Data")));
+            
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(DbPath, b => b.MigrationsAssembly("OverTheBoard.Data")));
 
-
+            
             //services.AddAuthentication(o =>
             //    {
             //        o.DefaultScheme = IdentityConstants.ApplicationScheme;

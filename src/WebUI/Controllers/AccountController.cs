@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using OverTheBoard.Core.Security.Data;
+using OverTheBoard.Data;
+using OverTheBoard.Data.Entities;
 using OverTheBoard.WebUI.Models;
 
 namespace OverTheBoard.WebUI.Controllers
