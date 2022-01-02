@@ -13,7 +13,7 @@ namespace OverTheBoard.Data
             : base(options)
         {
             var path = Environment.CurrentDirectory;
-            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}SecurityDb.db";
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
