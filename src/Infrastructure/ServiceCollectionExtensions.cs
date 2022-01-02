@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using OverTheBoard.Infrastructure.Queueing;
+using OverTheBoard.Infrastructure.Services;
 
 namespace OverTheBoard.Infrastructure
 {
@@ -21,6 +22,7 @@ namespace OverTheBoard.Infrastructure
             services.AddSingleton<IUnrankedGameQueue, UnrankedGameQueue>();
 
             services.AddScoped<IQueueSelector, QueueSelector>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddSingleton<IGameService, GameService>();
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
+using OverTheBoard.Data.Repositories;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -38,6 +39,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 })
                 .AddEntityFrameworkStores<SecurityDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(ISecurityRepository<>), typeof(SecurityRepository<>));
 
             return services;
         }

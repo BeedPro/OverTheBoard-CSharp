@@ -12,6 +12,7 @@ using OverTheBoard.Infrastructure.Queueing;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data;
+using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 
 namespace OverTheBoard.WebUI.Controllers
@@ -22,12 +23,14 @@ namespace OverTheBoard.WebUI.Controllers
     {
         private readonly IHubContext<GameMessageHub> _gameMessageHubContext;
         private readonly IGameService _gameService;
-        private readonly SecurityDbContext _securityDbContext;
-        public PlayController(IHubContext<GameMessageHub> gameMessageHubContext, IGameService gameService, SecurityDbContext securityDbContext)
+        private readonly IUserService _userService;
+
+        public PlayController(IHubContext<GameMessageHub> gameMessageHubContext, IGameService gameService,
+            IUserService userService)
         {
             _gameMessageHubContext = gameMessageHubContext;
             _gameService = gameService;
-            _securityDbContext = securityDbContext;
+            _userService = userService;
         }
         public IActionResult Index()
         {
@@ -60,8 +63,8 @@ namespace OverTheBoard.WebUI.Controllers
             var userId = GetUserId();
             var game =  await _gameService.GetPlayersAsync(gameId);
             var opponentPlayer = game.Players.FirstOrDefault(e => !e.UserId.Equals(userId));
-            var opponentUser = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.Id == opponentPlayer.UserId);
-            var currentUser = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
+            var opponentUser = await _userService.GetUserAsync(opponentPlayer.UserId);
+            var currentUser = await _userService.GetUserAsync(userId);
 
             model.CurrentDisplayName = currentUser.DisplayName;
             model.OpponentDisplayName = opponentUser.DisplayName;

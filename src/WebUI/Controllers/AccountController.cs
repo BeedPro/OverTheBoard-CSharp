@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
+using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 
 namespace OverTheBoard.WebUI.Controllers
@@ -18,19 +19,19 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly SignInManager<OverTheBoardUser> _signInManager;
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly ILogger<AccountController> _logger;
-        private readonly SecurityDbContext _securityDbContext;
+        private readonly IUserService _userService;
 
         public AccountController(
             SignInManager<OverTheBoardUser> signInManager,
             UserManager<OverTheBoardUser> userManager,
             ILogger<AccountController> logger,
-            SecurityDbContext securityDbContext
+            IUserService userService
             )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
-            _securityDbContext = securityDbContext;
+            _userService = userService;
         }
         [HttpGet]
         public IActionResult Login()
@@ -143,12 +144,12 @@ namespace OverTheBoard.WebUI.Controllers
             {
                 number = random.Next(0, 9999).ToString().PadLeft(4, '0');
             }
-            var user = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.DisplayName == displayName && e.DisplayNameId == number);
+            var user = await _userService.GetUserDisplayNameAndyNameIdAsync(displayName, number);
 
             while ( user != null)
             {
                 number = random.Next(0, 9999).ToString().PadLeft(4, '0');
-                user = await _securityDbContext.Users.FirstOrDefaultAsync(e => e.DisplayName == displayName && e.DisplayNameId == number);
+                user = await _userService.GetUserDisplayNameAndyNameIdAsync(displayName, number);
             }
             return Tuple.Create(displayName, number);
         }
