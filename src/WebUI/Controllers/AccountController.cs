@@ -39,7 +39,7 @@ namespace OverTheBoard.WebUI.Controllers
             // Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
-                return LocalRedirect("~/Dashboard");
+                return LocalRedirect("~/dashboard");
             }
             return View();
         }
@@ -50,7 +50,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            returnUrl ??= Url.Content("~/Dashboard/");
+            returnUrl ??= Url.Content("~/dashboard/");
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.EmailAddress) ?? await _userManager.FindByNameAsync(model.EmailAddress);
@@ -82,7 +82,7 @@ namespace OverTheBoard.WebUI.Controllers
             //Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
-                return LocalRedirect("~/Dashboard");
+                return LocalRedirect("~/dashboard");
             }
             return View(new RegistrationViewModel());
         }
@@ -160,7 +160,7 @@ namespace OverTheBoard.WebUI.Controllers
             //Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
-                return LocalRedirect("~/Dashboard");
+                return LocalRedirect("~/dashboard");
             }
             return View();
         }
@@ -171,7 +171,7 @@ namespace OverTheBoard.WebUI.Controllers
             //Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
-                return LocalRedirect("~/Dashboard");
+                return LocalRedirect("~/dashboard");
             }
             return View();
         }
