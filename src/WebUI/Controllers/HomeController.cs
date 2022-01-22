@@ -29,14 +29,10 @@ namespace OverTheBoard.WebUI.Controllers
             // Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
-                return LocalRedirect("~/Dashboard");
+                return LocalRedirect("~/dashboard");
             }
             return View();
-        }
-        public IActionResult Temp()
-        {
-            return View();
-        }      
+        }    
 
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
