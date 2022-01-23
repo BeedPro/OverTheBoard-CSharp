@@ -29,12 +29,13 @@
 }
 
 .loading-black {
-    position: fixed !important;
-    left: -5% !important;
-    top: 5% !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 9998 !important;
-    background: url(../images/loader.gif) center no-repeat #fff !important;
+    position: fixed;
+    left: -5%;
+    top: 5%;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    background: url(../images/loader.gif) center no-repeat #000;
+    background-color: black;
     /*border: 1px solid;*/
 }
