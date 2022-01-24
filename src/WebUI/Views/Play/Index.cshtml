@@ -9,8 +9,10 @@
         <h3>RANK</h3>
         <a href="#" id="btnQueue" class="btn btn-white" type="button"> Play Chess </a><br />
         <div id="divProgress" style="display: none;">
-            <div class="loading"></div>
-            <div class="loading-text">Waiting for player to join... </div>
+            <div class="loader-wrapper">
+                <div class="loader-box"></div>
+                <div class="loader-box-text">Waiting for player to join... </div>
+            </div>
         </div>
         <a asp-controller="Play" asp-action="Brackets" class="btn btn-white" type="button">League Games</a>
     </div>
