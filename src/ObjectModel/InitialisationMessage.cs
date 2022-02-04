@@ -14,6 +14,7 @@ namespace OverTheBoard.ObjectModel
     {
         public string GameId { get; set; }
         public string Fen { get; set; }
+        public string Pgn { get; set; }
         public string Colour { get; set; }
     }
 
@@ -34,6 +35,7 @@ namespace OverTheBoard.ObjectModel
         public string GameId { get; set; }
         public List<GamePlayer> Players { get; set; }
         public string Fen { get; set; }
+        public string Pgn { get; set; }
 
     }
 
