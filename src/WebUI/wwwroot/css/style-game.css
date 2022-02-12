@@ -117,3 +117,27 @@
         height: 0%;
     }
 }
+
+/* Style for gameTimer*/
+#player1clock {
+    color: white;
+}
+
+#player2clock {
+    color: white;
+}
+
+.now_playing {
+    border-bottom: .2em solid #aa0000;
+}
+
+#info {
+    font-size: 80%;
+    color: #AA0000;
+    text-align: center;
+    width: 100%;
+}
+
+.hidden {
+    visibility: hidden;
+}

@@ -1,39 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Temp";
-    Layout = "_Layout";
 }
 
-<!-- Display the countdown timer in an element -->
-<p id="demo"></p>
+    <div id="gameTimer" style="width:50px;">
+        <div id='info' class='hidden'>-</div>
+        <div id='player1clock'>0</div>
+        <div id='player2clock'>0</div>
+    </div>
 
-<script>
-    // Set the date we're counting down to
-    var countDownDate = new Date("Jan 23, 2022 15:37:25").getTime();
+    <div><button id="white" style="color:black">White</button></div>
+    <div><button id="black" style="color:black">Black</button></div>
 
-    // Update the count down every 1 second
-    var x = setInterval(function () {
+@section scripts {
+    <script src="~/js/gameTimer.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#white').click(function () {
+                $('#gameTimer').trigger('change_colour', "w");
+            });
+            $('#black').click(function () {
+                $('#gameTimer').trigger('change_colour', "b");
+            });
+        });
+    </script>
+}
 
-        // Get today's date and time
-        var now = new Date().getTime();
+@section styles{
+    <link href="~/css/style-game.css" rel="stylesheet" />
 
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the element with id="demo"
-        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
-        }
-    }, 1000);
-</script>
-
+}
