@@ -2,7 +2,7 @@
     $.fn.chessmove = function (options) {
         var $self = $(this);
 
-        $self.settings = $.extend({Id: '#divProcessor'}, options);
+        $self.settings = $.extend({ Id: '#checkConnection'}, options);
         $self.control = $($self.settings.Id);
 
         $self.connection = new signalR.HubConnectionBuilder().withUrl("/piece-move").build();
@@ -36,6 +36,9 @@
             $self.connection.invoke("Send", move).catch(function (err) {
                 return console.error(err.toString());
             });
+
+            $($self.settings.Id).trigger('change_colour', move.playerColour);
+
         });
 
         $self.connection.on("Initialised", function (move) {

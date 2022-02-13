@@ -6,7 +6,7 @@
 
 
         $self.settings = $.extend({
-            Id: '#divProcessor',
+            Id: '#checkConnection',
             status: '#status',
             fen: '#fen',
             pgn: '#pgn',
@@ -47,7 +47,7 @@
 
             
             $self.updateStatus();
-            var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id") };
+            var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: $self.game.turn() };
             $($self.settings.Id).trigger("chess_move", move);
         }
 
@@ -124,6 +124,7 @@
         $($self.settings.Id).once("chess_moved", function (event, move) {
             $self.game.load(move.fen);
             $self.board.position(move.fen);
+            $($self.settings.Id).trigger('change_colour', $self.game.turn());
             //$self.updateStatus();
         });
 

@@ -3,7 +3,13 @@
     $.fn.gameTimer = function (options) {
         var $self = $(this);
 
-        $self.initial_time = 10 * 60 * 15;
+
+        $self.settings = $.extend({
+            initial_time : 10 * 60 * 15,
+            player1css : 'player1clock',
+            player2css : 'player2clock'
+        }, options);
+
         $self.gameTimer = null;
         $self.formatTime = function (tenths) {
             var minutes = String(Math.floor(tenths / 600));
@@ -45,8 +51,8 @@
 
         var GameTimer = function (initial_time, info_id, p1_clock_id, p2_clock_id) {
             this.info = document.getElementById(info_id);
-            this.player1 = new Player(p1_clock_id, $self.initial_time, this);
-            this.player2 = new Player(p2_clock_id, $self.initial_time, this);
+            this.player1 = new Player(p1_clock_id, initial_time, this);
+            this.player2 = new Player(p2_clock_id, initial_time, this);
             this.player1.opponent = this.player2;
             this.player2.opponent = this.player1;
             this.timer_loop = null;
@@ -79,11 +85,11 @@
             }
         }
 
-        $('#gameTimer').once("change_colour", function (event, playerColour) {
+        $(this).once("change_colour", function (event, playerColour) {
             gameTimer.changePlay(playerColour);
         });
 
-        gameTimer = new GameTimer($self.initial_time, 'info', 'player1clock', 'player2clock');
+        gameTimer = new GameTimer($self.settings.initial_time, 'info', $self.settings.player1css, $self.settings.player2css);
         gameTimer.resetClocks();
         return this;
     }

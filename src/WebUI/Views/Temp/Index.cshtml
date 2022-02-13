@@ -7,7 +7,7 @@
         <div id='player1clock'>0</div>
         <div id='player2clock'>0</div>
     </div>
-
+    
     <div><button id="white" style="color:black">White</button></div>
     <div><button id="black" style="color:black">Black</button></div>
 
@@ -15,11 +15,18 @@
     <script src="~/js/gameTimer.js"></script>
     <script>
         $(document).ready(function () {
+
             $('#white').click(function () {
                 $('#gameTimer').trigger('change_colour', "w");
             });
             $('#black').click(function () {
                 $('#gameTimer').trigger('change_colour', "b");
+            });
+
+            $('#gameTimer').gameTimer({
+                initial_time: 10,
+                player1css: 'player1clock',
+                player2css: 'player2clock'
             });
         });
     </script>
