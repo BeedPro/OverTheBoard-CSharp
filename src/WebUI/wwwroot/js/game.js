@@ -45,9 +45,19 @@
             // illegal move
             if (move === null) return 'snapback';
 
+            var playerColour = '';
+            if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
+                playerColour = 'w';
+            }
+            else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
+                playerColour = 'b';
+            } else {
+                playerColour = $self.game.turn();
+            }
+
             
             $self.updateStatus();
-            var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: $self.game.turn() };
+            var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: playerColour };
             $($self.settings.Id).trigger("chess_move", move);
         }
 
@@ -124,7 +134,16 @@
         $($self.settings.Id).once("chess_moved", function (event, move) {
             $self.game.load(move.fen);
             $self.board.position(move.fen);
-            $($self.settings.Id).trigger('change_colour', $self.game.turn());
+
+            if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
+                $($self.settings.Id).trigger('change_colour', 'w');
+            }
+            else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
+                $($self.settings.Id).trigger('change_colour', 'b');
+            } else {
+                $($self.settings.Id).trigger('change_colour', $self.game.turn());
+            }
+            
             //$self.updateStatus();
         });
 
@@ -139,7 +158,6 @@
         };
 
         $self.board = Chessboard('myBoard', config);
-
         return this;
     };
 
