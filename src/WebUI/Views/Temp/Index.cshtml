@@ -2,37 +2,113 @@
     ViewData["Title"] = "Temp";
 }
 
-    <div id="gameTimer" style="width:50px;">
-        <div id='info' class='hidden'>-</div>
-        <div id='player1clock'>0</div>
-        <div id='player2clock'>0</div>
-    </div>
-    
-    <div><button id="white" style="color:black">White</button></div>
-    <div><button id="black" style="color:black">Black</button></div>
+<div id="myBoard" style="width: 400px"></div>
+
 
 @section scripts {
-    <script src="~/js/gameTimer.js"></script>
-    <script>
-        $(document).ready(function () {
+    <script src="https://unpkg.com/@@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js" integrity="sha384-8Vi8VHwn3vjQ9eUHUxex3JSN/NFqUg3QbPyX8kWyb93+8AC/pPWTzj+nHtbC5bxD" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js" integrity="sha384-s3XgLpvmHyscVpijnseAmye819Ee3yaGa8NxstkJVyA6nuDFjt59u1QvuEl/mecz" crossorigin="anonymous"></script>    
+<script>
 
-            $('#white').click(function () {
-                $('#gameTimer').trigger('change_colour', "w");
-            });
-            $('#black').click(function () {
-                $('#gameTimer').trigger('change_colour', "b");
-            });
+        var board = null
+        var $board = $('#myBoard')
+        var game = new Chess()
+        var squareToHighlight = null
+        var squareClass = 'square-55d63'
 
-            $('#gameTimer').gameTimer({
-                initial_time: 10,
-                player1css: 'player1clock',
-                player2css: 'player2clock'
-            });
-        });
+        function removeHighlights() {
+            $board.find('.' + squareClass)
+                .removeClass('highlight')
+        }
+
+        function onDragStart(source, piece, position, orientation) {
+            // do not pick up pieces if the game is over
+            if (game.game_over()) return false
+
+            // only pick up pieces for White
+            if (piece.search(/^b/) !== -1) return false
+        }
+
+        function makeRandomMove() {
+            var possibleMoves = game.moves({
+                verbose: true
+            })
+
+            // game over
+            if (possibleMoves.length === 0) return
+
+            var randomIdx = Math.floor(Math.random() * possibleMoves.length)
+            var move = possibleMoves[randomIdx]
+            game.move(move.san)
+
+            // highlight black's move
+            removeHighlights()
+            $board.find('.square-' + move.from).addClass('highlight')
+            squareToHighlight = move.to
+
+            // update the board to the new position
+            board.position(game.fen())
+        }
+
+        function onDrop(source, target) {
+            // see if the move is legal
+            var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            })
+
+            // illegal move
+            if (move === null) return 'snapback'
+
+            // highlight white's move
+            removeHighlights()
+            //$board.find('.square-' + source).attr('class').includes('black')
+
+            if ($board.find('.square-' + source).attr('class').includes('black')) {
+
+
+                pass
+            }
+
+
+            $board.find('.square-' + source).addClass('highlight')
+            $board.find('.square-' + target).addClass('highlight')
+
+            // make random move for black
+            window.setTimeout(makeRandomMove, 500)
+        }
+
+        function onMoveEnd() {
+            $board.find('.square-' + squareToHighlight)
+                .addClass('highlight')
+        }
+
+        // update the board position after the piece snap
+        // for castling, en passant, pawn promotion
+        function onSnapEnd() {
+            board.position(game.fen())
+        }
+
+        var config = {
+            draggable: true,
+            pieceTheme: '/img/chesspieces/merida/{piece}.svg',
+            position: 'start',
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onMoveEnd: onMoveEnd,
+            onSnapEnd: onSnapEnd
+        }
+        var board = Chessboard('myBoard', config)
     </script>
 }
 
 @section styles{
-    <link href="~/css/style-game.css" rel="stylesheet" />
-
+    <style type="text/css">
+        .highlight {
+            box-shadow: inset 0 0 3px 3px #c3d887;
+        }
+    </style>
+    <!-- Chessboard.js-->
+    <link rel="stylesheet" href="~/lib/chessboard/css/chessboard-1.0.0.css">
 }
