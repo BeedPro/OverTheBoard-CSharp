@@ -1,5 +1,8 @@
 /*! chessboard.js v1.0.0 | (c) 2019 Chris Oakman | MIT License chessboardjs.com/license */
-
+:root {
+    --white: #dee3e6; /*#f0d9b5*/
+    --black: #8ca2ad; /*#b58863*/
+}
 .clearfix-7da63 {
   clear: both;
 }
@@ -23,13 +26,13 @@
 }
 
 .white-1e1d7 {
-  background-color: #f0d9b5;
-  color: #b58863;
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .black-3c85d {
-  background-color: #b58863;
-  color: #f0d9b5;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .highlight1-32417, .highlight2-9c5d2 {

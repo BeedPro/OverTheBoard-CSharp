@@ -10,7 +10,7 @@
                     <div class="display-tc no-top-padding">
                         <div class="row">
                             <div class="col-md-7 text-center header-img animate-box">
-                                <img src="/images/cube-large.png" class="img-responsive" alt="Chess pic">
+                                <div class="img-responsive" id="myBoard"></div>
                             </div>
                             <div class="col-md-5 copy animate-box">
                                 <h1>OverTheBoard</h1>
@@ -20,7 +20,7 @@
                                     <p><a asp-controller="Account" asp-action="Register" class="btn btn-white btn-block">Register</a></p>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -28,3 +28,20 @@
         </div>
     </div>
 </header>
+
+@section scripts {
+    <script src="https://unpkg.com/@@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js" integrity="sha384-8Vi8VHwn3vjQ9eUHUxex3JSN/NFqUg3QbPyX8kWyb93+8AC/pPWTzj+nHtbC5bxD" crossorigin="anonymous"></script>
+    <script>
+        var config = {
+            pieceTheme: '/img/chesspieces/merida/{piece}.svg',
+            position: 'start'
+        }
+        var board = Chessboard('myBoard', config)
+    </script>
+
+}
+
+@section styles{
+    <!-- Chessboard.js-->
+    <link rel="stylesheet" href="~/lib/chessboard/css/chessboard-1.0.0.css">
+}

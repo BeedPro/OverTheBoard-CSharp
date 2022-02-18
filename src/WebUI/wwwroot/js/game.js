@@ -149,6 +149,7 @@
 
         var config = {
             draggable: true,
+            pieceTheme: '/img/chesspieces/merida/{piece}.svg',
             position: 'start',
             onDragStart: $self.onDragStart,
             onDrop: $self.onDrop,
