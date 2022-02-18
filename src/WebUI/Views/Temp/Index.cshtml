@@ -7,8 +7,8 @@
 
 @section scripts {
     <script src="https://unpkg.com/@@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js" integrity="sha384-8Vi8VHwn3vjQ9eUHUxex3JSN/NFqUg3QbPyX8kWyb93+8AC/pPWTzj+nHtbC5bxD" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js" integrity="sha384-s3XgLpvmHyscVpijnseAmye819Ee3yaGa8NxstkJVyA6nuDFjt59u1QvuEl/mecz" crossorigin="anonymous"></script>    
-<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js" integrity="sha384-s3XgLpvmHyscVpijnseAmye819Ee3yaGa8NxstkJVyA6nuDFjt59u1QvuEl/mecz" crossorigin="anonymous"></script>
+    <script>
 
         var board = null
         var $board = $('#myBoard')
@@ -18,36 +18,73 @@
 
         function removeHighlights() {
             $board.find('.' + squareClass)
-                .removeClass('highlight')
+                .removeClass('highlight-white')
+            $board.find('.' + squareClass)
+                .removeClass('highlight-black')
+        }
+
+        function addHighlights(source, target) {
+            removeHighlights()
+            if ($board.find('.square-' + source).attr('class').includes('black')) {
+                $board.find('.square-' + source).addClass('highlight-black')
+            }
+            else {
+                $board.find('.square-' + source).addClass('highlight-white')
+            }
+            if (target != null) {
+                if ($board.find('.square-' + target).attr('class').includes('black')) {
+                    $board.find('.square-' + target).addClass('highlight-black')
+                }
+                else {
+                    $board.find('.square-' + target).addClass('highlight-white')
+                }
+            }
+        }
+
+        //---------------------------------------------
+        //function onMouseoverSquare(square, piece) {
+        //    // get list of possible moves for this square
+        //    var moves = game.moves({
+        //        square: square,
+        //        verbose: true
+        //    })
+        //    console.log(square)
+        //}
+        //----------------------------------------------
+
+        function greySquare(square) {
+            var $square = $('#myBoard .square-' + square)
+
+            var dot = 'inset 0 0 5px 5px #7caff7'
+            if ($square.hasClass('black-3c85d')) {
+                dot = 'inset 0 0 5px 5px #6299e6'
+            }
+
+            $square.css('box-shadow', dot)
+        }
+
+        function removeGreySquares() {
+            $('#myBoard .square-55d63').css('box-shadow', '')
         }
 
         function onDragStart(source, piece, position, orientation) {
             // do not pick up pieces if the game is over
             if (game.game_over()) return false
-
-            // only pick up pieces for White
-            if (piece.search(/^b/) !== -1) return false
-        }
-
-        function makeRandomMove() {
-            var possibleMoves = game.moves({
+            addHighlights(source, null)
+            removeGreySquares()
+            var moves = game.moves({
+                square: source,
                 verbose: true
             })
+            if (moves.length === 0) return
 
-            // game over
-            if (possibleMoves.length === 0) return
+            // highlight the square they moused over
+            greySquare(source)
 
-            var randomIdx = Math.floor(Math.random() * possibleMoves.length)
-            var move = possibleMoves[randomIdx]
-            game.move(move.san)
-
-            // highlight black's move
-            removeHighlights()
-            $board.find('.square-' + move.from).addClass('highlight')
-            squareToHighlight = move.to
-
-            // update the board to the new position
-            board.position(game.fen())
+            // highlight the possible squares for this piece
+            for (var i = 0; i < moves.length; i++) {
+                greySquare(moves[i].to)
+            }
         }
 
         function onDrop(source, target) {
@@ -62,21 +99,7 @@
             if (move === null) return 'snapback'
 
             // highlight white's move
-            removeHighlights()
-            //$board.find('.square-' + source).attr('class').includes('black')
-
-            if ($board.find('.square-' + source).attr('class').includes('black')) {
-
-
-                pass
-            }
-
-
-            $board.find('.square-' + source).addClass('highlight')
-            $board.find('.square-' + target).addClass('highlight')
-
-            // make random move for black
-            window.setTimeout(makeRandomMove, 500)
+            addHighlights(source, target)
         }
 
         function onMoveEnd() {
@@ -92,7 +115,7 @@
 
         var config = {
             draggable: true,
-            pieceTheme: '/img/chesspieces/merida/{piece}.svg',
+            pieceTheme: '/img/chesspieces/merida/{piece}.svg', //merida
             position: 'start',
             onDragStart: onDragStart,
             onDrop: onDrop,
@@ -105,8 +128,12 @@
 
 @section styles{
     <style type="text/css">
-        .highlight {
-            box-shadow: inset 0 0 3px 3px #c3d887;
+        .highlight-white {
+            box-shadow: inset 0 0 50px 50px #7caff7;
+        }
+
+        .highlight-black {
+            box-shadow: inset 0 0 50px 50px #6299e6;
         }
     </style>
     <!-- Chessboard.js-->
