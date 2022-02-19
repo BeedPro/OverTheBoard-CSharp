@@ -63,6 +63,8 @@
 
         $self.onDragStart = function (source, piece, position, orientation)
         {
+            $self.addHighlights(source, null)
+            $self.removeHighlightMoves()
             if ($self.game.game_over()) return false;
 
             // only pick up pieces for the side to move
@@ -76,8 +78,7 @@
                 return false;
             }
 
-            $self.addHighlights(source, null)
-            $self.removeHighlightMoves()
+           
             var moves = $self.game.moves({
                 square: source,
                 verbose: true
@@ -120,29 +121,6 @@
             var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: playerColour };
             $($self.settings.Id).trigger("chess_move", move);
         }
-
-        //$self.onMouseoverSquare = function (square, piece) {
-        //    // get list of possible moves for this square
-        //    var moves = $self.game.moves({
-        //        square: square,
-        //        verbose: true
-        //    });
-
-        //    // exit if there are no moves available for this square
-        //    if (moves.length === 0) return;
-
-        //    // highlight the square they moused over
-        //    //$self.greySquare(square);
-
-        //    // highlight the possible squares for this piece
-        //    for (var i = 0; i < moves.length; i++) {
-        //        //$self.greySquare(moves[i].to);
-        //    }
-        //}
-
-        //$self.onMouseoutSquare = function (square, piece) {
-        //    //$self.removeGreySquares();
-        //}
 
         $self.onMoveEnd = function () {
             $self.divBoard.find('.square-' + squareToHighlight)
@@ -219,8 +197,6 @@
             onDragStart: $self.onDragStart,
             onDrop: $self.onDrop,
             onMoveEnd: $self.onMoveEnd,
-            //onMouseoutSquare: $self.onMouseoutSquare,
-            //onMouseoverSquare: $self.onMouseoverSquare,
             onSnapEnd: $self.onSnapEnd
         };
 
