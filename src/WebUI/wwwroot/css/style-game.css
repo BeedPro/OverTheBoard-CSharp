@@ -141,3 +141,11 @@
 .hidden {
     visibility: hidden;
 }
+
+.highlight-white {
+    box-shadow: inset 0 0 50px 50px #7caff7;
+}
+
+.highlight-black {
+    box-shadow: inset 0 0 50px 50px #6299e6;
+}

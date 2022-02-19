@@ -25,6 +25,7 @@
 
         function addHighlights(source, target) {
             removeHighlights()
+            console.log($board)
             if ($board.find('.square-' + source).attr('class').includes('black')) {
                 $board.find('.square-' + source).addClass('highlight-black')
             }
@@ -52,7 +53,7 @@
         //}
         //----------------------------------------------
 
-        function greySquare(square) {
+        function addHighlightMoves(square) {
             var $square = $('#myBoard .square-' + square)
 
             var dot = 'inset 0 0 5px 5px #7caff7'
@@ -63,7 +64,7 @@
             $square.css('box-shadow', dot)
         }
 
-        function removeGreySquares() {
+        function removeHighlightMoves() {
             $('#myBoard .square-55d63').css('box-shadow', '')
         }
 
@@ -71,19 +72,17 @@
             // do not pick up pieces if the game is over
             if (game.game_over()) return false
             addHighlights(source, null)
-            removeGreySquares()
+            removeHighlightMoves()
             var moves = game.moves({
                 square: source,
                 verbose: true
             })
             if (moves.length === 0) return
 
-            // highlight the square they moused over
-            greySquare(source)
-
             // highlight the possible squares for this piece
+
             for (var i = 0; i < moves.length; i++) {
-                greySquare(moves[i].to)
+                addHighlightMoves(moves[i].to)
             }
         }
 
@@ -100,6 +99,7 @@
 
             // highlight white's move
             addHighlights(source, target)
+            removeHighlightMoves()
         }
 
         function onMoveEnd() {

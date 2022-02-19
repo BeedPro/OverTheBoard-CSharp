@@ -10,13 +10,56 @@
             status: '#status',
             fen: '#fen',
             pgn: '#pgn',
-            whiteSquareGrey: '#a9a9a9',
-            blackSquareGrey: '#696969'
         }, options);
 
         $self.control = $($self.settings.Id);
         $self.board = null;
+        $self.divBoard = $('#myBoard');
         $self.game = new Chess();
+        $self.squareToHighlight = null;
+        $self.squareClass = 'square-55d63';
+
+        $self.removeHighlights = function () {
+            console.log($self.divBoard);
+            $self.divBoard.find('.' + $self.squareClass)
+                .removeClass('highlight-white')
+            $self.divBoard.find('.' + $self.squareClass)
+                .removeClass('highlight-black')
+        }
+
+        $self.addHighlights = function (source, target) {
+            $self.removeHighlights()
+            
+            if ($self.divBoard.find('.square-' + source).attr('class').includes('black')) {
+                $self.divBoard.find('.square-' + source).addClass('highlight-black')
+            }
+            else {
+                $self.divBoard.find('.square-' + source).addClass('highlight-white')
+            }
+            if (target != null) {
+                if ($self.divBoard.find('.square-' + target).attr('class').includes('black')) {
+                    $self.divBoard.find('.square-' + target).addClass('highlight-black')
+                }
+                else {
+                    $self.divBoard.find('.square-' + target).addClass('highlight-white')
+                }
+            }
+        }
+
+        $self.addHighlightMoves = function (square) {
+            var $square = $('#myBoard .square-' + square)
+
+            var dot = 'inset 0 0 5px 5px #7caff7'
+            if ($square.hasClass('black-3c85d')) {
+                dot = 'inset 0 0 5px 5px #6299e6'
+            }
+
+            $square.css('box-shadow', dot)
+        }
+
+        $self.removeHighlightMoves = function () {
+            $('#myBoard .square-55d63').css('box-shadow', '')
+        }
 
         $self.onDragStart = function (source, piece, position, orientation)
         {
@@ -31,6 +74,20 @@
             if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
                 (orientation === 'black' && piece.search(/^w/) !== -1)) {
                 return false;
+            }
+
+            $self.addHighlights(source, null)
+            $self.removeHighlightMoves()
+            var moves = $self.game.moves({
+                square: source,
+                verbose: true
+            })
+            if (moves.length === 0) return
+
+            // highlight the possible squares for this piece
+
+            for (var i = 0; i < moves.length; i++) {
+                $self.addHighlightMoves(moves[i].to)
             }
 
         }
@@ -55,37 +112,45 @@
                 playerColour = $self.game.turn();
             }
 
-            
+            // highlight white's move
+            $self.addHighlights(source, target)
+            $self.removeHighlightMoves()
+
             $self.updateStatus();
             var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: playerColour };
             $($self.settings.Id).trigger("chess_move", move);
         }
 
-        $self.onMouseoverSquare = function (square, piece) {
-            // get list of possible moves for this square
-            var moves = $self.game.moves({
-                square: square,
-                verbose: true
-            });
+        //$self.onMouseoverSquare = function (square, piece) {
+        //    // get list of possible moves for this square
+        //    var moves = $self.game.moves({
+        //        square: square,
+        //        verbose: true
+        //    });
 
-            // exit if there are no moves available for this square
-            if (moves.length === 0) return;
+        //    // exit if there are no moves available for this square
+        //    if (moves.length === 0) return;
 
-            // highlight the square they moused over
-            //$self.greySquare(square);
+        //    // highlight the square they moused over
+        //    //$self.greySquare(square);
 
-            // highlight the possible squares for this piece
-            for (var i = 0; i < moves.length; i++) {
-                //$self.greySquare(moves[i].to);
-            }
-        }
+        //    // highlight the possible squares for this piece
+        //    for (var i = 0; i < moves.length; i++) {
+        //        //$self.greySquare(moves[i].to);
+        //    }
+        //}
 
-        $self.onMouseoutSquare = function (square, piece) {
-            //$self.removeGreySquares();
+        //$self.onMouseoutSquare = function (square, piece) {
+        //    //$self.removeGreySquares();
+        //}
+
+        $self.onMoveEnd = function () {
+            $self.divBoard.find('.square-' + squareToHighlight)
+                .addClass('highlight');
         }
 
         $self.onSnapEnd = function () {
-            $self.board.position($self.game.fen());
+            $self.divBoard.position($self.game.fen());
         }
 
         $self.updateStatus = function () {
@@ -153,8 +218,9 @@
             position: 'start',
             onDragStart: $self.onDragStart,
             onDrop: $self.onDrop,
-            onMouseoutSquare: $self.onMouseoutSquare,
-            onMouseoverSquare: $self.onMouseoverSquare,
+            onMoveEnd: $self.onMoveEnd,
+            //onMouseoutSquare: $self.onMouseoutSquare,
+            //onMouseoverSquare: $self.onMouseoverSquare,
             onSnapEnd: $self.onSnapEnd
         };
 
