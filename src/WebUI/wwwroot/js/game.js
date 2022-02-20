@@ -63,8 +63,7 @@
 
         $self.onDragStart = function (source, piece, position, orientation)
         {
-            $self.addHighlights(source, null)
-            $self.removeHighlightMoves()
+            
             if ($self.game.game_over()) return false;
 
             // only pick up pieces for the side to move
@@ -77,6 +76,8 @@
                 (orientation === 'black' && piece.search(/^w/) !== -1)) {
                 return false;
             }
+            $self.addHighlights(source, null)
+            $self.removeHighlightMoves()
 
            
             var moves = $self.game.moves({
@@ -186,8 +187,7 @@
             } else {
                 $($self.settings.Id).trigger('change_colour', $self.game.turn());
             }
-            
-            //$self.updateStatus();
+            $self.updateStatus();
         });
 
         var config = {
