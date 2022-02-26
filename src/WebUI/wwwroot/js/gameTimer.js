@@ -38,6 +38,7 @@
                             clearTimeout(gameTimer.timer_loop);
                             gameTimer.gameTimer_over = true;
                             gameTimer.info.innerHTML = 'GAME OVER';
+                            $($self).trigger('gameFlagged');
                             gameTimer.info.className = '';
                         }
                         gameTimer.displayTimers();
@@ -102,5 +103,9 @@
 }(jQuery));
 
 $(function () {
-    $.fn.gameTimer();
+    $('#checkConnection').gameTimer({
+        initial_time: 10,
+        player1css: 'player1clock',
+        player2css: 'player2clock'
+    });
 });

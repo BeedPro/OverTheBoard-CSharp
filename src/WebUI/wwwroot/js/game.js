@@ -16,11 +16,12 @@
         }, options);
 
         $self.control = $($self.settings.Id);
-        $self.board = null;
+        //$self.board = null;
         $self.game = new Chess();
+        $self.gameFlagged = false;
 
         $self.onDragStart = function (source, piece, position, orientation) {
-            if ($self.game.game_over()) return false;
+            if ($self.game.game_over() || $self.gameFlagged) return false;
 
             // only pick up pieces for the side to move
             if (($self.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
@@ -61,22 +62,6 @@
             $($self.settings.Id).trigger("chess_move", move);
         }
 
-        $self.onMouseoverSquare = function (square, piece) {
-            // get list of possible moves for this square
-            var moves = $self.game.moves({
-                square: square,
-                verbose: true
-            });
-
-            // exit if there are no moves available for this square
-            if (moves.length === 0) return;
-
-        }
-
-        $self.onMouseoutSquare = function (square, piece) {
-            //$self.removeGreySquares();
-        }
-
         $self.onSnapEnd = function () {
             $self.board.position($self.game.fen());
         }
@@ -109,7 +94,6 @@
                     status += ', ' + moveColor + ' is in check';
                 }
             }
-
             $($self.settings.status).html(status);
             $($self.settings.fen).html($self.game.fen());
             $($self.settings.pgn).html($self.game.pgn());
@@ -137,7 +121,11 @@
                 $($self.settings.Id).trigger('change_colour', $self.game.turn());
             }
 
-            //$self.updateStatus();
+            $self.updateStatus();
+        });
+
+        $($self.settings.Id).once('gameFlagged', function (event) {
+            $self.gameFlagged = true;
         });
 
         var config = {
@@ -146,8 +134,6 @@
             position: 'start',
             onDragStart: $self.onDragStart,
             onDrop: $self.onDrop,
-            onMouseoutSquare: $self.onMouseoutSquare,
-            onMouseoverSquare: $self.onMouseoverSquare,
             onSnapEnd: $self.onSnapEnd
         };
 
