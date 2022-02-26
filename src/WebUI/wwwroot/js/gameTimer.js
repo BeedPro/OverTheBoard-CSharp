@@ -37,21 +37,17 @@
                         if (opponent.time == 0) {
                             clearTimeout(gameTimer.timer_loop);
                             gameTimer.gameTimer_over = true;
-                            gameTimer.info.innerHTML = 'GAME OVER';
                             $($self).trigger('gameFlagged');
-                            gameTimer.info.className = '';
                         }
                         gameTimer.displayTimers();
                     }, 100);
                     opponent.clock.className = 'now_playing';
                     this.clock.className = '';
-                    gameTimer.info.className = 'hidden';
                 }
             }
         }
 
-        var GameTimer = function (initial_time, info_id, p1_clock_id, p2_clock_id) {
-            this.info = document.getElementById(info_id);
+        var GameTimer = function (initial_time, p1_clock_id, p2_clock_id) {
             this.player1 = new Player(p1_clock_id, initial_time, this);
             this.player2 = new Player(p2_clock_id, initial_time, this);
             this.player1.opponent = this.player2;
@@ -63,7 +59,6 @@
                 clearTimeout(this.timer_loop);
                 this.player1.clock.className = '';
                 this.player2.clock.className = '';
-                this.info.className = 'hidden';
                 this.player1.time = this.player1.initial_time;
                 this.player2.time = this.player2.initial_time;
                 this.gameTimer_over = false;
@@ -90,7 +85,7 @@
             gameTimer.changePlay(playerColour);
         });
 
-        gameTimer = new GameTimer($self.settings.initial_time, 'info', $self.settings.player1css, $self.settings.player2css);
+        gameTimer = new GameTimer($self.settings.initial_time, $self.settings.player1css, $self.settings.player2css);
         gameTimer.resetClocks();
         return this;
     }
@@ -104,7 +99,7 @@
 
 $(function () {
     $('#checkConnection').gameTimer({
-        initial_time: 10,
+        initial_time: 9000,
         player1css: 'player1clock',
         player2css: 'player2clock'
     });

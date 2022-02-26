@@ -21,7 +21,9 @@
         $self.gameFlagged = false;
 
         $self.onDragStart = function (source, piece, position, orientation) {
-            if ($self.game.game_over() || $self.gameFlagged) return false;
+            if ($self.game.game_over() || $self.gameFlagged) {
+                return false;
+            }
 
             // only pick up pieces for the side to move
             if (($self.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
@@ -36,13 +38,21 @@
 
         }
 
-        $self.onDrop = function (source, target) {
-            // see if the move is legal
-            var move = $self.game.move({
+        $self.onDrop = function (source, target, piece) {
+            var move = null;
+            var promotion = null;
+            if (target.slice(-1) === "8" && piece === "wP") {
+                promotion = prompt("Enter (Q)ueen, K(n)ight, (B)ishop, (R)ook").toLowerCase();
+            } else if (target.slice(-1) === "1" && piece === "bP") {
+                promotion = prompt("Enter (Q)ueen, K(n)ight, (B)ishop, (R)ook").toLowerCase();
+            }
+            // check if move is legal
+            move = $self.game.move({
                 from: source,
                 to: target,
-                promotion: 'q' // NOTE: always promote to a queen for example simplicity
+                promotion: promotion // NOTE: always promote to a queen for example simplicity [q, n, b, r]
             });
+            console.log(move)
             // illegal move
             if (move === null) return 'snapback';
 
@@ -58,8 +68,8 @@
 
 
             $self.updateStatus();
-            var move = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: playerColour };
-            $($self.settings.Id).trigger("chess_move", move);
+            var move_info = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: playerColour };
+            $($self.settings.Id).trigger("chess_move", move_info);
         }
 
         $self.onSnapEnd = function () {
@@ -74,10 +84,9 @@
             if ($self.game.turn() === 'b') {
                 moveColor = 'Black';
             }
-
             // checkmate?
             if ($self.game.in_checkmate()) {
-                status = 'Game over, ' + moveColor + ' is in checkmate.';
+                status = 'Game over ' + moveColor + ' is in checkmate.';
             }
 
             // draw?
@@ -86,21 +95,27 @@
             }
 
             // game still on
-            else {
+            else if ($self.gameFlagged) {
+                status = 'Game over, ' + moveColor + ' flagged';
+            } else {
                 status = moveColor + ' to move';
-
                 // check?
                 if ($self.game.in_check()) {
                     status += ', ' + moveColor + ' is in check';
                 }
             }
             $($self.settings.status).html(status);
-            $($self.settings.fen).html($self.game.fen());
-            $($self.settings.pgn).html($self.game.pgn());
+            //$($self.settings.pgn).html($self.game.pgn());
+            //$($self.settings.fen).html($self.game.fen());
         }
 
         $($self.settings.Id).once("chess_init", function (event, move) {
-            $($self.settings.status).html(move.colour);
+            if (move.colour === "black") {
+                $($self.settings.status).html("Waiting for move");
+            }
+            else {
+                $($self.settings.status).html("Move piece to start");
+            }
             $self.board.orientation(move.colour);
             if (move.fen) {
                 $self.game.load(move.fen);
@@ -126,6 +141,7 @@
 
         $($self.settings.Id).once('gameFlagged', function (event) {
             $self.gameFlagged = true;
+            $self.updateStatus();
         });
 
         var config = {
