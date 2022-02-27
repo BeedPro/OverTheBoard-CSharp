@@ -3,21 +3,52 @@
 }
 
 
-<header id="gtco-header" class="gtco-cover" role="banner">
-    <div class="text-center center-play-index">
-        <!--Shows Players Ranks currently there is a temp msg-->
-        <h3>RANK</h3>
-        <a href="#" id="btnQueue" class="btn btn-white" type="button"> Play Chess </a><br />
-        <div id="divProgress" style="display: none;">
-            <div class="loader-wrapper">
-                <div class="loader-box"></div>
-                <div class="loader-box-text">Waiting for player to join... </div>
-            </div>
+<div class="text-center center-play-index">
+    <!--Shows Players Ranks currently there is a temp msg-->
+    <h3>RANK</h3>
+    <a href="#" id="btnQueue" class="btn btn-white" type="button"> Play Chess </a><br />
+    <div id="divProgress" style="display: none;">
+        <div class="loader-wrapper">
+            <div class="loader-box"></div>
+            <div class="loader-box-text">Waiting for player to join... </div>
         </div>
-        <a asp-controller="Play" asp-action="Brackets" class="btn btn-white" type="button">League Games</a>
     </div>
-
-</header>
+    <a asp-controller="Play" asp-action="Brackets" class="btn btn-white" type="button">League Games</a>
+</div>
+<table class="tg center-table">
+    <thead>
+        <tr>
+            <th class="tg-0pky">Game Number</th>
+            <th class="tg-0pky">White</th>
+            <th class="tg-0pky">Black</th>
+            <th class="tg-0pky">Score</th>
+            <th class="tg-0pky">GameLink</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="tg-0pky">1</td>
+            <td class="tg-0pky">PlaceholderUser<br></td>
+            <td class="tg-0pky">PlaceholderUser</td>
+            <td class="tg-0pky">0</td>
+            <td class="tg-0pky"><a asp-controller="Dashboard" asp-action="Analysis">Link</a></td>
+        </tr>
+        <tr>
+            <td class="tg-0pky">2<br></td>
+            <td class="tg-0pky">PlaceholderUser</td>
+            <td class="tg-0pky">PlaceholderUser</td>
+            <td class="tg-0pky">0</td>
+            <td class="tg-0pky"><a asp-controller="Dashboard" asp-action="Analysis">Link</a></td>
+        </tr>
+        <tr>
+            <td class="tg-0pky">3</td>
+            <td class="tg-0pky">PlaceholderUser</td>
+            <td class="tg-0pky">PlaceholderUser</td>
+            <td class="tg-0pky">0</td>
+            <td class="tg-0pky"><a asp-controller="Dashboard" asp-action="Analysis">Link</a></td>
+        </tr>
+    </tbody>
+</table>
 
 @section scripts {
 

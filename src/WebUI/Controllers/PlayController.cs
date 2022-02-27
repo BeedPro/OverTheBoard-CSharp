@@ -32,8 +32,10 @@ namespace OverTheBoard.WebUI.Controllers
             _gameService = gameService;
             _userService = userService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var userId = GetUserId();
+            var games = await _gameService.GetGameByUserIdAsync(userId);
             return View();
         }
 

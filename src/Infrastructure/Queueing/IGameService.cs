@@ -13,5 +13,6 @@ namespace OverTheBoard.Infrastructure.Queueing
         Task<ChessGame> GetPlayersAsync(string gameId);
         Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId);
         Task<string> SaveGameMoveAsync(string userId, ChessMove move);
+        Task<List<GameInfo>> GetGameByUserIdAsync(string userId);
     }
 }

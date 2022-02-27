@@ -41,6 +41,7 @@ body {
     -webkit-transition: 0.5s;
     -o-transition: 0.5s;
     transition: 0.5s;
+    background: var(--background);
 }
 
 .offcanvas #page {
@@ -2279,7 +2280,7 @@ form label {
 }
 
 body {
-    background: var(--surface);
+    background: var(--background);
     color: var(--on-surface);
 }
 
@@ -2386,14 +2387,14 @@ img {
 }
 
 .center-play-index {
-    margin-top: 360px;
-    margin-bottom: 306px
+    margin-top: 30px;
+    margin-bottom: 30px
 }
 
 .center-table {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 300px;
+    margin-top: 10px;
     margin-bottom: 297px;
 }
 
@@ -2503,3 +2504,37 @@ img {
 .br-550 {
     margin-bottom: 550px
 }
+
+.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    .tg td {
+        border-color: black;
+        border-style: solid;
+        border-width: 1px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        overflow: hidden;
+        padding: 10px 5px;
+        word-break: normal;
+    }
+
+    .tg th {
+        border-color: black;
+        border-style: solid;
+        border-width: 1px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        overflow: hidden;
+        padding: 10px 5px;
+        word-break: normal;
+    }
+
+    .tg .tg-0pky {
+        border-color: inherit;
+        text-align: left;
+        vertical-align: top
+    }

@@ -109,5 +109,25 @@ namespace OverTheBoard.Infrastructure.Queueing
                 .FirstOrDefault(e => e.Identifier == id);
             return gameEntity;
         }
+
+        public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
+        {
+            var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
+            foreach(var game in gamesInProgress)
+            {
+                var whitePlayer = game.Players.Where(e => e.Colour == "white");
+                var blackPlayer = game.Players.Where(e => e.Colour == "black");
+            }
+            
+
+            var gamePlayerEntities = _repositoryGamePlayer.Query().Where(e => e.UserId == userId.ToGuid());
+            var sss = gamePlayerEntities.Select(e => new GameInfo()
+            {
+                Identifier = e.Game.Identifier.ToString(),
+                WhiteUser = null,
+                BlackUser = null
+            }).ToList();
+            return sss;
+        }
     }
 }
