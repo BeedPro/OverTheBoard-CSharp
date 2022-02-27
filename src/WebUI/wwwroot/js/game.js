@@ -56,29 +56,42 @@
             // illegal move
             if (move === null) return 'snapback';
 
-            var playerColour = '';
-            if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
-                playerColour = 'w';
-            }
-            else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
-                playerColour = 'b';
-            } else {
-                playerColour = $self.game.turn();
-            }
+            //var playerColour = '';
+            //if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
+            //    playerColour = 'w';
+            //}
+            //else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
+            //    playerColour = 'b';
+            //} else {
+            //    playerColour = $self.game.turn();
+            //}
 
 
             $self.updateStatus();
+
             var moveInfo = {
                 fen: $self.game.fen(),
                 gameId: $self.control.data("instance-id"),
-                playerColour: playerColour
+                orientation: $self.board.orientation(),
+                turn: $self.game.turn()
             };
 
             $($self.settings.Id).trigger("chess_move", moveInfo);
+            $self.changeTimer();
         }
 
         $self.onSnapEnd = function () {
             $self.board.position($self.game.fen());
+        }
+
+        $self.changeTimer = function () {
+
+            var timerInfo = {
+                orientation: $self.board.orientation(),
+                turn: $self.game.turn()
+            };
+
+            $($self.settings.Id).trigger('change_colour', timerInfo);
         }
 
         $self.updateStatus = function () {
@@ -115,35 +128,41 @@
         }
 
         $($self.settings.Id).once("chess_init", function (event, move) {
-            if (move.colour === "black") {
+
+            if (move.orientation === "black") {
                 $($self.settings.status).html("Waiting for move");
             }
             else {
                 $($self.settings.status).html("Move piece to start");
             }
-            $self.board.orientation(move.colour);
+
+            $self.board.orientation(move.orientation);
+
             if (move.fen) {
                 $self.game.load(move.fen);
                 $self.board.position(move.fen);
             }
+
         });
 
         $($self.settings.Id).once("chess_moved", function (event, move) {
             $self.game.load(move.fen);
             $self.board.position(move.fen);
 
-            if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
-                $($self.settings.Id).trigger('change_colour', 'w');
-            }
-            else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
-                $($self.settings.Id).trigger('change_colour', 'b');
-            } else {
-                $($self.settings.Id).trigger('change_colour', $self.game.turn());
-            }
+            //if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
+            //    $($self.settings.Id).trigger('change_colour', 'w');
+            //}
+            //else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
+            //    $($self.settings.Id).trigger('change_colour', 'b');
+            //} else {
+            //    $($self.settings.Id).trigger('change_colour', $self.game.turn());
+            //}
 
             $self.updateStatus();
+            $self.changeTimer();
         });
 
+        
         $($self.settings.Id).once('gameFlagged', function (event) {
             $self.gameFlagged = true;
             $self.updateStatus();

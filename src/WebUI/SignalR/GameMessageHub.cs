@@ -28,7 +28,7 @@ namespace OverTheBoard.WebUI.SignalR
             {
                 foreach (var player in players.Players)
                 {
-                    var chessMove = new ChessMove(){ Colour = player.Colour};
+                    var chessMove = new ChessMove(){ Orientation = player.Colour};
                     if (player.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
                     {
                         chessMove.Fen = players.Fen;

@@ -36,9 +36,6 @@
             $self.connection.invoke("Send", move).catch(function (err) {
                 return console.error(err.toString());
             });
-
-            $($self.settings.Id).trigger('change_colour', move.playerColour);
-
         });
 
         $self.connection.on("Initialised", function (move) {

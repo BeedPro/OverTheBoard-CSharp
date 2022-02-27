@@ -69,7 +69,18 @@
                 this.player1.clock.innerHTML = $self.formatTime(this.player1.time);
                 this.player2.clock.innerHTML = $self.formatTime(this.player2.time);
             }
-            this.changePlay = function (playerColour) {
+            this.changePlay = function (timerInfo) {
+
+                var playerColour = '';
+                if (timerInfo.orientation === 'black' && timerInfo.turn == 'b') {
+                    playerColour = 'w';
+                }
+                else if (timerInfo.orientation === 'black' && timerInfo.turn === 'w') {
+                    playerColour = 'b';
+                } else {
+                    playerColour = timerInfo.turn;
+                }
+
                 // Player1 Move then start timer of player2
                 if ('w'.indexOf(playerColour) != -1) {
                     this.player1.play();
