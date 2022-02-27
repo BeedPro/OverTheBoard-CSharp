@@ -41,6 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(ISecurityRepository<>), typeof(SecurityRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             return services;
         }

@@ -44,7 +44,7 @@ namespace OverTheBoard.WebUI.SignalR
         public async Task Send(ChessMove move)
         {
             var userId = GetUserId();
-            var clientId = await _gameService.MoveAsync(userId, move);
+            var clientId = await _gameService.SaveGameMoveAsync(userId, move);
             await Clients.Client(clientId).SendAsync("Receive", move);
         }
 

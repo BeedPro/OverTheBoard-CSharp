@@ -52,7 +52,7 @@
                 to: target,
                 promotion: promotion // NOTE: always promote to a queen for example simplicity [q, n, b, r]
             });
-            console.log(move)
+            console.log(move);
             // illegal move
             if (move === null) return 'snapback';
 
@@ -68,8 +68,13 @@
 
 
             $self.updateStatus();
-            var move_info = { fen: $self.game.fen(), gameId: $self.control.data("instance-id"), playerColour: playerColour };
-            $($self.settings.Id).trigger("chess_move", move_info);
+            var moveInfo = {
+                fen: $self.game.fen(),
+                gameId: $self.control.data("instance-id"),
+                playerColour: playerColour
+            };
+
+            $($self.settings.Id).trigger("chess_move", moveInfo);
         }
 
         $self.onSnapEnd = function () {

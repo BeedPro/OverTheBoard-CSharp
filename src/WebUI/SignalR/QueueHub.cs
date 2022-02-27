@@ -21,8 +21,12 @@ namespace OverTheBoard.WebUI.SignalR
         }
         public async Task Queue(string connectionId)
         {
-            var queueItems = _gameQueue.GetQueueGame(new UnrankedGameQueueItem()
-                {UserId = GetUserId(), ConnectionId = connectionId});
+            var queueItems = _gameQueue.GetQueueGame(
+                new UnrankedGameQueueItem()
+                {
+                    UserId = GetUserId(), 
+                    ConnectionId = connectionId
+                });
 
             if (queueItems?.Count == 2)
             {

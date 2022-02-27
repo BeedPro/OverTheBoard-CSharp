@@ -9,8 +9,8 @@ using OverTheBoard.Data;
 namespace OverTheBoard.Data.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    [Migration("20220102215448_Initial-Security")]
-    partial class InitialSecurity
+    [Migration("20220226224617_Security-init")]
+    partial class Securityinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
