@@ -1,8 +1,4 @@
-﻿//const { read } = require("@popperjs/core");
-
-
-
-(function ($) {
+﻿(function ($) {
     $.fn.play = function (options) {
         var $self = $(this);
 
@@ -50,7 +46,6 @@
         $self.onDrop = function (source, target, piece) {
             var move = null;
             var promotion = null;
-            //TODO: Fix this - dev BALAHEAD
             const allowedPromotions = ["q", "n", "b", "k", "queen", "knight", "bishop", "rook"];
             if (target.slice(-1) === "8" && piece === "wP" || target.slice(-1) === "1" && piece === "bP") {
                 promotion = prompt("Enter Queen, Knight, Bishop, Rook to promote pawn to").toLowerCase();
@@ -64,21 +59,10 @@
             move = $self.game.move({
                 from: source,
                 to: target,
-                promotion: promotion // NOTE: always promote to a queen for example simplicity [q, n, b, r]
+                promotion: promotion 
             });
             // illegal move
             if (move === null) return 'snapback';
-
-            //var playerColour = '';
-            //if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
-            //    playerColour = 'w';
-            //}
-            //else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
-            //    playerColour = 'b';
-            //} else {
-            //    playerColour = $self.game.turn();
-            //}
-
 
             $self.updateStatus();
 
@@ -135,8 +119,6 @@
                 }
             }
             $($self.settings.status).html(status);
-            //$($self.settings.pgn).html($self.game.pgn());
-            //$($self.settings.fen).html($self.game.fen());
         }
 
         $($self.settings.Id).once("chess_init", function (event, move) {
@@ -160,16 +142,6 @@
         $($self.settings.Id).once("chess_moved", function (event, move) {
             $self.game.load(move.fen);
             $self.board.position(move.fen);
-
-            //if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
-            //    $($self.settings.Id).trigger('change_colour', 'w');
-            //}
-            //else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
-            //    $($self.settings.Id).trigger('change_colour', 'b');
-            //} else {
-            //    $($self.settings.Id).trigger('change_colour', $self.game.turn());
-            //}
-
             $self.updateStatus();
             $self.changeTimer();
         });
