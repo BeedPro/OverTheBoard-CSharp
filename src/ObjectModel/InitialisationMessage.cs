@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OverTheBoard.ObjectModel
 {
@@ -44,6 +45,7 @@ namespace OverTheBoard.ObjectModel
         public string ConnectionId { get; set; }
         public string Colour { get; set; }
         public string UserId { get; set; }
+        public TimeSpan TimeRemain { get; set; }
     }
 
     public class GameInfo

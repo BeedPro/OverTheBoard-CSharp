@@ -55,6 +55,13 @@
             this.timer_loop = null;
             this.gameTimer_over = false;
 
+            this.setPlayer1Time = function (new_time) {
+                this.player1 = new Player(p1_clock_id, new_time, this);
+            }
+            this.setPlayer2Time = function (new_time) {
+                this.player1 = new Player(p1_clock_id, new_time, this);
+            }
+
             this.resetClocks = function () {
                 clearTimeout(this.timer_loop);
                 this.player1.clock.className = '';
@@ -95,7 +102,11 @@
         $(this).once("change_colour", function (event, playerColour) {
             gameTimer.changePlay(playerColour);
         });
-
+        $(this).once("changeWhiteTimer", function (event, whiteTime) {
+            gameTimer.setPlayer1Time(playerColour);
+        }); $(this).once("changeBlackTimer", function (event, blackTime) {
+            gameTimer.setPlayer2Time(playerColour);
+        });
         gameTimer = new GameTimer($self.settings.initial_time, $self.settings.player1css, $self.settings.player2css);
         gameTimer.resetClocks();
         return this;

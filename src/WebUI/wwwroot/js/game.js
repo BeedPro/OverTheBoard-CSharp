@@ -13,7 +13,6 @@
         }, options);
 
         $self.control = $($self.settings.Id);
-        //$self.board = null;
         $self.game = new Chess();
         $self.gameFlagged = false;
 
@@ -136,7 +135,8 @@
                 $self.game.load(move.fen);
                 $self.board.position(move.fen);
             }
-
+            //$($self.settings.Id).trigger("changeWhiteTimer", whiteTime);
+            //$($self.settings.Id).trigger("changeBlackTimer", blackTime);
         });
 
         $($self.settings.Id).once("chess_moved", function (event, move) {
