@@ -1,4 +1,5 @@
-﻿
+﻿//const { read } = require("@popperjs/core");
+
 
 
 (function ($) {
@@ -38,21 +39,33 @@
 
         }
 
+        $self.returnCorrectPromotion = function (input) {
+            if (input === "queen") { return "q"; }
+            else if (input === "knight") { return "n"; }
+            else if (input === "bishop") { return "b"; }
+            else if (input === "rook") { return "r"; }
+            else { return input; }
+        }
+
         $self.onDrop = function (source, target, piece) {
             var move = null;
             var promotion = null;
-            if (target.slice(-1) === "8" && piece === "wP") {
-                promotion = prompt("Enter (Q)ueen, K(n)ight, (B)ishop, (R)ook").toLowerCase();
-            } else if (target.slice(-1) === "1" && piece === "bP") {
-                promotion = prompt("Enter (Q)ueen, K(n)ight, (B)ishop, (R)ook").toLowerCase();
+            //TODO: Fix this - dev BALAHEAD
+            const allowedPromotions = ["q", "n", "b", "k", "queen", "knight", "bishop", "rook"];
+            if (target.slice(-1) === "8" && piece === "wP" || target.slice(-1) === "1" && piece === "bP") {
+                promotion = prompt("Enter Queen, Knight, Bishop, Rook to promote pawn to").toLowerCase();
+                while (!allowedPromotions.includes(promotion)) {
+                    promotion = prompt("Previous value entered was wrong \n Please enter Queen, Knight, Bishop, Rook to promote pawn to").toLowerCase();
+                }
+                promotion = $self.returnCorrectPromotion(promotion);
             }
+            
             // check if move is legal
             move = $self.game.move({
                 from: source,
                 to: target,
                 promotion: promotion // NOTE: always promote to a queen for example simplicity [q, n, b, r]
             });
-            console.log(move);
             // illegal move
             if (move === null) return 'snapback';
 
