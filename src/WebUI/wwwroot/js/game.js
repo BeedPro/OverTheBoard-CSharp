@@ -123,12 +123,12 @@
 
         $($self.settings.Id).once("chess_init", function (event, move) {
 
-            if (move.orientation === "black") {
-                $($self.settings.status).html("Waiting for move");
-            }
-            else {
-                $($self.settings.status).html("Move piece to start");
-            }
+            //if (move.orientation === "black") {
+            //    $($self.settings.status).html("Waiting for move");
+            //}
+            //else {
+            //    $($self.settings.status).html("Move piece to start");
+            //}
 
             $self.board.orientation(move.orientation);
 
@@ -136,6 +136,12 @@
                 $self.game.load(move.fen);
                 $self.board.position(move.fen);
             }
+            $($self.settings.Id).trigger("init_timer", {
+                whiteTime: move.whiteRemaining,
+                blackTime: move.blackRemaining,
+                orientation: $self.board.orientation(),
+                turn: $self.game.turn()
+            });
 
         });
 

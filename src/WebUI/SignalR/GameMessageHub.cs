@@ -6,16 +6,18 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
+using OverTheBoard.Data.Entities.Applications;
+using OverTheBoard.Data.Repositories;
 
 namespace OverTheBoard.WebUI.SignalR
 {
     public class GameMessageHub : Hub
     {
         private readonly IGameService _gameService;
-
         public GameMessageHub(IGameService gameService)
         {
             _gameService = gameService;
+
         }
 
 
@@ -26,6 +28,8 @@ namespace OverTheBoard.WebUI.SignalR
             var players = await _gameService.GetPlayersAsync(initialisationMessage.GameId);
             if (players != null)
             {
+                var whiteTimer = Convert.ToInt32(players.Players.FirstOrDefault(e => e.Colour == "white").TimeRemaining.TotalSeconds) * 10;
+                var blackTimer = Convert.ToInt32(players.Players.FirstOrDefault(e => e.Colour == "black").TimeRemaining.TotalSeconds) * 10;
                 foreach (var player in players.Players)
                 {
                     var chessMove = new ChessMove(){ Orientation = player.Colour};
@@ -33,10 +37,12 @@ namespace OverTheBoard.WebUI.SignalR
                     {
                         chessMove.Fen = players.Fen;
                     }
-
+                    chessMove.whiteRemaining = whiteTimer;
+                    chessMove.blackRemaining = blackTimer;
                     await Clients.Client(player.ConnectionId).SendAsync("Initialised", chessMove);
                 }
-
+                
+               
             }
         }
 

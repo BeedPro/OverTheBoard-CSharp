@@ -70,6 +70,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                 UserId = e.UserId.ToString(),
                 ConnectionId = e.ConnectionId,
                 Colour = e.Colour,
+                TimeRemaining = e.TimeRemain
             }).ToList();
 
 
