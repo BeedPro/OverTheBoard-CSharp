@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Data;
 
 namespace OverTheBoard.Data.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220227234219_Adding-pgn")]
+    partial class Addingpgn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,12 +29,6 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("Identifier")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Period")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
                     b.HasKey("GameId");
@@ -55,13 +51,7 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                     b.Property<int>("GameId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("LastMoveAt")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Pgn")
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeSpan>("TimeRemain")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")

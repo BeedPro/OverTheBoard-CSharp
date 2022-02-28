@@ -72,8 +72,7 @@
             var moveInfo = {
                 fen: $self.game.fen(),
                 gameId: $self.control.data("instance-id"),
-                orientation: $self.board.orientation(),
-                turn: $self.game.turn()
+                pgn: source + '-' + target
             };
 
             $($self.settings.Id).trigger("chess_move", moveInfo);

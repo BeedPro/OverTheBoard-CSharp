@@ -9,7 +9,7 @@ namespace OverTheBoard.Infrastructure.Queueing
 {
     public interface IGameService
     {
-        Task<bool> CreateGameAsync(string identifier, List<UnrankedGameQueueItem> queueItems);
+        Task<bool> CreateGameAsync(string identifier, List<UnrankedGameQueueItem> queueItems, DateTime startTime, int periodInMinutes);
         Task<ChessGame> GetPlayersAsync(string gameId);
         Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId);
         Task<string> SaveGameMoveAsync(string userId, ChessMove move);

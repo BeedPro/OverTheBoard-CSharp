@@ -22,11 +22,13 @@ namespace OverTheBoard.Infrastructure.Queueing
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
-        public async Task<bool> CreateGameAsync(string identifier, List<UnrankedGameQueueItem> queueItems)
+        public async Task<bool> CreateGameAsync(string identifier, List<UnrankedGameQueueItem> queueItems, DateTime startTime, int periodInMinutes)
         {
             ChessGameEntity game = new ChessGameEntity();
             game.Identifier = identifier.ToGuid();
             game.Players = new List<GamePlayerEntity>();
+            game.StartTime = startTime;
+            game.Period = periodInMinutes;
 
             var colour = "white";
             foreach (var item in queueItems)
@@ -35,13 +37,13 @@ namespace OverTheBoard.Infrastructure.Queueing
                 {
                     UserId = item.UserId.ToGuid(),
                     Colour = colour,
-                    ConnectionId = item.ConnectionId
-
+                    ConnectionId = item.ConnectionId,
+                    TimeRemain = new TimeSpan(0,0,periodInMinutes, 0),
+                    LastMoveAt = startTime
                 };
 
                 colour = "black";
                 game.Players.Add(player);
-                
             }
             _repositoryChessGame.Context.Add(game);
             _repositoryChessGame.Save();
@@ -94,10 +96,20 @@ namespace OverTheBoard.Infrastructure.Queueing
         {
             //var game = _chessGames.FirstOrDefault(e => e.Identifier.Equals(move.GameId, StringComparison.OrdinalIgnoreCase));
             var game = GetGameEntity(move.GameId);
-            var player = game?.Players.FirstOrDefault(u => u.UserId != userId.ToGuid());
             game.Fen = move.Fen;
+
+            var current = game.Players.FirstOrDefault(u => u.UserId == userId.ToGuid());
+            current.Pgn = $"{current.Pgn}#{move.Pgn}";
+            current.TimeRemain = current.TimeRemain - (DateTime.Now - current.LastMoveAt);
+            current.LastMoveAt = DateTime.Now;
+
+            var opponent = game?.Players.FirstOrDefault(u => u.UserId != userId.ToGuid());
+            opponent.LastMoveAt = DateTime.Now;
+
+
             _repositoryChessGame.Save();
-            return player.ConnectionId;
+
+            return opponent?.ConnectionId;
         }
 
         private ChessGameEntity GetGameEntity(string gameId)
