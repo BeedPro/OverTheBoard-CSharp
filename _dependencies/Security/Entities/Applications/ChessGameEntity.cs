@@ -19,11 +19,12 @@ namespace OverTheBoard.Data.Entities.Applications
 
         public string Fen { get; set; }
         public DateTime StartTime { get; set; }
+        public DateTime LastMoveAt { get; set; }
+        public int Period { get; set; } //in minutes
 
+        
         [ForeignKey("GameId")]
         public ICollection<GamePlayerEntity> Players { get; set; }
-
-        public int Period { get; set; } //in minutes
     }
 
     [Table("Players")]
@@ -38,7 +39,6 @@ namespace OverTheBoard.Data.Entities.Applications
         public ChessGameEntity Game { get; set; }
         public string Pgn { get; set; }
         public TimeSpan TimeRemain { get; set; }
-        public DateTime LastMoveAt { get; set; }
     }
 
 }
