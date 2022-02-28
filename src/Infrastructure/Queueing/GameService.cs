@@ -126,32 +126,13 @@ namespace OverTheBoard.Infrastructure.Queueing
         public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
         {
             var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
-
-            List<GamePlayerEntity> whitePlayers = new List<GamePlayerEntity>();
-            foreach(var game in gamesInProgress)
-            {
-                foreach(var player in game.Players)
-                {
-                    if(player.Colour == "white")
-                    {
-                        whitePlayers.Add(player);
-                    }
-                }
-            }
-            var tempVar = gamesInProgress.Select(e => new GameInfo()
+            var gamesInProgressInfo = gamesInProgress.Select(e => new GameInfo()
             {
                 Identifier = e.GameId.ToString(),
-                WhiteUser = e.Players.ToList()[0].UserId.ToString(),
-                BlackUser = e.Players.ToList()[1].UserId.ToString()
+                WhiteUser = e.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString(),
+                BlackUser = e.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString()
             }).ToList();
-            var gamePlayerEntities = _repositoryGamePlayer.Query().Where(e => e.UserId == userId.ToGuid());
-            var sss = gamePlayerEntities.Select(e => new GameInfo()
-            {
-                Identifier = e.Game.Identifier.ToString(),
-                WhiteUser = null,
-                BlackUser = null
-            }).ToList();
-            return sss;
+            return gamesInProgressInfo;
         }
     }
 }
