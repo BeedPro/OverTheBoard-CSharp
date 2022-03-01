@@ -17,6 +17,8 @@ namespace OverTheBoard.ObjectModel
         public string Fen { get; set; }
         public string Pgn { get; set; }
         public string Orientation { get; set; }
+        public int whiteRemaining { get; set; }
+        public int blackRemaining { get; set; }
     }
 
 
@@ -45,7 +47,7 @@ namespace OverTheBoard.ObjectModel
         public string ConnectionId { get; set; }
         public string Colour { get; set; }
         public string UserId { get; set; }
-        public TimeSpan TimeRemain { get; set; }
+        public TimeSpan TimeRemaining { get; set; }
     }
 
     public class GameInfo

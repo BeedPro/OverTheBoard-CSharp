@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
+using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
 
 namespace OverTheBoard.Infrastructure.Queueing
@@ -14,11 +15,13 @@ namespace OverTheBoard.Infrastructure.Queueing
     {
         private readonly IRepository<ChessGameEntity> _repositoryChessGame;
         private readonly IRepository<GamePlayerEntity> _repositoryGamePlayer;
+        private readonly IUserService _userService;
 
-        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer)
+        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer, IUserService userService)
         {
             _repositoryChessGame = repositoryChessGame;
             _repositoryGamePlayer = repositoryGamePlayer;
+            _userService = userService;
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
@@ -38,7 +41,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                     UserId = item.UserId.ToGuid(),
                     Colour = colour,
                     ConnectionId = item.ConnectionId,
-                    TimeRemain = new TimeSpan(0,0,periodInMinutes, 0),
+                    TimeRemain = new TimeSpan(0, 0, periodInMinutes, 0),
                     LastMoveAt = startTime
                 };
 
@@ -49,12 +52,12 @@ namespace OverTheBoard.Infrastructure.Queueing
             _repositoryChessGame.Save();
             return true;
         }
-        
+
 
         public async Task<ChessGame> GetPlayersAsync(string gameId)
         {
             var id = gameId.ToGuid();
-            var gameEntity = GetGameEntity(gameId); 
+            var gameEntity = GetGameEntity(gameId);
 
             var game = new ChessGame()
             {
@@ -67,9 +70,9 @@ namespace OverTheBoard.Infrastructure.Queueing
                 UserId = e.UserId.ToString(),
                 ConnectionId = e.ConnectionId,
                 Colour = e.Colour,
-                TimeRemain = e.TimeRemain
+                TimeRemaining = e.TimeRemain
             }).ToList();
-            
+
 
             return game;
         }
@@ -91,7 +94,7 @@ namespace OverTheBoard.Infrastructure.Queueing
             return true;
         }
 
-       
+
 
         public async Task<string> SaveGameMoveAsync(string userId, ChessMove move)
         {
@@ -126,32 +129,19 @@ namespace OverTheBoard.Infrastructure.Queueing
         public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
         {
             var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
+            var gamesInProgressInfo = gamesInProgress.Select( e => new GameInfo()
+            {
+                Identifier = e.Identifier.ToString(),
+                WhiteUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString()),
+                BlackUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString())
+            }).ToList();
+            return gamesInProgressInfo;
+        }
 
-            List<GamePlayerEntity> whitePlayers = new List<GamePlayerEntity>();
-            foreach(var game in gamesInProgress)
-            {
-                foreach(var player in game.Players)
-                {
-                    if(player.Colour == "white")
-                    {
-                        whitePlayers.Add(player);
-                    }
-                }
-            }
-            var tempVar = gamesInProgress.Select(e => new GameInfo()
-            {
-                Identifier = e.GameId.ToString(),
-                WhiteUser = e.Players.ToList()[0].UserId.ToString(),
-                BlackUser = e.Players.ToList()[1].UserId.ToString()
-            }).ToList();
-            var gamePlayerEntities = _repositoryGamePlayer.Query().Where(e => e.UserId == userId.ToGuid());
-            var sss = gamePlayerEntities.Select(e => new GameInfo()
-            {
-                Identifier = e.Game.Identifier.ToString(),
-                WhiteUser = null,
-                BlackUser = null
-            }).ToList();
-            return sss;
+        private string GetDisplayNameById(string userId)
+        {
+            var user = _userService.GetUserAsync(userId).GetAwaiter().GetResult();
+            return user.DisplayName;
         }
     }
 }

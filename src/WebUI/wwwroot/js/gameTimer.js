@@ -6,8 +6,8 @@
 
         $self.settings = $.extend({
             initial_time : 10 * 60 * 15,
-            player1css : 'player1clock',
-            player2css : 'player2clock'
+            whiteTimercss: 'player1clock',
+            blackTimercss: 'player2clock'
         }, options);
 
         $self.gameTimer = null;
@@ -48,33 +48,32 @@
         }
 
         var GameTimer = function (initial_time, p1_clock_id, p2_clock_id) {
-            this.player1 = new Player(p1_clock_id, initial_time, this);
-            this.player2 = new Player(p2_clock_id, initial_time, this);
-            this.player1.opponent = this.player2;
-            this.player2.opponent = this.player1;
+            this.whiteTimer = new Player(p1_clock_id, initial_time, this);
+            this.blackTimer = new Player(p2_clock_id, initial_time, this);
+            this.whiteTimer.opponent = this.blackTimer;
+            this.blackTimer.opponent = this.whiteTimer;
             this.timer_loop = null;
             this.gameTimer_over = false;
 
-            this.setPlayer1Time = function (new_time) {
-                this.player1 = new Player(p1_clock_id, new_time, this);
-            }
-            this.setPlayer2Time = function (new_time) {
-                this.player1 = new Player(p1_clock_id, new_time, this);
-            }
-
-            this.resetClocks = function () {
+            this.resetClocks = function (times) {
                 clearTimeout(this.timer_loop);
-                this.player1.clock.className = '';
-                this.player2.clock.className = '';
-                this.player1.time = this.player1.initial_time;
-                this.player2.time = this.player2.initial_time;
+                this.whiteTimer.clock.className = '';
+                this.blackTimer.clock.className = '';
+                this.whiteTimer.time = times.whiteTime;
+                this.blackTimer.time = times.blackTime;
                 this.gameTimer_over = false;
                 this.displayTimers();
+                this.changePlay({
+                    orientation: times.orientation,
+                    turn: times.turn
+                })
             }
 
+
+            
             this.displayTimers = function () {
-                this.player1.clock.innerHTML = $self.formatTime(this.player1.time);
-                this.player2.clock.innerHTML = $self.formatTime(this.player2.time);
+                this.whiteTimer.clock.innerHTML = $self.formatTime(this.whiteTimer.time);
+                this.blackTimer.clock.innerHTML = $self.formatTime(this.blackTimer.time);
             }
             this.changePlay = function (timerInfo) {
 
@@ -88,27 +87,28 @@
                     playerColour = timerInfo.turn;
                 }
 
-                // Player1 Move then start timer of player2
+                // whiteTimer Move then start timer of blackTimer
                 if ('w'.indexOf(playerColour) != -1) {
-                    this.player1.play();
+                    this.whiteTimer.play();
                 }
-                // Player2 Move then start timer of player1
+                // blackTimer Move then start timer of whiteTimer
                 else if (("b".indexOf(playerColour) != -1)) {
-                    this.player2.play();
+                    this.blackTimer.play();
                 }
             }
         }
 
-        $(this).once("change_colour", function (event, playerColour) {
-            gameTimer.changePlay(playerColour);
+        $(this).once("init_timer", function (event, times) {
+            gameTimer.resetClocks(times);
         });
-        $(this).once("changeWhiteTimer", function (event, whiteTime) {
-            gameTimer.setPlayer1Time(playerColour);
-        }); $(this).once("changeBlackTimer", function (event, blackTime) {
-            gameTimer.setPlayer2Time(playerColour);
+
+
+        $(this).once("change_colour", function (event, timerInfo) {
+            gameTimer.changePlay(timerInfo);
         });
-        gameTimer = new GameTimer($self.settings.initial_time, $self.settings.player1css, $self.settings.player2css);
-        gameTimer.resetClocks();
+
+        gameTimer = new GameTimer($self.settings.initial_time, $self.settings.whiteTimercss, $self.settings.blackTimercss);
+        //gameTimer.resetClocks();
         return this;
     }
 
@@ -122,7 +122,7 @@
 $(function () {
     $('#checkConnection').gameTimer({
         initial_time: 9000,
-        player1css: 'player1clock',
-        player2css: 'player2clock'
+        whiteTimercss: 'player1clock',
+        blackTimercss: 'player2clock'
     });
 });
