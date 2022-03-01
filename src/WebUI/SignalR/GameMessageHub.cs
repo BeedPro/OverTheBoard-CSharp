@@ -26,8 +26,6 @@ namespace OverTheBoard.WebUI.SignalR
             var userId = GetUserId();
             await _gameService.UpdateConnectionAsync(userId, initialisationMessage.GameId, initialisationMessage.ConnectionId);
             var players = await _gameService.GetPlayersAsync(initialisationMessage.GameId);
-            double whiteTime = 900;
-            double blackTime = 900;
             if (players != null)
             {
                 var whiteTimer = Convert.ToInt32(players.Players.FirstOrDefault(e => e.Colour == "white").TimeRemaining.TotalSeconds) * 10;
@@ -35,14 +33,6 @@ namespace OverTheBoard.WebUI.SignalR
                 foreach (var player in players.Players)
                 {
                     var chessMove = new ChessMove(){ Orientation = player.Colour};
-                    if (player.Colour == "white")
-                    {
-                        whiteTime = player.TimeRemain.TotalSeconds;
-                    }
-                    else
-                    {
-                        blackTime = player.TimeRemain.TotalSeconds;
-                    }
                     if (player.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
                     {
                         chessMove.Fen = players.Fen;
