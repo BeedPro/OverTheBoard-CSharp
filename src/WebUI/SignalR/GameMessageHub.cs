@@ -28,8 +28,9 @@ namespace OverTheBoard.WebUI.SignalR
             var players = await _gameService.GetPlayersAsync(initialisationMessage.GameId);
             if (players != null)
             {
-                var whiteTimer = Convert.ToInt32(players.Players.FirstOrDefault(e => e.Colour == "white").TimeRemaining.TotalSeconds) * 10;
+                int whiteTimer = Convert.ToInt32(players.Players.FirstOrDefault(e => e.Colour == "white").TimeRemaining.TotalSeconds) * 10;
                 var blackTimer = Convert.ToInt32(players.Players.FirstOrDefault(e => e.Colour == "black").TimeRemaining.TotalSeconds) * 10;
+
                 foreach (var player in players.Players)
                 {
                     var chessMove = new ChessMove(){ Orientation = player.Colour};

@@ -32,7 +32,6 @@ namespace OverTheBoard.Infrastructure.Queueing
             game.Players = new List<GamePlayerEntity>();
             game.StartTime = startTime;
             game.Period = periodInMinutes;
-            game.LastMoveAt = startTime;
 
             var colour = "white";
             foreach (var item in queueItems)
@@ -42,8 +41,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                     UserId = item.UserId.ToGuid(),
                     Colour = colour,
                     ConnectionId = item.ConnectionId,
-                    TimeRemain = new TimeSpan(0, 0, periodInMinutes, 0),
-                    LastMoveAt = startTime
+                    TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0)
                 };
 
                 colour = "black";
@@ -63,18 +61,25 @@ namespace OverTheBoard.Infrastructure.Queueing
             var game = new ChessGame()
             {
                 Identifier = gameEntity.Identifier.ToString(),
-                Fen = gameEntity.Fen
+                Fen = gameEntity.Fen,
+                LastMoveAt = gameEntity.LastMoveAt,
+                NextMoveColour = gameEntity.NextMoveColour
             };
-
+            
             game.Players = gameEntity.Players.Select(e => new GamePlayer()
             {
                 UserId = e.UserId.ToString(),
                 ConnectionId = e.ConnectionId,
                 Colour = e.Colour,
-                TimeRemaining = e.TimeRemain
+                TimeRemaining = e.TimeRemaining
             }).ToList();
 
-
+            if (game.LastMoveAt.HasValue)
+            {
+                var player = game.Players.FirstOrDefault(e => e.Colour == game.NextMoveColour);
+                player.TimeRemaining = player.TimeRemaining - (DateTime.Now - game.LastMoveAt.Value);
+            }
+            
             return game;
         }
 
@@ -82,8 +87,13 @@ namespace OverTheBoard.Infrastructure.Queueing
         {
             var gameEntity = GetGameEntity(gameId);
 
-            var player = _repositoryGamePlayer.Query()
-                .FirstOrDefault(e => e.GameId == gameEntity.GameId && e.UserId == userId.ToGuid());
+            if (!gameEntity.LastMoveAt.HasValue)
+            {
+                gameEntity.LastMoveAt = DateTime.Now;
+                gameEntity.NextMoveColour = "white";
+            }
+
+            var player = gameEntity.Players.FirstOrDefault(e => e.UserId == userId.ToGuid());
 
             if (player != null)
             {
@@ -104,15 +114,17 @@ namespace OverTheBoard.Infrastructure.Queueing
             game.Fen = move.Fen;
 
             var current = game.Players.FirstOrDefault(u => u.UserId == userId.ToGuid());
-            current.Pgn = $"{current.Pgn}#{move.Pgn}";
-            current.TimeRemain = current.TimeRemain - (DateTime.Now - game.LastMoveAt);
-            
-
             var opponent = game?.Players.FirstOrDefault(u => u.UserId != userId.ToGuid());
-
+            
+            current.Pgn = $"{current.Pgn}#{move.Pgn}";
+            if (game.LastMoveAt.HasValue)
+            {
+                current.TimeRemaining = current.TimeRemaining - (DateTime.Now - game.LastMoveAt.Value);
+            }
             game.LastMoveAt = DateTime.Now;
+            game.NextMoveColour = opponent.Colour;
+            
             _repositoryChessGame.Save();
-
             return opponent?.ConnectionId;
         }
 

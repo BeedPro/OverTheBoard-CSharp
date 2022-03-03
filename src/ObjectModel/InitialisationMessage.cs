@@ -39,7 +39,8 @@ namespace OverTheBoard.ObjectModel
         public List<GamePlayer> Players { get; set; }
         public string Fen { get; set; }
         public string Pgn { get; set; }
-
+        public DateTime? LastMoveAt { get; set; }
+        public string NextMoveColour { get; set; }
     }
 
     public class GamePlayer

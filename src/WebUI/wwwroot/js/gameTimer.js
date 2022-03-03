@@ -6,8 +6,8 @@
 
         $self.settings = $.extend({
             initial_time : 10 * 60 * 15,
-            whiteTimercss: 'player1clock',
-            blackTimercss: 'player2clock'
+            whiteTimercss: 'whiteTimercss',
+            blackTimercss: 'blackTimercss'
         }, options);
 
         $self.gameTimer = null;
@@ -77,22 +77,23 @@
             }
             this.changePlay = function (timerInfo) {
 
-                var playerColour = '';
-                if (timerInfo.orientation === 'black' && timerInfo.turn == 'b') {
-                    playerColour = 'w';
-                }
-                else if (timerInfo.orientation === 'black' && timerInfo.turn === 'w') {
-                    playerColour = 'b';
-                } else {
-                    playerColour = timerInfo.turn;
-                }
+                //var playerColour = '';
+                //if (timerInfo.orientation === 'black' && timerInfo.turn == 'b') {
+                //    playerColour = 'w';
+                //}
+                //else if (timerInfo.orientation === 'black' && timerInfo.turn === 'w') {
+                //    playerColour = 'b';
+                //} else {
+                //    playerColour = timerInfo.turn;
+                //}
 
+                var playerColour = timerInfo.turn;
                 // whiteTimer Move then start timer of blackTimer
-                if ('w'.indexOf(playerColour) != -1) {
+                if ('b'.indexOf(playerColour) != -1) {
                     this.whiteTimer.play();
                 }
                 // blackTimer Move then start timer of whiteTimer
-                else if (("b".indexOf(playerColour) != -1)) {
+                else if (("w".indexOf(playerColour) != -1)) {
                     this.blackTimer.play();
                 }
             }
@@ -122,7 +123,7 @@
 $(function () {
     $('#checkConnection').gameTimer({
         initial_time: 9000,
-        whiteTimercss: 'player1clock',
-        blackTimercss: 'player2clock'
+        whiteTimercss: 'whiteTimercss',
+        blackTimercss: 'blackTimercss'
     });
 });

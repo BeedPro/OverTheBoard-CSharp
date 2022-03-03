@@ -9,5 +9,7 @@ namespace OverTheBoard.WebUI.Models
     {
         public string CurrentDisplayName { get; set; }
         public string OpponentDisplayName { get; set; }
+        public string CurrentColour { get; set; }
+        public string OpponentColour { get; set; }
     }
 }
