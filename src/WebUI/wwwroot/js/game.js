@@ -1,7 +1,4 @@
-﻿
-
-
-(function ($) {
+﻿(function ($) {
     $.fn.play = function (options) {
         var $self = $(this);
 
@@ -38,34 +35,34 @@
 
         }
 
+        $self.returnCorrectPromotion = function (input) {
+            if (input === "queen") { return "q"; }
+            else if (input === "knight") { return "n"; }
+            else if (input === "bishop") { return "b"; }
+            else if (input === "rook") { return "r"; }
+            else { return input; }
+        }
+
         $self.onDrop = function (source, target, piece) {
             var move = null;
             var promotion = null;
-            if (target.slice(-1) === "8" && piece === "wP") {
-                promotion = prompt("Enter (Q)ueen, K(n)ight, (B)ishop, (R)ook").toLowerCase();
-            } else if (target.slice(-1) === "1" && piece === "bP") {
-                promotion = prompt("Enter (Q)ueen, K(n)ight, (B)ishop, (R)ook").toLowerCase();
+            const allowedPromotions = ["q", "n", "b", "k", "queen", "knight", "bishop", "rook"];
+            if (target.slice(-1) === "8" && piece === "wP" || target.slice(-1) === "1" && piece === "bP") {
+                promotion = prompt("Enter Queen, Knight, Bishop, Rook to promote pawn to").toLowerCase();
+                while (!allowedPromotions.includes(promotion)) {
+                    promotion = prompt("Previous value entered was wrong \n Please enter Queen, Knight, Bishop, Rook to promote pawn to").toLowerCase();
+                }
+                promotion = $self.returnCorrectPromotion(promotion);
             }
+            
             // check if move is legal
             move = $self.game.move({
                 from: source,
                 to: target,
-                promotion: promotion // NOTE: always promote to a queen for example simplicity [q, n, b, r]
+                promotion: promotion 
             });
-            console.log(move);
             // illegal move
             if (move === null) return 'snapback';
-
-            //var playerColour = '';
-            //if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
-            //    playerColour = 'w';
-            //}
-            //else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
-            //    playerColour = 'b';
-            //} else {
-            //    playerColour = $self.game.turn();
-            //}
-
 
             $self.updateStatus();
 
@@ -122,18 +119,16 @@
                 }
             }
             $($self.settings.status).html(status);
-            //$($self.settings.pgn).html($self.game.pgn());
-            //$($self.settings.fen).html($self.game.fen());
         }
 
         $($self.settings.Id).once("chess_init", function (event, move) {
 
-            if (move.orientation === "black") {
-                $($self.settings.status).html("Waiting for move");
-            }
-            else {
-                $($self.settings.status).html("Move piece to start");
-            }
+            //if (move.orientation === "black") {
+            //    $($self.settings.status).html("Waiting for move");
+            //}
+            //else {
+            //    $($self.settings.status).html("Move piece to start");
+            //}
 
             $self.board.orientation(move.orientation);
 
@@ -141,22 +136,18 @@
                 $self.game.load(move.fen);
                 $self.board.position(move.fen);
             }
+            $($self.settings.Id).trigger("init_timer", {
+                whiteTime: move.whiteRemaining,
+                blackTime: move.blackRemaining,
+                orientation: $self.board.orientation(),
+                turn: $self.game.turn()
+            });
 
         });
 
         $($self.settings.Id).once("chess_moved", function (event, move) {
             $self.game.load(move.fen);
             $self.board.position(move.fen);
-
-            //if ($self.board.orientation() === 'black' && $self.game.turn() == 'b') {
-            //    $($self.settings.Id).trigger('change_colour', 'w');
-            //}
-            //else if ($self.board.orientation() === 'black' && $self.game.turn() === 'w') {
-            //    $($self.settings.Id).trigger('change_colour', 'b');
-            //} else {
-            //    $($self.settings.Id).trigger('change_colour', $self.game.turn());
-            //}
-
             $self.updateStatus();
             $self.changeTimer();
         });

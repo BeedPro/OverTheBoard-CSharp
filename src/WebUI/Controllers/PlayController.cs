@@ -34,9 +34,11 @@ namespace OverTheBoard.WebUI.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var model = new PlayViewModel();
             var userId = GetUserId();
             var games = await _gameService.GetGameByUserIdAsync(userId);
-            return View();
+            model.gameInProgress = games;
+            return View(model);
         }
 
         [HttpGet("unranked")]
