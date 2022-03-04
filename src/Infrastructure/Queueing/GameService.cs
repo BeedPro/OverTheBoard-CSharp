@@ -33,9 +33,13 @@ namespace OverTheBoard.Infrastructure.Queueing
             game.StartTime = startTime;
             game.Period = periodInMinutes;
             game.Status = GameStatus.InProgress;
-            var colour = "white";
+            List<string> colours = new List<string> { "white", "black" };
+            var colour = "";
             foreach (var item in queueItems)
             {
+                Random rand = new Random();
+                int index = rand.Next(colours.Count);
+                colour = colours[index];
                 var player = new GamePlayerEntity()
                 {
                     UserId = item.UserId.ToGuid(),
@@ -43,8 +47,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                     ConnectionId = item.ConnectionId,
                     TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0)
                 };
-
-                colour = "black";
+                colours.Remove(colour);
                 game.Players.Add(player);
             }
             _repositoryChessGame.Context.Add(game);
