@@ -24,6 +24,14 @@ namespace OverTheBoard.Data.Entities.Applications
         [ForeignKey("GameId")]
         public ICollection<GamePlayerEntity> Players { get; set; }
         public string NextMoveColour { get; set; }
+        public GameStatus Status { get; set; }
+    }
+
+    public enum GameStatus
+    {
+        None,
+        InProgress,
+        Completed
     }
 
     [Table("Players")]

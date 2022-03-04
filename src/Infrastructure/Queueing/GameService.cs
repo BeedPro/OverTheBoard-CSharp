@@ -32,7 +32,7 @@ namespace OverTheBoard.Infrastructure.Queueing
             game.Players = new List<GamePlayerEntity>();
             game.StartTime = startTime;
             game.Period = periodInMinutes;
-
+            game.Status = GameStatus.InProgress;
             var colour = "white";
             foreach (var item in queueItems)
             {
@@ -63,7 +63,8 @@ namespace OverTheBoard.Infrastructure.Queueing
                 Identifier = gameEntity.Identifier.ToString(),
                 Fen = gameEntity.Fen,
                 LastMoveAt = gameEntity.LastMoveAt,
-                NextMoveColour = gameEntity.NextMoveColour
+                NextMoveColour = gameEntity.NextMoveColour,
+                Status = gameEntity.Status
             };
             
             game.Players = gameEntity.Players.Select(e => new GamePlayer()
@@ -78,8 +79,17 @@ namespace OverTheBoard.Infrastructure.Queueing
             {
                 var player = game.Players.FirstOrDefault(e => e.Colour == game.NextMoveColour);
                 player.TimeRemaining = player.TimeRemaining - (DateTime.Now - game.LastMoveAt.Value);
+                var intTimeRemaining = Convert.ToInt32(player.TimeRemaining.TotalSeconds);
+                if (intTimeRemaining <= 0)
+                {
+                    player.TimeRemaining = new TimeSpan(0,0,0);
+                    gameEntity.Status = GameStatus.Completed;
+                    _repositoryChessGame.Save();
+                }
             }
             
+
+
             return game;
         }
 
