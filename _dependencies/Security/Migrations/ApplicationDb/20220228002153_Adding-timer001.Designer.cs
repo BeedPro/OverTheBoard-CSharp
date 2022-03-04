@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Data;
 
 namespace OverTheBoard.Data.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220228002153_Adding-timer001")]
+    partial class Addingtimer001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +31,7 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                     b.Property<Guid>("Identifier")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("LastMoveAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NextMoveColour")
+                    b.Property<DateTime>("LastMoveAt")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Period")
@@ -64,7 +63,7 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                     b.Property<string>("Pgn")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("TimeRemaining")
+                    b.Property<TimeSpan>("TimeRemain")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")

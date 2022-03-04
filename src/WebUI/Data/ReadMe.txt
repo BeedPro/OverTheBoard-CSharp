@@ -17,6 +17,6 @@ go to Package manager console
 3. run Update-Database -Context ApplicationDbContext
 
 Examples
-Add-Migration Initial-Security -context "SecurityDbContext"
-Update-Database -context "SecurityDbContext"
+Add-Migration -context ApplicationDbContext Check-any
+Update-Database -context ApplicationDbContext
 

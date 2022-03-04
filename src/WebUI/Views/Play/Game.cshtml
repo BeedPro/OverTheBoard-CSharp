@@ -22,8 +22,9 @@
                             <div class="text-center">
                                 <h3>
                                     @Model.OpponentDisplayName
+                                    @Model.OpponentColour
                                 </h3>
-                                <div id='player1clock'>0</div>
+                                <div id='@($"{Model.OpponentColour}Timercss")'>0</div>
                             </div>
                             
                         </div>
@@ -41,8 +42,9 @@
                     <div class="col-md-12 margin-top-300">
 
                         <div class="text-center">
-                            <h3>@Model.CurrentDisplayName</h3>
-                            <div id='player2clock'>0</div>
+                            <h3>@Model.CurrentDisplayName
+                                @Model.CurrentColour</h3>
+                            <div id='@($"{Model.CurrentColour}Timercss")'>0</div>
                         </div>
 
                     </div>

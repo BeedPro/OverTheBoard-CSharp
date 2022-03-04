@@ -66,12 +66,17 @@ namespace OverTheBoard.WebUI.Controllers
             var model = new GameViewModel();
             var userId = GetUserId();
             var game =  await _gameService.GetPlayersAsync(gameId);
+            var currentPlayer = game.Players.FirstOrDefault(e => e.UserId.Equals(userId));
             var opponentPlayer = game.Players.FirstOrDefault(e => !e.UserId.Equals(userId));
+
             var opponentUser = await _userService.GetUserAsync(opponentPlayer.UserId);
             var currentUser = await _userService.GetUserAsync(userId);
 
             model.CurrentDisplayName = currentUser.DisplayName;
             model.OpponentDisplayName = opponentUser.DisplayName;
+
+            model.CurrentColour = currentPlayer.Colour;
+            model.OpponentColour = opponentPlayer.Colour;
 
             return View(model);
         }
