@@ -151,15 +151,17 @@ namespace OverTheBoard.Infrastructure.Queueing
         public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
         {
             var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
+            //var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
             var gamesInProgressInfo = gamesInProgress.Select( e => new GameInfo()
             {
                 Identifier = e.Identifier.ToString(),
                 WhiteUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString()),
-                BlackUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString())
+                BlackUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString()),
+                Status = e.Status
             }).ToList();
             return gamesInProgressInfo;
         }
-
+       
         private string GetDisplayNameById(string userId)
         {
             var user = _userService.GetUserAsync(userId).GetAwaiter().GetResult();

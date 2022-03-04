@@ -58,6 +58,7 @@ namespace OverTheBoard.ObjectModel
         public string Identifier { get; set; }
         public string  WhiteUser { get; set; }
         public string BlackUser { get; set; }
+        public GameStatus Status { get; set; }
     }
 
     public enum GameType

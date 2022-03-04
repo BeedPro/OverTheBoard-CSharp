@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
+using OverTheBoard.Data.Entities.Applications;
 
 namespace OverTheBoard.WebUI.Controllers
 {
@@ -37,7 +38,8 @@ namespace OverTheBoard.WebUI.Controllers
             var model = new PlayViewModel();
             var userId = GetUserId();
             var games = await _gameService.GetGameByUserIdAsync(userId);
-            model.gameInProgress = games;
+            var gamesInProgress = games.Where(e => e.Status == GameStatus.InProgress).ToList();
+            model.gameInProgress = gamesInProgress;
             return View(model);
         }
 
