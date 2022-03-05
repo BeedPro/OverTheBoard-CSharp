@@ -367,7 +367,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\_dependencies\BackgroundHost\OverTheBoard.BackgroundHost.csproj" />
     <ProjectReference Include="..\..\_dependencies\Security\OverTheBoard.Data.csproj" />
     <ProjectReference Include="..\Infrastructure\OverTheBoard.Infrastructure.csproj" />
     <ProjectReference Include="..\ObjectModel\OverTheBoard.ObjectModel.csproj" />
