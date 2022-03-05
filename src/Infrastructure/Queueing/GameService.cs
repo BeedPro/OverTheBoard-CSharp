@@ -86,8 +86,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                 if (intTimeRemaining <= 0)
                 {
                     player.TimeRemaining = new TimeSpan(0,0,0);
-                    gameEntity.Status = GameStatus.Completed;
-                    _repositoryChessGame.Save();
+                    await SaveGameOutcomeAsync(gameId, GameStatus.Completed);
                 }
             }
             
@@ -153,22 +152,51 @@ namespace OverTheBoard.Infrastructure.Queueing
 
         public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
         {
-            var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
+            var games = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
             //var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
-            var gamesInProgressInfo = gamesInProgress.Select( e => new GameInfo()
+            var gamesInfo = games.Select( e => new GameInfo()
             {
                 Identifier = e.Identifier.ToString(),
                 WhiteUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString()),
                 BlackUser =  GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString()),
                 Status = e.Status
             }).ToList();
-            return gamesInProgressInfo;
+            return gamesInfo;
         }
        
         private string GetDisplayNameById(string userId)
         {
             var user = _userService.GetUserAsync(userId).GetAwaiter().GetResult();
             return user.DisplayName;
+        }
+
+        public async Task<List<ChessGame>> GetGamesInProgress()
+        {
+            var gameInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Status == GameStatus.InProgress);
+            var gameInProgressInfo = gameInProgress.Select(e => new ChessGame()
+            {
+                Identifier = e.Identifier.ToString(),
+                Fen = e.Fen,
+                LastMoveAt = e.LastMoveAt,
+                NextMoveColour = e.NextMoveColour,
+                Players = e.Players.Select(p => new GamePlayer() {
+                    UserId = p.UserId.ToString(),
+                    ConnectionId = p.ConnectionId,
+                    Colour = p.Colour,
+                    TimeRemaining = p.TimeRemaining
+                }).ToList(),
+                Status = e.Status
+            }).ToList();
+            return gameInProgressInfo;
+        }
+
+        public async Task<bool> SaveGameOutcomeAsync(string gameId, GameStatus status)
+        {
+            var id = gameId.ToGuid();
+            var gameEntity = GetGameEntity(gameId);
+            gameEntity.Status = status;
+            _repositoryChessGame.Save();
+            return true;
         }
     }
 }

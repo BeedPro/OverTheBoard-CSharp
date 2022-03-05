@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.ObjectModel;
 
 namespace OverTheBoard.Infrastructure.Queueing
@@ -14,5 +15,7 @@ namespace OverTheBoard.Infrastructure.Queueing
         Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId);
         Task<string> SaveGameMoveAsync(string userId, ChessMove move);
         Task<List<GameInfo>> GetGameByUserIdAsync(string userId);
+        Task<List<ChessGame>> GetGamesInProgress();
+        Task<bool> SaveGameOutcomeAsync(string gameId, GameStatus status);
     }
 }
