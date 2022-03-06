@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.WebUI.SignalR;
-using OverTheBoard.Infrastructure.Queueing;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data;
@@ -79,6 +78,9 @@ namespace OverTheBoard.WebUI.Controllers
 
             model.CurrentColour = currentPlayer.Colour;
             model.OpponentColour = opponentPlayer.Colour;
+
+            model.CurrentRating = currentUser.Rating;
+            model.OpponentRating = opponentUser.Rating;
 
             return View(model);
         }

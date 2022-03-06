@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OverTheBoard.Data.Entities;
-using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.WebUI.Models;

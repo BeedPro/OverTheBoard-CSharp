@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
+using OverTheBoard.Infrastructure.Services;
 
 namespace OverTheBoard.WebUI.SignalR
 {

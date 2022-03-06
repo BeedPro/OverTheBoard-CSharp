@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
-using OverTheBoard.Infrastructure.Queueing;
 using System.Security.Claims;
 using OverTheBoard.Data.Entities.Applications;
 

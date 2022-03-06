@@ -114,6 +114,7 @@ namespace OverTheBoard.WebUI.Controllers
                         UserName = model.EmailAddress,
                         Email = model.EmailAddress,
                         DisplayImagePath = "defaultDisplayPic.jpeg",
+                        Rating = 1200,
                         LockoutEnabled = true,
                         EmailConfirmed = true
                     };

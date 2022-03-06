@@ -27,26 +27,16 @@ namespace OverTheBoard.Data.Entities.Applications
         public GameStatus Status { get; set; }
     }
 
+    public struct GameOutcome
+    {
+        public const double Win = 1.0;
+        public const double Draw = 0.5;
+        public const double Lose = 0.0;
+    }
     public enum GameStatus
     {
         None,
         InProgress,
         Completed
     }
-
-    [Table("Players")]
-    public class GamePlayerEntity
-    {
-        [Key]
-        public int PlayerId { get; set; }
-        public int GameId { get; set; }
-        public Guid UserId { get; set; }
-        public string ConnectionId { get; set; }
-        public string Colour { get; set; }
-        public ChessGameEntity Game { get; set; }
-        public string Pgn { get; set; }
-        public TimeSpan TimeRemaining { get; set; }
-        
-    }
-
 }

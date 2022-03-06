@@ -11,5 +11,6 @@ namespace OverTheBoard.Data.Entities
         public string DisplayImagePath { get; set; }
         [StringLength(100)]
         public string DisplayNameId { get; set; }
+        public int Rating { get; set; }
     }
 }

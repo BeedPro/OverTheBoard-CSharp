@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
+using OverTheBoard.Infrastructure.Services;
 
 namespace OverTheBoard.WebUI.SignalR
 {

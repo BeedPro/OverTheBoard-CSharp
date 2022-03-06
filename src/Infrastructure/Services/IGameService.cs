@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.ObjectModel;
 
-namespace OverTheBoard.Infrastructure.Queueing
+namespace OverTheBoard.Infrastructure.Services
 {
     public interface IGameService
     {

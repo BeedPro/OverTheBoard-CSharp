@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <div class="text-center margin-top-300">
+                <div class="text-center margin-top-250">
                     <label>Status:</label>
                     <div id="status"></div>
                 </div>
@@ -21,7 +21,7 @@
 
                             <div class="text-center">
                                 <h3>
-                                    @Model.OpponentDisplayName
+                                    @Model.OpponentDisplayName <br /> @Model.OpponentRating
                                 </h3>
                                 <div id='@($"{Model.OpponentColour}Timercss")'>0</div>
                             </div>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 margin-top-300">
+                    <div class="col-md-12 margin-top-250">
                         <div id="gameTimer" style="width:50px;">
                         </div>
                         <label>PGN:</label>
@@ -38,10 +38,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 margin-top-300">
+                    <div class="col-md-12 margin-top-250">
 
                         <div class="text-center">
-                            <h3>@Model.CurrentDisplayName</h3>
+                            <h3>
+                                @Model.CurrentDisplayName <br /> @Model.CurrentRating
+                            </h3>
                             <div id='@($"{Model.CurrentColour}Timercss")'>0</div>
                         </div>
 

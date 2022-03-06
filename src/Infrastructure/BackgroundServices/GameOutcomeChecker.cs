@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
-using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
 using System;
