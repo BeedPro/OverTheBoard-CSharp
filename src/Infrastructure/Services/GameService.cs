@@ -87,7 +87,15 @@ namespace OverTheBoard.Infrastructure.Services
                 if (intTimeRemaining <= 0)
                 {
                     player.TimeRemaining = new TimeSpan(0, 0, 0);
-                    await SaveGameOutcomeAsync(gameId, GameStatus.Completed);
+                    if (player.Colour == "white")
+                    {
+                        await SaveGameOutcomeAsync(gameId, GameStatus.Completed, EloOutcomesType.Lose, EloOutcomesType.Win);
+                    }
+                    else
+                    {
+                        await SaveGameOutcomeAsync(gameId, GameStatus.Completed, EloOutcomesType.Win,
+                            EloOutcomesType.Lose);
+                    }
                 }
             }
             return game;
@@ -170,25 +178,32 @@ namespace OverTheBoard.Infrastructure.Services
             return gameInProgressInfo;
         }
 
-        public async Task<bool> SaveGameOutcomeAsync(string gameId, GameStatus status)
+        public async Task<bool> SaveGameOutcomeAsync(string gameId, GameStatus status, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
         {
             var id = gameId.ToGuid();
             var gameEntity = GetGameEntity(gameId);
-            var whitePlayerRating = GetRatingById(gameEntity.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString());
-            var blackPlayerRating = GetRatingById(gameEntity.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString());
-            
+            if (gameEntity.Status != GameStatus.Completed)
+            {
+                var whiteUser =
+                    await _userService.GetUserAsync(gameEntity.Players.FirstOrDefault(f => f.Colour == "white")?.UserId
+                        .ToString());
+                var blackUser =
+                    await _userService.GetUserAsync(gameEntity.Players.FirstOrDefault(f => f.Colour == "black")?.UserId
+                        .ToString());
 
-            gameEntity.Status = status;
-            _repositoryChessGame.Save();
+                var newRatings = await _eloService.CalculateEloAsync(whiteUser.Rating, blackUser.Rating,
+                    whitePlayerOutcome, blackPlayerOutcome);
+                //TODO change the indexing to properties
+                //newRating index 0 is whitePlayers and newRating index 1 is blackPlayers
+                whiteUser.Rating = newRatings.WhitePlayerRating;
+                blackUser.Rating = newRatings.BlackPlayerRating;
+                gameEntity.Status = status;
+                _repositoryChessGame.Save();
+            }
+            
             return true;
         }
 
-        
-        private int GetRatingById(string userId)
-        {
-            var user = _userService.GetUserAsync(userId).GetAwaiter().GetResult();
-            return user.Rating;
-        }
 
         private string GetDisplayNameById(string userId)
         {

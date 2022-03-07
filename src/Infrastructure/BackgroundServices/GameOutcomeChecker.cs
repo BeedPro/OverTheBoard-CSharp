@@ -52,7 +52,15 @@ namespace OverTheBoard.Infrastructure.BackgroundServices
                             if (intTimeRemaining <= 0)
                             {
                                 player.TimeRemaining = new TimeSpan(0, 0, 0);
-                                await _gameService.SaveGameOutcomeAsync(game.Identifier, GameStatus.Completed);
+                                if (player.Colour == "white")
+                                {
+                                    await _gameService.SaveGameOutcomeAsync(game.Identifier, GameStatus.Completed, EloOutcomesType.Lose, EloOutcomesType.Win);
+                                }
+                                else
+                                {
+                                    await _gameService.SaveGameOutcomeAsync(game.Identifier, GameStatus.Completed, EloOutcomesType.Win,
+                                        EloOutcomesType.Lose);
+                                }
                             }
                         }
                     }

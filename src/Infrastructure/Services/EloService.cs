@@ -7,19 +7,18 @@ namespace OverTheBoard.Infrastructure.Services
 {
     public class EloService : IEloService
     {
-        //TODO Fix EloServices Async methods
-
-        public async Task<int[]> CalculateEloAsync(int playerOneRating, int playerTwoRating, EloOutcomesType gameOutcomeForPlayerOne, EloOutcomesType gameOutcomeForPlayerTwo, int kFactorA = GameConstants.EloK, int kFactorB = GameConstants.EloK)
+        public async Task<GamePlayerRatings> CalculateEloAsync(int playerWhiteRating, int playerBlackRating, EloOutcomesType gameOutcomeForPlayerWhite, EloOutcomesType gameOutcomeForPlayerBlack, int kFactorA = GameConstants.EloK, int kFactorB = GameConstants.EloK)
         {
-            var expectedResults = await PredictResultAsync(playerOneRating, playerTwoRating);
-            var deltaPlayerOne = kFactorA * (GetEloOutcomeValue(gameOutcomeForPlayerOne) - expectedResults[0]);
-            var deltaPlayerTwo = kFactorB * (GetEloOutcomeValue(gameOutcomeForPlayerTwo)- expectedResults[1]);
+            var expectedResults = await PredictResultAsync(playerWhiteRating, playerBlackRating);
+            var deltaPlayerWhite = kFactorA * (GetEloOutcomeValue(gameOutcomeForPlayerWhite) - expectedResults[0]);
+            var deltaPlayerBlack = kFactorB * (GetEloOutcomeValue(gameOutcomeForPlayerBlack)- expectedResults[1]);
 
-            var newEloPlayerOneRating = (int)(playerOneRating + deltaPlayerOne);
-            var newEloPlayerTwoRating = (int)(playerTwoRating + deltaPlayerTwo);
-            return new int[] { newEloPlayerOneRating, newEloPlayerTwoRating };
+            var newEloWhiteRating = (int)(playerWhiteRating + deltaPlayerWhite);
+            var newEloBlackRating = (int)(playerBlackRating + deltaPlayerBlack);
+            return new GamePlayerRatings() { WhitePlayerRating = newEloWhiteRating, BlackPlayerRating = newEloBlackRating };
         }
 
+        //TODO: Make sure to return Array into an object with whitePlayerRating, blackPlayerRating or use ref it
         public async Task<decimal[]> PredictResultAsync(int playerOneRating, int playerTwoRating)
         {
             var eloPlayerOne = 1 / (1 + (decimal)Math.Pow(10, (double)(playerTwoRating - playerOneRating) / 400));

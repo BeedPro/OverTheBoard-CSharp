@@ -7,7 +7,7 @@ namespace OverTheBoard.Infrastructure.Services
 {
     public interface IEloService
     {
-        Task<int[]> CalculateEloAsync(int playerOneRating, int playerTwoRating, EloOutcomesType gameOutcomeForPlayerOne,
+        Task<GamePlayerRatings> CalculateEloAsync(int playerOneRating, int playerTwoRating, EloOutcomesType gameOutcomeForPlayerOne,
             EloOutcomesType gameOutcomeForPlayerTwo, int kFactorA = GameConstants.EloK,
             int kFactorB = GameConstants.EloK);
 
