@@ -42,12 +42,14 @@ namespace OverTheBoard.WebUI.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Index(DashboardViewModel model)
+        public async Task<IActionResult> Index()
         {
             // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
+            var model = new DashboardViewModel();
             var user = await _userManager.GetUserAsync(User);
             model.DisplayName = user.DisplayName;
             model.DisplayImagePath = $"{user.DisplayImagePath}";
+            model.Rating = user.Rating;
             return View(model);
         }
         [HttpGet]

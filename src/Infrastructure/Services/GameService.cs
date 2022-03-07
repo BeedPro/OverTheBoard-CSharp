@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OverTheBoard.Data.Entities;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
@@ -16,13 +18,15 @@ namespace OverTheBoard.Infrastructure.Services
         private readonly IRepository<GamePlayerEntity> _repositoryGamePlayer;
         private readonly IUserService _userService;
         private readonly IEloService _eloService;
+        public readonly UserManager<OverTheBoardUser> _userManager;
 
-        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer, IUserService userService, IEloService eloService)
+        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer, IUserService userService, IEloService eloService, UserManager<OverTheBoardUser> userManager)
         {
             _repositoryChessGame = repositoryChessGame;
             _repositoryGamePlayer = repositoryGamePlayer;
             _userService = userService;
             _eloService = eloService;
+            _userManager = userManager;
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
@@ -198,6 +202,8 @@ namespace OverTheBoard.Infrastructure.Services
                 whiteUser.Rating = newRatings.WhitePlayerRating;
                 blackUser.Rating = newRatings.BlackPlayerRating;
                 gameEntity.Status = status;
+                await _userManager.UpdateAsync(whiteUser);
+                await _userManager.UpdateAsync(blackUser);
                 _repositoryChessGame.Save();
             }
             
