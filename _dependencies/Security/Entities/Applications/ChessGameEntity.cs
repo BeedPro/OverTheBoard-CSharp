@@ -26,17 +26,4 @@ namespace OverTheBoard.Data.Entities.Applications
         public string NextMoveColour { get; set; }
         public GameStatus Status { get; set; }
     }
-
-    public struct GameOutcome
-    {
-        public const double Win = 1.0;
-        public const double Draw = 0.5;
-        public const double Lose = 0.0;
-    }
-    public enum GameStatus
-    {
-        None,
-        InProgress,
-        Completed
-    }
 }

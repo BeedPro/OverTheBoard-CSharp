@@ -15,12 +15,14 @@ namespace OverTheBoard.Infrastructure.Services
         private readonly IRepository<ChessGameEntity> _repositoryChessGame;
         private readonly IRepository<GamePlayerEntity> _repositoryGamePlayer;
         private readonly IUserService _userService;
+        private readonly IEloService _eloService;
 
-        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer, IUserService userService)
+        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer, IUserService userService, IEloService eloService)
         {
             _repositoryChessGame = repositoryChessGame;
             _repositoryGamePlayer = repositoryGamePlayer;
             _userService = userService;
+            _eloService = eloService;
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
@@ -44,18 +46,11 @@ namespace OverTheBoard.Infrastructure.Services
                     UserId = item.UserId.ToGuid(),
                     Colour = colour,
                     ConnectionId = item.ConnectionId,
-                    TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0)
+                    TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0),
                 };
                 colours.Remove(colour);
                 game.Players.Add(player);
             }
-
-            var whitePlayerRating = GetRatingById(game.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString());
-            var blackPlayerRating = GetRatingById(game.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString());
-
-            var tempOutputWhite = CalculateEloRatingChange(whitePlayerRating, blackPlayerRating);
-            var tempOutputBlack = CalculateEloRatingChange(blackPlayerRating, whitePlayerRating);
-
             _repositoryChessGame.Context.Add(game);
             _repositoryChessGame.Save();
             return true;
@@ -81,7 +76,7 @@ namespace OverTheBoard.Infrastructure.Services
                 UserId = e.UserId.ToString(),
                 ConnectionId = e.ConnectionId,
                 Colour = e.Colour,
-                TimeRemaining = e.TimeRemaining
+                TimeRemaining = e.TimeRemaining,
             }).ToList();
 
             if (game.LastMoveAt.HasValue)
@@ -95,9 +90,6 @@ namespace OverTheBoard.Infrastructure.Services
                     await SaveGameOutcomeAsync(gameId, GameStatus.Completed);
                 }
             }
-
-
-
             return game;
         }
 
@@ -112,14 +104,11 @@ namespace OverTheBoard.Infrastructure.Services
             }
 
             var player = gameEntity.Players.FirstOrDefault(e => e.UserId == userId.ToGuid());
-
             if (player != null)
             {
                 player.ConnectionId = connectionId;
             }
-
             _repositoryGamePlayer.Save();
-
             return true;
         }
 
@@ -145,9 +134,6 @@ namespace OverTheBoard.Infrastructure.Services
             _repositoryChessGame.Save();
             return opponent?.ConnectionId;
         }
-
-
-
 
         public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
         {
@@ -177,7 +163,7 @@ namespace OverTheBoard.Infrastructure.Services
                     UserId = p.UserId.ToString(),
                     ConnectionId = p.ConnectionId,
                     Colour = p.Colour,
-                    TimeRemaining = p.TimeRemaining
+                    TimeRemaining = p.TimeRemaining,
                 }).ToList(),
                 Status = e.Status
             }).ToList();
@@ -191,34 +177,13 @@ namespace OverTheBoard.Infrastructure.Services
             var whitePlayerRating = GetRatingById(gameEntity.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString());
             var blackPlayerRating = GetRatingById(gameEntity.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString());
             
-            var tempOutputWhite = CalculateEloRatingChange(whitePlayerRating, blackPlayerRating);
-            var tempOutputBlack = CalculateEloRatingChange(blackPlayerRating, whitePlayerRating);
-
-            //var eloOutput = EloCalculator.CalculateElo(whitePlayerRating, blackPlayerRating,
-            //  Convert.ToDecimal(GameOutcome.Win), Convert.ToDecimal(GameOutcome.Lose));
 
             gameEntity.Status = status;
             _repositoryChessGame.Save();
             return true;
         }
 
-        private List<int> CalculateEloRatingChange(int currentPlayerRating, int opponentPlayerRating)
-        {
-            var outcomes = new List<int>()
-            {
-                EloCalculator.CalculateDeltaElo(currentPlayerRating, opponentPlayerRating,
-                    Convert.ToDecimal(GameOutcome.Win)),
-
-                EloCalculator.CalculateDeltaElo(currentPlayerRating, opponentPlayerRating,
-                    Convert.ToDecimal(GameOutcome.Lose)),
-
-                EloCalculator.CalculateDeltaElo(currentPlayerRating, opponentPlayerRating,
-                    Convert.ToDecimal(GameOutcome.Draw)),
-            };
-
-            return outcomes;
-        }
-
+        
         private int GetRatingById(string userId)
         {
             var user = _userService.GetUserAsync(userId).GetAwaiter().GetResult();

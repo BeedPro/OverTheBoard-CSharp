@@ -26,6 +26,7 @@ namespace OverTheBoard.Infrastructure
 
             services.AddScoped<IGameService, GameService>();
 
+            services.AddScoped<IEloService, EloService>();
             return services;
         }
 

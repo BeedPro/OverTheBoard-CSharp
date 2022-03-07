@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.WebUI.SignalR;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data;
 using OverTheBoard.Infrastructure.Services;
@@ -24,13 +25,15 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly IHubContext<GameMessageHub> _gameMessageHubContext;
         private readonly IGameService _gameService;
         private readonly IUserService _userService;
+        private readonly IEloService _eloService;
 
         public PlayController(IHubContext<GameMessageHub> gameMessageHubContext, IGameService gameService,
-            IUserService userService)
+            IUserService userService, IEloService eloService)
         {
             _gameMessageHubContext = gameMessageHubContext;
             _gameService = gameService;
             _userService = userService;
+            _eloService = eloService;
         }
         public async Task<IActionResult> Index()
         {
@@ -64,23 +67,45 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet("game/{gameId}")]
         public async Task<IActionResult> Game(string gameId)
         {
+            
             var model = new GameViewModel();
             var userId = GetUserId();
             var game =  await _gameService.GetPlayersAsync(gameId);
             var currentPlayer = game.Players.FirstOrDefault(e => e.UserId.Equals(userId));
             var opponentPlayer = game.Players.FirstOrDefault(e => !e.UserId.Equals(userId));
 
-            var opponentUser = await _userService.GetUserAsync(opponentPlayer.UserId);
-            var currentUser = await _userService.GetUserAsync(userId);
+            if (opponentPlayer != null && currentPlayer != null)
+            {
+                var opponentUser = await _userService.GetUserAsync(opponentPlayer.UserId);
+                var currentUser = await _userService.GetUserAsync(userId);
 
-            model.CurrentDisplayName = currentUser.DisplayName;
-            model.OpponentDisplayName = opponentUser.DisplayName;
+                model.CurrentDisplayName = currentUser.DisplayName;
+                model.OpponentDisplayName = opponentUser.DisplayName;
 
-            model.CurrentColour = currentPlayer.Colour;
-            model.OpponentColour = opponentPlayer.Colour;
+                model.CurrentColour = currentPlayer.Colour;
+                model.OpponentColour = opponentPlayer.Colour;
 
-            model.CurrentRating = currentUser.Rating;
-            model.OpponentRating = opponentUser.Rating;
+                model.CurrentRating = currentUser.Rating;
+                model.OpponentRating = opponentUser.Rating;
+
+                var currentEloOutcomes = await _eloService.CalculateEloRatingChangeAsync(currentUser.Rating, opponentUser.Rating);
+
+                foreach (var outcome in currentEloOutcomes)
+                {
+                    switch (outcome.Type)
+                    {
+                        case EloOutcomesType.Win:
+                            model.CurrentEloChangeOnWin = outcome.Value;
+                            break;
+                        case EloOutcomesType.Lose:
+                            model.CurrentEloChangeOnLose = outcome.Value;
+                            break;
+                        case EloOutcomesType.Draw:
+                            model.CurrentEloChangeOnDraw = outcome.Value;
+                            break;
+                    }
+                }
+            }
 
             return View(model);
         }
