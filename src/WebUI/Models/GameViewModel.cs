@@ -11,5 +11,10 @@ namespace OverTheBoard.WebUI.Models
         public string OpponentDisplayName { get; set; }
         public string CurrentColour { get; set; }
         public string OpponentColour { get; set; }
+        public int CurrentRating { get; set; }
+        public int OpponentRating { get; set; }
+        public int CurrentEloChangeOnWin { get; set; }
+        public int CurrentEloChangeOnLose { get; set; }
+        public int CurrentEloChangeOnDraw { get; set; }
     }
 }

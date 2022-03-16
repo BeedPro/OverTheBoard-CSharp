@@ -34,10 +34,11 @@
                     clearTimeout(gameTimer.timer_loop);
                     gameTimer.timer_loop = setInterval(function () {
                         opponent.time -= 1;
-                        if (opponent.time == 0) {
+                        if (opponent.time <= 0) {
                             clearTimeout(gameTimer.timer_loop);
                             gameTimer.gameTimer_over = true;
                             $($self).trigger('gameFlagged');
+                            opponent.time = 0;
                         }
                         gameTimer.displayTimers();
                     }, 100);
@@ -76,16 +77,6 @@
                 this.blackTimer.clock.innerHTML = $self.formatTime(this.blackTimer.time);
             }
             this.changePlay = function (timerInfo) {
-
-                //var playerColour = '';
-                //if (timerInfo.orientation === 'black' && timerInfo.turn == 'b') {
-                //    playerColour = 'w';
-                //}
-                //else if (timerInfo.orientation === 'black' && timerInfo.turn === 'w') {
-                //    playerColour = 'b';
-                //} else {
-                //    playerColour = timerInfo.turn;
-                //}
 
                 var playerColour = timerInfo.turn;
                 // whiteTimer Move then start timer of blackTimer

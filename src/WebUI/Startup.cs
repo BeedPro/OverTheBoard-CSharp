@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OverTheBoard.Infrastructure;
+using OverTheBoard.Infrastructure.BackgroundServices;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.SignalR;
@@ -27,7 +28,8 @@ namespace OverTheBoard.WebUI
             services.AddSecurity();
             services.AddScoped<IFileUploader, FileUploader>();
             services.AddSignalR();
-            services.AddQueueing();
+            services.AddInfrastructure();
+            services.AddHostedService<GameOutcomeChecker>();
 
         }
 

@@ -1,38 +1,29 @@
-﻿@{
+﻿@model OverTheBoard.WebUI.Models.GameHistoryViewModel
+@{
+    int i = 1;
 }
 <div class="">
-    <table class="tg center-table">
-        <thead>
-            <tr>
-                <th class="tg-0pky">Game Number</th>
-                <th class="tg-0pky">White</th>
-                <th class="tg-0pky">Black</th>
-                <th class="tg-0pky">Score</th>
-                <th class="tg-0pky">GameLink</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="tg-0pky">1</td>
-                <td class="tg-0pky">PlaceholderUser<br></td>
-                <td class="tg-0pky">PlaceholderUser</td>
-                <td class="tg-0pky">0</td>
-                <td class="tg-0pky"><a asp-controller="Dashboard" asp-action="Analysis">Link</a></td>
-            </tr>
-            <tr>
-                <td class="tg-0pky">2<br></td>
-                <td class="tg-0pky">PlaceholderUser</td>
-                <td class="tg-0pky">PlaceholderUser</td>
-                <td class="tg-0pky">0</td>
-                <td class="tg-0pky"><a asp-controller="Dashboard" asp-action="Analysis">Link</a></td>
-            </tr>
-            <tr>
-                <td class="tg-0pky">3</td>
-                <td class="tg-0pky">PlaceholderUser</td>
-                <td class="tg-0pky">PlaceholderUser</td>
-                <td class="tg-0pky">0</td>
-                <td class="tg-0pky"><a asp-controller="Dashboard" asp-action="Analysis">Link</a></td>
-            </tr>
-        </tbody>
-    </table>
+    @if (Model.gamesCompleted.Count > 0)
+    {
+        <table class="tg center-table">
+            <thead>
+                <tr>
+                    <th class="tg-0pky">Game Number</th>
+                    <th class="tg-0pky">White</th>
+                    <th class="tg-0pky">Black</th>
+                    <th class="tg-0pky">Game Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var game in Model.gamesCompleted)
+                {
+                    <tr>
+                        <td class="tg-0pky"><span>@(i++)</span></td>
+                        <td class="tg-0pky">@game.WhiteUser<br></td>
+                        <td class="tg-0pky">@game.BlackUser</td>
+                        <td class="tg-0pky"><a href="https://localhost:44305/play/game/@game.Identifier">Open Game</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>}
 </div>

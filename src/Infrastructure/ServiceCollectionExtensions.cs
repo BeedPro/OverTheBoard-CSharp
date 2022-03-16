@@ -16,7 +16,7 @@ namespace OverTheBoard.Infrastructure
         /// </summary>
         /// <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />.</param>
         /// <returns>The service collection.</returns>
-        public static IServiceCollection AddQueueing(
+        public static IServiceCollection AddInfrastructure(
             this IServiceCollection services)
         {
             services.AddSingleton<IUnrankedGameQueue, UnrankedGameQueue>();
@@ -26,6 +26,7 @@ namespace OverTheBoard.Infrastructure
 
             services.AddScoped<IGameService, GameService>();
 
+            services.AddScoped<IEloService, EloService>();
             return services;
         }
 

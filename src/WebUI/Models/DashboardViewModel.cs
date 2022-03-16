@@ -9,5 +9,6 @@ namespace OverTheBoard.WebUI.Models
     {
         public string DisplayImagePath { get; set; }
         public string DisplayName { get; set; }
+        public int Rating { get; set; }
     }
 }

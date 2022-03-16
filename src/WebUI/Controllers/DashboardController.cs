@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
+using System.Security.Claims;
+using OverTheBoard.Data.Entities.Applications;
 
 namespace OverTheBoard.WebUI.Controllers
 {
@@ -22,26 +24,32 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly SignInManager<OverTheBoardUser> _signInManager;
         private readonly IUserService _userService;
+        private readonly IGameService _gameService;
 
         public DashboardController(IFileUploader fileUploader, 
             UserManager<OverTheBoardUser> userManager, 
             SignInManager<OverTheBoardUser> signInManager,
-            IUserService userService)
+            IUserService userService,
+            IGameService gameService
+            )
         {
             _fileUploader = fileUploader;
             _userManager = userManager;
             _signInManager = signInManager;
             _userService = userService;
+            _gameService = gameService;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Index(DashboardViewModel model)
+        public async Task<IActionResult> Index()
         {
             // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
+            var model = new DashboardViewModel();
             var user = await _userManager.GetUserAsync(User);
             model.DisplayName = user.DisplayName;
             model.DisplayImagePath = $"{user.DisplayImagePath}";
+            model.Rating = user.Rating;
             return View(model);
         }
         [HttpGet]
@@ -106,9 +114,14 @@ namespace OverTheBoard.WebUI.Controllers
             return View(model);
             
         }
-        public IActionResult GameHistory()
+        public async Task<IActionResult> GameHistory()
         {
-            return View();
+            var model = new GameHistoryViewModel();
+            var userId = GetUserId();
+            var games = await _gameService.GetGameByUserIdAsync(userId);
+            var gamesCompleted = games.Where(e => e.Status == GameStatus.Completed).ToList();
+            model.gamesCompleted = gamesCompleted;
+            return View(model);
         }
         public IActionResult Leaderboard()
         {
@@ -129,6 +142,12 @@ namespace OverTheBoard.WebUI.Controllers
                 return true;
             }
             return false;
+        }
+
+        private string GetUserId()
+        {
+            return User
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
     }
 }

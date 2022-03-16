@@ -24,21 +24,6 @@ namespace OverTheBoard.Data.Entities.Applications
         [ForeignKey("GameId")]
         public ICollection<GamePlayerEntity> Players { get; set; }
         public string NextMoveColour { get; set; }
+        public GameStatus Status { get; set; }
     }
-
-    [Table("Players")]
-    public class GamePlayerEntity
-    {
-        [Key]
-        public int PlayerId { get; set; }
-        public int GameId { get; set; }
-        public Guid UserId { get; set; }
-        public string ConnectionId { get; set; }
-        public string Colour { get; set; }
-        public ChessGameEntity Game { get; set; }
-        public string Pgn { get; set; }
-        public TimeSpan TimeRemaining { get; set; }
-        
-    }
-
 }
