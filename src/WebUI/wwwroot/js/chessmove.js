@@ -38,6 +38,20 @@
             });
         });
 
+        $($self.settings.Id).once("send_gameStatus", function (event, gameOverStatus) {
+            gameOverStatus.GameId = $self.control.data("instance-id");
+            gameOverStatus.ConnectionId = $self.connection.connectionId;
+            $self.connection.invoke("SendGameStatus", gameOverStatus).catch(function (err) {
+                return console.error(err.toString());
+            });
+        });
+
+        $self.connection.on("ReceiveMessage", function (gameOverStatus) {
+            console.log(gameOverStatus);
+            console.log("Hello there");
+            //  TODO get a receive from the HUB.
+        });
+
         $self.connection.on("Initialised", function (move) {
             $($self.settings.Id).trigger("chess_init", move);
             $($self.settings.Id).hide();
@@ -51,3 +65,5 @@
 $(function () {
     $.fn.chessmove();
 });
+
+/*R ando m athe ath aba wetha athlawhgt*/

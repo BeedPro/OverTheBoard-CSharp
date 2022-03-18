@@ -33,7 +33,7 @@ namespace OverTheBoard.WebUI.SignalR
 
                 foreach (var player in players.Players)
                 {
-                    var chessMove = new ChessMove(){ Orientation = player.Colour};
+                    var chessMove = new ChessMove() { Orientation = player.Colour };
                     if (player.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
                     {
                         chessMove.Fen = players.Fen;
@@ -42,12 +42,29 @@ namespace OverTheBoard.WebUI.SignalR
                     chessMove.blackRemaining = blackTimer;
                     await Clients.Client(player.ConnectionId).SendAsync("Initialised", chessMove);
                 }
-                
-               
+
+
             }
         }
 
-        
+        public async Task SendGameStatus(GameOverStatus gameOverStatus)
+        {
+            //TODO: FIX the SERVER ERROR
+            await Clients.Client(gameOverStatus.ConnectionId).SendAsync("ReceiveMessage", gameOverStatus);
+            
+            //if (players != null)
+            //{
+            //    foreach (var player in players.Players)
+            //    {
+            //        await Clients.Client(player.ConnectionId).SendAsync("ReceiveMessage", gameOverStatus);
+            //    }
+            //}
+            
+        }
+
+
+
+
         public async Task Send(ChessMove move)
         {
             var userId = GetUserId();
@@ -62,5 +79,5 @@ namespace OverTheBoard.WebUI.SignalR
         }
     }
 
-    
+
 }

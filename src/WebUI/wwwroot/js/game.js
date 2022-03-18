@@ -13,7 +13,6 @@
         }, options);
 
         $self.control = $($self.settings.Id);
-        //$self.board = null;
         $self.game = new Chess();
         $self.gameFlagged = false;
 
@@ -101,6 +100,16 @@
             // checkmate?
             if ($self.game.in_checkmate()) {
                 status = 'Game over ' + moveColor + ' is in checkmate.';
+                $($self.settings.Id).trigger("send_gameStatus", {
+                    WhiteOutcome: "Win",
+                    BlackOutcome: "Lose"
+                });
+                //$($self.settings.Id).trigger("send_gameStatus", {
+                //    whiteTime: move.whiteRemaining,
+                //    blackTime: move.blackRemaining,
+                //    orientation: $self.board.orientation(),
+                //    turn: $self.game.turn()
+                //});
             }
 
             // draw?
@@ -135,7 +144,7 @@
                 orientation: $self.board.orientation(),
                 turn: $self.game.turn()
             });
-
+            $self.updateStatus();
         });
 
         $($self.settings.Id).once("chess_moved", function (event, move) {
