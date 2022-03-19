@@ -32,7 +32,7 @@ namespace OverTheBoard.WebUI.SignalR
             if (queueItems?.Count == 2)
             {
                 var gameId = Guid.NewGuid().ToString();
-                await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, 10);
+                await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, 1);
 
                 foreach (UnrankedGameQueueItem item in queueItems)
                 {

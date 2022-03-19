@@ -22,8 +22,9 @@
 
                             <div class="text-center">
                                 <h3>
-                                    @Model.OpponentDisplayName <br /> @Model.OpponentRating
+                                    @Model.OpponentDisplayName
                                 </h3>
+                                <div id="oppRating"> <h3>@Model.OpponentRating</h3></div>
                                 <div id='@($"{Model.OpponentColour}Timercss")'>0</div>
                             </div>
                             
@@ -35,7 +36,7 @@
                         <div id="gameTimer" style="width:50px;">
                         </div>
                         <label>PGN:</label>
-                        <div id="pgnNOTHERE" class="pgn-height-50"></div>
+                        <div class="pgn-height-50"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -43,8 +44,9 @@
 
                         <div class="text-center">
                             <h3>
-                                @Model.CurrentDisplayName <br /> @Model.CurrentRating
+                                @Model.CurrentDisplayName
                             </h3>
+                            <div id="currRating"> <h3>@Model.CurrentRating</h3></div>
                             <div id='@($"{Model.CurrentColour}Timercss")'>0</div>
                         </div>
 

@@ -14,10 +14,12 @@ namespace OverTheBoard.WebUI.SignalR
     public class GameMessageHub : Hub
     {
         private readonly IGameService _gameService;
-        public GameMessageHub(IGameService gameService)
+        private readonly IUserService _userService;
+
+        public GameMessageHub(IGameService gameService, IUserService userService)
         {
             _gameService = gameService;
-
+            _userService = userService;
         }
 
 
@@ -49,16 +51,18 @@ namespace OverTheBoard.WebUI.SignalR
 
         public async Task SendGameStatus(GameOverStatus gameOverStatus)
         {
-            //TODO: FIX the SERVER ERROR
-            await Clients.Client(gameOverStatus.ConnectionId).SendAsync("ReceiveMessage", gameOverStatus);
-            
-            //if (players != null)
-            //{
-            //    foreach (var player in players.Players)
-            //    {
-            //        await Clients.Client(player.ConnectionId).SendAsync("ReceiveMessage", gameOverStatus);
-            //    }
-            //}
+            var gameId = gameOverStatus.GameId;
+            var game = await _gameService.GetPlayersAsync(gameOverStatus.GameId);
+            await _gameService.SaveGameOutcomeAsync(gameId,
+                gameOverStatus.WhiteOutcome, gameOverStatus.BlackOutcome);
+            var whitePlayer = await _userService.GetUserAsync(game.Players.FirstOrDefault(e => e.Colour == "white")?.UserId);
+            var blackPlayer = await _userService.GetUserAsync(game.Players.FirstOrDefault(e => e.Colour == "black")?.UserId);
+            var gameRatings = new GamePlayerRatings()
+            {
+                WhitePlayerRating = whitePlayer.Rating,
+                BlackPlayerRating = blackPlayer.Rating
+            };
+            await Clients.Client(gameOverStatus.ConnectionId).SendAsync("ReceiveRatings", gameRatings);
             
         }
 

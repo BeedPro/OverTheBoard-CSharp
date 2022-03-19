@@ -16,6 +16,7 @@ namespace OverTheBoard.Infrastructure.Services
         Task<string> SaveGameMoveAsync(string userId, ChessMove move);
         Task<List<GameInfo>> GetGameByUserIdAsync(string userId);
         Task<List<ChessGame>> GetGamesInProgress();
-        Task<bool> SaveGameOutcomeAsync(string gameId, GameStatus status, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome);
+        Task<bool> SaveGameOutcomeAsync(string gameId, EloOutcomesType whitePlayerOutcome,
+            EloOutcomesType blackPlayerOutcome);
     }
 }

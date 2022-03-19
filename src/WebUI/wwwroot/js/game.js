@@ -1,6 +1,12 @@
 ﻿(function ($) {
     $.fn.play = function (options) {
         var $self = $(this);
+        const Outcomes = {
+            None: 0,
+            Win: 1,
+            Lose: 2,
+            Draw: 3
+        };
 
 
         $self.settings = $.extend({
@@ -11,7 +17,6 @@
             whiteSquareGrey: '#a9a9a9',
             blackSquareGrey: '#696969'
         }, options);
-
         $self.control = $($self.settings.Id);
         $self.game = new Chess();
         $self.gameFlagged = false;
@@ -100,21 +105,29 @@
             // checkmate?
             if ($self.game.in_checkmate()) {
                 status = 'Game over ' + moveColor + ' is in checkmate.';
-                $($self.settings.Id).trigger("send_gameStatus", {
-                    WhiteOutcome: "Win",
-                    BlackOutcome: "Lose"
-                });
-                //$($self.settings.Id).trigger("send_gameStatus", {
-                //    whiteTime: move.whiteRemaining,
-                //    blackTime: move.blackRemaining,
-                //    orientation: $self.board.orientation(),
-                //    turn: $self.game.turn()
-                //});
+                if (moveColor === "White") {
+                    $($self.settings.Id).trigger("send_gameStatus",
+                        {
+                            WhiteOutcome: Outcomes.Lose,
+                            BlackOutcome: Outcomes.Win
+                        });
+                } else {
+                    $($self.settings.Id).trigger("send_gameStatus",
+                        {
+                            WhiteOutcome: Outcomes.Win,
+                            BlackOutcome: Outcomes.Lose
+                        });
+                }
             }
 
             // draw?
             else if ($self.game.in_draw()) {
                 status = 'Game over, drawn position';
+                $($self.settings.Id).trigger("send_gameStatus",
+                    {
+                        WhiteOutcome: Outcomes.Draw,
+                        BlackOutcome: Outcomes.Draw
+                    });
             }
 
             // game still on
@@ -157,6 +170,20 @@
         
         $($self.settings.Id).once('gameFlagged', function (event) {
             $self.gameFlagged = true;
+            if ($self.game.turn() === 'w') {
+                $($self.settings.Id).trigger("send_gameStatus",
+                    {
+                        WhiteOutcome: Outcomes.Lose,
+                        BlackOutcome: Outcomes.Win
+                    });
+            } else {
+                $($self.settings.Id).trigger("send_gameStatus",
+                    {
+                        WhiteOutcome: Outcomes.Win,
+                        BlackOutcome: Outcomes.Lose
+                    });
+            }
+            
             $self.updateStatus();
         });
 

@@ -93,11 +93,11 @@ namespace OverTheBoard.Infrastructure.Services
                     player.TimeRemaining = new TimeSpan(0, 0, 0);
                     if (player.Colour == "white")
                     {
-                        await SaveGameOutcomeAsync(gameId, GameStatus.Completed, EloOutcomesType.Lose, EloOutcomesType.Win);
+                        await SaveGameOutcomeAsync(gameId, EloOutcomesType.Lose, EloOutcomesType.Win);
                     }
                     else
                     {
-                        await SaveGameOutcomeAsync(gameId, GameStatus.Completed, EloOutcomesType.Win,
+                        await SaveGameOutcomeAsync(gameId, EloOutcomesType.Win,
                             EloOutcomesType.Lose);
                     }
                 }
@@ -120,6 +120,7 @@ namespace OverTheBoard.Infrastructure.Services
             {
                 player.ConnectionId = connectionId;
             }
+
             _repositoryGamePlayer.Save();
             return true;
         }
@@ -182,9 +183,8 @@ namespace OverTheBoard.Infrastructure.Services
             return gameInProgressInfo;
         }
 
-        public async Task<bool> SaveGameOutcomeAsync(string gameId, GameStatus status, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
+        public async Task<bool> SaveGameOutcomeAsync(string gameId, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
         {
-            var id = gameId.ToGuid();
             var gameEntity = GetGameEntity(gameId);
             if (gameEntity.Status != GameStatus.Completed)
             {
@@ -201,7 +201,7 @@ namespace OverTheBoard.Infrastructure.Services
                 //newRating index 0 is whitePlayers and newRating index 1 is blackPlayers
                 whiteUser.Rating = newRatings.WhitePlayerRating;
                 blackUser.Rating = newRatings.BlackPlayerRating;
-                gameEntity.Status = status;
+                gameEntity.Status = GameStatus.Completed;
                 await _userManager.UpdateAsync(whiteUser);
                 await _userManager.UpdateAsync(blackUser);
                 _repositoryChessGame.Save();
