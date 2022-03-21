@@ -39,12 +39,11 @@ namespace OverTheBoard.Infrastructure.Services
             game.Period = periodInMinutes;
             game.Status = GameStatus.InProgress;
             List<string> colours = new List<string> { "white", "black" };
-            var colour = "";
             foreach (var item in queueItems)
             {
                 Random rand = new Random();
                 int index = rand.Next(colours.Count);
-                colour = colours[index];
+                var colour = colours[index];
                 var player = new GamePlayerEntity()
                 {
                     UserId = item.UserId.ToGuid(),
