@@ -71,11 +71,6 @@
                 });
             }
 
-            this.stopTimer = function() {
-                this.gameTimer_over = true;
-            }
-
-            
             this.displayTimers = function () {
                 this.whiteTimer.clock.innerHTML = $self.formatTime(this.whiteTimer.time);
                 this.blackTimer.clock.innerHTML = $self.formatTime(this.blackTimer.time);
@@ -103,7 +98,6 @@
             gameTimer.changePlay(timerInfo);
         });
         $(this).once("game_over", function (event) {
-            gameTimer.stopTimer();
             $("#" + $self.settings.whiteTimercss).hide();
             $("#" + $self.settings.blackTimercss).hide();
         });

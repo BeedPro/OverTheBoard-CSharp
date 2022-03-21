@@ -119,7 +119,6 @@
                         });
                 }
                 $($self.settings.Id).trigger("game_over");
-                $self.changeTimer();
             }
 
             // draw?
@@ -131,7 +130,6 @@
                         BlackOutcome: outcomes.Draw
                     });
                 $($self.settings.Id).trigger("game_over");
-                $self.changeTimer();
             }
 
             // game still on

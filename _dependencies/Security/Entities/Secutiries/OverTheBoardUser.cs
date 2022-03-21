@@ -12,5 +12,6 @@ namespace OverTheBoard.Data.Entities
         [StringLength(100)]
         public string DisplayNameId { get; set; }
         public int Rating { get; set; }
+        public UserRank Rank { get; set; }
     }
 }
