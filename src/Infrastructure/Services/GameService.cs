@@ -50,8 +50,7 @@ namespace OverTheBoard.Infrastructure.Services
                     UserId = item.UserId.ToGuid(),
                     Colour = colour,
                     ConnectionId = item.ConnectionId,
-                    //TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0),
-                    TimeRemaining = new TimeSpan(0,0,0,periodInMinutes)
+                    TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0),
                 };
                 colours.Remove(colour);
                 game.Players.Add(player);
@@ -92,15 +91,6 @@ namespace OverTheBoard.Infrastructure.Services
                 if (intTimeRemaining <= 0)
                 {
                     player.TimeRemaining = new TimeSpan(0, 0, 0);
-                    if (player.Colour == "white")
-                    {
-                        await SaveGameOutcomeAsync(gameId, EloOutcomesType.Lose, EloOutcomesType.Win);
-                    }
-                    else
-                    {
-                        await SaveGameOutcomeAsync(gameId, EloOutcomesType.Win,
-                            EloOutcomesType.Lose);
-                    }
                 }
             }
             return game;

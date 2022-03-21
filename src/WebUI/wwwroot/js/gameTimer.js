@@ -5,7 +5,6 @@
 
 
         $self.settings = $.extend({
-            initial_time : 10 * 60 * 15,
             whiteTimercss: 'whiteTimercss',
             blackTimercss: 'blackTimercss'
         }, options);
@@ -32,16 +31,17 @@
                 var gameTimer = this.gameTimer;
                 if (!gameTimer.gameTimer_over) {
                     clearTimeout(gameTimer.timer_loop);
-                    gameTimer.timer_loop = setInterval(function () {
-                        opponent.time -= 1;
-                        if (opponent.time <= 0) {
-                            clearTimeout(gameTimer.timer_loop);
-                            gameTimer.gameTimer_over = true;
-                            $($self).trigger('gameFlagged');
-                            opponent.time = 0;
-                        }
-                        gameTimer.displayTimers();
-                    }, 100);
+                    gameTimer.timer_loop = setInterval(function() {
+                            opponent.time -= 1;
+                            if (opponent.time <= 0) {
+                                clearTimeout(gameTimer.timer_loop);
+                                gameTimer.gameTimer_over = true;
+                                $($self).trigger('gameFlagged');
+                                opponent.time = 0;
+                            }
+                            gameTimer.displayTimers();
+                        },
+                        100);
                     opponent.clock.className = 'now_playing';
                     this.clock.className = '';
                 }
@@ -55,6 +55,7 @@
             this.blackTimer.opponent = this.whiteTimer;
             this.timer_loop = null;
             this.gameTimer_over = false;
+            this.gameOver = false;
 
             this.resetClocks = function (times) {
                 clearTimeout(this.timer_loop);
@@ -67,9 +68,12 @@
                 this.changePlay({
                     orientation: times.orientation,
                     turn: times.turn
-                })
+                });
             }
 
+            this.stopTimer = function() {
+                this.gameTimer_over = true;
+            }
 
             
             this.displayTimers = function () {
@@ -98,6 +102,11 @@
         $(this).once("change_colour", function (event, timerInfo) {
             gameTimer.changePlay(timerInfo);
         });
+        $(this).once("game_over", function (event) {
+            gameTimer.stopTimer();
+            $("#" + $self.settings.whiteTimercss).hide();
+            $("#" + $self.settings.blackTimercss).hide();
+        });
 
         gameTimer = new GameTimer($self.settings.initial_time, $self.settings.whiteTimercss, $self.settings.blackTimercss);
         //gameTimer.resetClocks();
@@ -113,7 +122,6 @@
 
 $(function () {
     $('#checkConnection').gameTimer({
-        initial_time: 9000,
         whiteTimercss: 'whiteTimercss',
         blackTimercss: 'blackTimercss'
     });

@@ -118,6 +118,8 @@
                             BlackOutcome: outcomes.Lose
                         });
                 }
+                $($self.settings.Id).trigger("game_over");
+                $self.changeTimer();
             }
 
             // draw?
@@ -128,6 +130,8 @@
                         WhiteOutcome: outcomes.Draw,
                         BlackOutcome: outcomes.Draw
                     });
+                $($self.settings.Id).trigger("game_over");
+                $self.changeTimer();
             }
 
             // game still on
@@ -146,6 +150,7 @@
                             BlackOutcome: outcomes.Lose
                         });
                 }
+                $($self.settings.Id).trigger("game_over");
             } else {
                 status = moveColor + ' to move';
                 // check?

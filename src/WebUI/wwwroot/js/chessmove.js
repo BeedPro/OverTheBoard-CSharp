@@ -50,13 +50,9 @@
 
         //TODO get a receive from the HUB.
         $self.connection.on("ReceiveRatings", function (gameRatings) {
-            //$("#currRating").text(gameRatings.whitePlayerRating.toString());
-            //$("#oppRating").text(gameRatings.blackPlayerRating.toString());
             userRatingDiv.textContent = gameRatings.whitePlayerRating.toString();
             oppRatingDiv.textContent = gameRatings.blackPlayerRating.toString();
             $("#eloChangeOnOutcome").hide();
-            //userRatingDiv.textContent = "hi";
-            //oppRatingDiv.textContent = "hello";
         });
 
         $self.connection.on("Initialised", function (move) {
