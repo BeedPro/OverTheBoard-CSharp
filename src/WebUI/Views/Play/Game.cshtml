@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="text-center margin-top-250">
-                    <div> Win: @Model.CurrentEloChangeOnWin | Lose: @Model.CurrentEloChangeOnLose | Draw: @Model.CurrentEloChangeOnDraw </div>
+                    <div id="eloChangeOnOutcome"> Win: @Model.CurrentEloChangeOnWin | Lose: @Model.CurrentEloChangeOnLose | Draw: @Model.CurrentEloChangeOnDraw </div>
                     <label>Status:</label>
                     <div id="status"></div>
                 </div>
@@ -24,7 +24,7 @@
                                 <h3>
                                     @Model.OpponentDisplayName
                                 </h3>
-                                <div id="oppRating"> <h3>@Model.OpponentRating</h3></div>
+                                <div id="oppRating">@Model.OpponentRating</div>
                                 <div id='@($"{Model.OpponentColour}Timercss")'>0</div>
                             </div>
                             
@@ -46,7 +46,7 @@
                             <h3>
                                 @Model.CurrentDisplayName
                             </h3>
-                            <div id="currRating"> <h3>@Model.CurrentRating</h3></div>
+                            <div id="currRating">@Model.CurrentRating</div>
                             <div id='@($"{Model.CurrentColour}Timercss")'>0</div>
                         </div>
 

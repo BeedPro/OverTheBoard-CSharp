@@ -1,7 +1,7 @@
 ﻿(function ($) {
     $.fn.play = function (options) {
         var $self = $(this);
-        const Outcomes = {
+        const outcomes = {
             None: 0,
             Win: 1,
             Lose: 2,
@@ -108,14 +108,14 @@
                 if (moveColor === "White") {
                     $($self.settings.Id).trigger("send_gameStatus",
                         {
-                            WhiteOutcome: Outcomes.Lose,
-                            BlackOutcome: Outcomes.Win
+                            WhiteOutcome: outcomes.Lose,
+                            BlackOutcome: outcomes.Win
                         });
                 } else {
                     $($self.settings.Id).trigger("send_gameStatus",
                         {
-                            WhiteOutcome: Outcomes.Win,
-                            BlackOutcome: Outcomes.Lose
+                            WhiteOutcome: outcomes.Win,
+                            BlackOutcome: outcomes.Lose
                         });
                 }
             }
@@ -125,14 +125,27 @@
                 status = 'Game over, drawn position';
                 $($self.settings.Id).trigger("send_gameStatus",
                     {
-                        WhiteOutcome: Outcomes.Draw,
-                        BlackOutcome: Outcomes.Draw
+                        WhiteOutcome: outcomes.Draw,
+                        BlackOutcome: outcomes.Draw
                     });
             }
 
             // game still on
             else if ($self.gameFlagged) {
                 status = 'Game over, ' + moveColor + ' flagged';
+                if (moveColor === 'White') {
+                    $($self.settings.Id).trigger("send_gameStatus",
+                        {
+                            WhiteOutcome: outcomes.Lose,
+                            BlackOutcome: outcomes.Win
+                        });
+                } else {
+                    $($self.settings.Id).trigger("send_gameStatus",
+                        {
+                            WhiteOutcome: outcomes.Win,
+                            BlackOutcome: outcomes.Lose
+                        });
+                }
             } else {
                 status = moveColor + ' to move';
                 // check?
@@ -170,20 +183,6 @@
         
         $($self.settings.Id).once('gameFlagged', function (event) {
             $self.gameFlagged = true;
-            if ($self.game.turn() === 'w') {
-                $($self.settings.Id).trigger("send_gameStatus",
-                    {
-                        WhiteOutcome: Outcomes.Lose,
-                        BlackOutcome: Outcomes.Win
-                    });
-            } else {
-                $($self.settings.Id).trigger("send_gameStatus",
-                    {
-                        WhiteOutcome: Outcomes.Win,
-                        BlackOutcome: Outcomes.Lose
-                    });
-            }
-            
             $self.updateStatus();
         });
 

@@ -50,7 +50,8 @@ namespace OverTheBoard.Infrastructure.Services
                     UserId = item.UserId.ToGuid(),
                     Colour = colour,
                     ConnectionId = item.ConnectionId,
-                    TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0),
+                    //TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0),
+                    TimeRemaining = new TimeSpan(0,0,0,periodInMinutes)
                 };
                 colours.Remove(colour);
                 game.Players.Add(player);
