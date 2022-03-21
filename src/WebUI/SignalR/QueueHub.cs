@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.Infrastructure.Services;
@@ -14,11 +15,14 @@ namespace OverTheBoard.WebUI.SignalR
     {
         private readonly IUnrankedGameQueue _gameQueue;
         private readonly IGameService _gameService;
+        private readonly IUserService _userService;
 
-        public QueueHub(IUnrankedGameQueue gameQueue, IGameService gameService)
+
+        public QueueHub(IUnrankedGameQueue gameQueue, IGameService gameService, IUserService userService)
         {
             _gameQueue = gameQueue;
             _gameService = gameService;
+            _userService = userService;
         }
         public async Task Queue(string connectionId)
         {
@@ -26,7 +30,8 @@ namespace OverTheBoard.WebUI.SignalR
                 new UnrankedGameQueueItem()
                 {
                     UserId = GetUserId(), 
-                    ConnectionId = connectionId
+                    ConnectionId = connectionId,
+                    Rating = await GetUserRating()
                 });
 
             if (queueItems?.Count == 2)
@@ -46,6 +51,12 @@ namespace OverTheBoard.WebUI.SignalR
         {
             return Context.User
                 .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        }
+        private async Task<int> GetUserRating()
+        {
+            var userId = GetUserId();
+            var user = await _userService.GetUserAsync(userId);
+            return user.Rating;
         }
     }
 }

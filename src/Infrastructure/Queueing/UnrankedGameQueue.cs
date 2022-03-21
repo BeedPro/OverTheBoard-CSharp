@@ -9,25 +9,64 @@ namespace OverTheBoard.Infrastructure.Queueing
     {
         public string Name => GameType.Unranked.ToString();
 
-        public Queue<UnrankedGameQueueItem> Queue = new Queue<UnrankedGameQueueItem>();
+        //public Queue<UnrankedGameQueueItem> Queue = new();
+        public List<UnrankedGameQueueItem> UserQueue = new();
 
         public List<UnrankedGameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem)
         {
-            if(Queue.Any())
+            var foundMatch = false;
+            if(UserQueue.Any())
             {
-                var item = Queue.Dequeue();
-                if (!item.UserId.Equals(queueItem.UserId, StringComparison.OrdinalIgnoreCase))
+                var nearestUpperVal = Math.Ceiling(queueItem.Rating / 50.0) * 50.0;
+                var upperBound = Convert.ToInt32(nearestUpperVal + 50.0);
+                var lowerBound = Convert.ToInt32(nearestUpperVal - 50.0);
+                while (!foundMatch)
                 {
-                    return new List<UnrankedGameQueueItem>()
+                    upperBound += 50;
+                    lowerBound -= 50;
+                    foreach (var itemQueue in UserQueue)
                     {
-                        item,
-                        queueItem
-                    };
+                        var inRange = itemQueue.Rating <= upperBound && itemQueue.Rating >= lowerBound;
+                        if (inRange)
+                        {
+                            foundMatch = true;
+                            var itemIndex = UserQueue.IndexOf(itemQueue);
+                            var item = UserQueue[itemIndex];
+                            UserQueue.RemoveAt(itemIndex);
+                            if (!item.UserId.Equals(queueItem.UserId, StringComparison.OrdinalIgnoreCase))
+                            {
+                                return new List<UnrankedGameQueueItem>()
+                                {
+                                    item,
+                                    queueItem
+                                };
+                            }
+                        }
+                    }
                 }
             }
 
-            Queue.Enqueue(queueItem);
+            UserQueue.Add(queueItem);
             return null;
         }
+
+        //TODO: Implement new Queueing Logic
+        //public List<UnrankedGameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem)
+        //{
+        //    if (Queue.Any())
+        //    {
+        //        var item = Queue.Dequeue();
+        //        if (!item.UserId.Equals(queueItem.UserId, StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            return new List<UnrankedGameQueueItem>()
+        //            {
+        //                item,
+        //                queueItem
+        //            };
+        //        }
+        //    }
+        //    Queue.Enqueue(queueItem);
+        //    return null;
+        //}
     }
 }
