@@ -20,22 +20,26 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly ILogger<AccountController> _logger;
         private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
 
         public AccountController(
             SignInManager<OverTheBoardUser> signInManager,
             UserManager<OverTheBoardUser> userManager,
             ILogger<AccountController> logger,
-            IUserService userService
+            IUserService userService,
+            IEmailService emailService
             )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _userService = userService;
+            _emailService = emailService;
         }
         [HttpGet]
         public IActionResult Login()
         {
+
             // Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
@@ -59,6 +63,8 @@ namespace OverTheBoard.WebUI.Controllers
                     var checkResult = await _signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
                     if (checkResult.Succeeded)
                     {
+                        //TODO: Check here if Email is confirmed
+
                         var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, lockoutOnFailure: true);
                         if (result.Succeeded)
                         {
@@ -77,7 +83,7 @@ namespace OverTheBoard.WebUI.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             //Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
@@ -117,11 +123,15 @@ namespace OverTheBoard.WebUI.Controllers
                         Rank = UserRank.Unranked,
                         Rating = 1200,
                         LockoutEnabled = true,
-                        EmailConfirmed = true
+                        EmailConfirmed = false
                     };
 
                     var result = await _userManager.CreateAsync(user, model.Password);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var tokenLink = Url.Action("VerifyEmail", "Account",
+                        new { token = token, idToken = userId, returnUrl = returnUrl }, "https");
 
+                    await _emailService.SendRegistrationEmailAsync(user.Email, tokenLink);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Success");
@@ -137,6 +147,13 @@ namespace OverTheBoard.WebUI.Controllers
                 }
             }
             return View("Register", model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VerifyEmail(string token, string idToken, string returnUrl)
+        {
+            //TODO: implement verification
+            return View();
         }
 
         private async Task<Tuple<string, string>> GenerateUniqueDisplayName(string displayName, string number=null)

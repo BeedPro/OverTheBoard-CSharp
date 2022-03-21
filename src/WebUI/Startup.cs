@@ -7,6 +7,7 @@ using OverTheBoard.Infrastructure;
 using OverTheBoard.Infrastructure.BackgroundServices;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
+using OverTheBoard.ObjectModel;
 using OverTheBoard.WebUI.SignalR;
 
 namespace OverTheBoard.WebUI
@@ -23,6 +24,8 @@ namespace OverTheBoard.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<GameSettingOptions>(Configuration.GetSection("GameSettings"));
+            services.Configure<EmailSettingOptions>(Configuration.GetSection("EmailSettings"));
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews();
             services.AddSecurity();
