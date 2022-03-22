@@ -1,0 +1,19 @@
+﻿@model OverTheBoard.WebUI.Models.VerifyEmailMsgViewModel
+
+@{
+    ViewData["Title"] = "Verify Msg";
+    Layout = "_LayoutAccount";
+}
+
+
+<h1 class="text-center">OverTheBoard</h1>
+<p>This account does not have an email which has been verified, please verify the email before trying to login.</p>
+<p>Verification Email has been sent to: @Model.Email</p>
+<form method="post">
+    
+    <div class="form-group center-block">
+        <a type="submit" class="btn btn-white center-button-form" asp-controller="Account" asp-action="VerifyEmailMsg">Resend Email</a>
+    </div>
+
+
+</form>
