@@ -109,7 +109,7 @@ namespace OverTheBoard.WebUI.Controllers
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var tokenLink = Url.Action("EmailVerification", "Account",
-                        new { token, idToken = user.Id, returnUrl }, "https");
+                        new { token, idToken = user.Id, returnUrl }, Request.Scheme);
                     await _emailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
                     return View("EmailSent");
                 }
@@ -177,7 +177,7 @@ namespace OverTheBoard.WebUI.Controllers
                     var result = await _userManager.CreateAsync(user, model.Password);
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var tokenLink = Url.Action("EmailVerification", "Account",
-                        new {token, idToken = userId, returnUrl }, "https");
+                        new {token, idToken = userId, returnUrl }, Request.Scheme);
 
                     //TODO: Add implementation of Visitor Role for unverified accounts [Maybe]
                     await _emailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
@@ -212,7 +212,7 @@ namespace OverTheBoard.WebUI.Controllers
                 if (user != null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, "https");
+                    var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
                     await _emailService.SendPasswordResetEmailAsync(user.Email, user.DisplayName,token, callback);
                 }
 
