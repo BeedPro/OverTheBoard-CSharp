@@ -50,7 +50,10 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            returnUrl ??= Url.Content("~/dashboard/");
+            if (returnUrl == null)
+            {
+                returnUrl = Url.Content("~/dashboard/");
+            }
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.EmailAddress) ?? await _userManager.FindByNameAsync(model.EmailAddress);
@@ -105,7 +108,7 @@ namespace OverTheBoard.WebUI.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var tokenLink = Url.Action("EmailVerification", "Account",
                         new { token, idToken = user.Id, returnUrl }, "https");
-                    await _emailService.SendRegistrationEmailAsync(user.Email, tokenLink);
+                    await _emailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
                     return View("EmailSent");
                 }
             }
@@ -173,7 +176,7 @@ namespace OverTheBoard.WebUI.Controllers
                         new {token, idToken = userId, returnUrl }, "https");
 
                     //TODO: Add implementation of Visitor Role for unverified accounts [Maybe]
-                    await _emailService.SendRegistrationEmailAsync(user.Email, tokenLink);
+                    await _emailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Success");

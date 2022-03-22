@@ -5,6 +5,6 @@ namespace OverTheBoard.Infrastructure.Services
 {
     public interface IEmailService
     {
-        Task<bool> SendRegistrationEmailAsync(string email, string link);
+        Task<bool> SendRegistrationEmailAsync(string email, string displayName, string link);
     }
 }

@@ -14,7 +14,7 @@ namespace OverTheBoard.Infrastructure.Services
         {
             _options = options.Value;
         }
-        public async Task<bool> SendRegistrationEmailAsync(string email, string link)
+        public async Task<bool> SendRegistrationEmailAsync(string email, string displayName,string link)
         {
             var smtpClient = new SmtpClient(_options.SmtpServer)
             {
@@ -22,8 +22,18 @@ namespace OverTheBoard.Infrastructure.Services
                 Credentials = new NetworkCredential(_options.Username, _options.Password),
                 EnableSsl = false,
             };
+            var body = $"<h3>OverTheBoard</h3>\r\n<p>Hello {displayName}. Welcome to OverTheBoard where you play Chess in a fun and gamified Tournament based system. To verify your account please click the <a href=\"{link}\">link</a>.";
 
-            smtpClient.Send(_options.Sender, email, "OverTheBoard Email Verification", $"Hello please activate by clicking the link: {link}");
+            var mailMessage = new MailMessage()
+            {
+                From = new MailAddress(_options.Sender),
+                Subject = "OverTheBoard Email Verification",
+                Body = body,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
+
+            smtpClient.Send(mailMessage);
             return true;
         }
     }

@@ -2,15 +2,10 @@
     ViewData["Title"] = "Error";
     Layout = "_LayoutAccount";
 }
-
-
 <h1 class="text-center">OverTheBoard</h1>
-<p>An Error has occurred</p>
+<p>An Error has occurred, most likely token expired</p>
 <form method="post">
-    
     <div class="form-group center-block">
-        <a type="submit" class="btn btn-white center-button-form" asp-controller="Account" asp-action="Login">Login</a>
+        <a type="submit" class="btn btn-white center-button-form" asp-controller="Home" asp-action="Index">Home</a>
     </div>
-
-
 </form>
