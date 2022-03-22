@@ -120,14 +120,16 @@ namespace OverTheBoard.WebUI.Controllers
 
         [HttpGet]
         //TODO: Have a resend verification email on the page
-        public IActionResult VerifyEmailMsg()
+        public IActionResult VerifyEmailMsg(string email)
         {
+            var model = new VerifyEmailMsgViewModel();
+            model.EmailAddress = email;
             //Checking if user is logged on and redirecting to Dashboard
             if (_signInManager.IsSignedIn(User))
             {
                 return LocalRedirect("~/dashboard");
             }
-            return View();
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Register()
