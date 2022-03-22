@@ -16,24 +16,26 @@ namespace OverTheBoard.Infrastructure.Services
         }
         public async Task<bool> SendRegistrationEmailAsync(string email, string displayName,string link)
         {
-            var smtpClient = new SmtpClient(_options.SmtpServer)
+            using (var smtpClient = new SmtpClient(_options.SmtpServer))
             {
-                Port = 25, // 587 also works
-                Credentials = new NetworkCredential(_options.Username, _options.Password),
-                EnableSsl = false,
-            };
-            var body = $"<h3>OverTheBoard</h3>\r\n<p>Hello {displayName}. Welcome to OverTheBoard where you play Chess in a fun and gamified Tournament based system. To verify your account please click the <a href=\"{link}\">link</a>.";
+                smtpClient.Port = 25;
+                smtpClient.Credentials = new NetworkCredential(_options.Username, _options.Password);
+                smtpClient.EnableSsl = false;
 
-            var mailMessage = new MailMessage()
-            {
-                From = new MailAddress(_options.Sender),
-                Subject = "OverTheBoard Email Verification",
-                Body = body,
-                IsBodyHtml = true,
-            };
-            mailMessage.To.Add(email);
+                var body = $"<h3>OverTheBoard</h3>\r\n<p>Hello {displayName}. Welcome to OverTheBoard where you play Chess in a fun and gamified Tournament based system. To verify your account please click the <a href=\"{link}\">link</a>.";
 
-            smtpClient.Send(mailMessage);
+                var mailMessage = new MailMessage()
+                {
+                    From = new MailAddress(_options.Sender),
+                    Subject = "OverTheBoard Email Verification",
+                    Body = body,
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(email);
+
+                smtpClient.Send(mailMessage);
+
+            }
             return true;
         }
     }
