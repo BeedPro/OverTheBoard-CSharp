@@ -7,6 +7,6 @@ namespace OverTheBoard.WebUI.Models
 {
     public class VerifyEmailMsgViewModel
     {
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

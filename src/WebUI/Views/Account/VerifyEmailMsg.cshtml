@@ -8,12 +8,17 @@
 
 <h1 class="text-center">OverTheBoard</h1>
 <p>This account does not have an email which has been verified, please verify the email before trying to login.</p>
-<p>Verification Email has been sent to: @Model.Email</p>
 <form method="post">
-    
-    <div class="form-group center-block">
-        <a type="submit" class="btn btn-white center-button-form" asp-controller="Account" asp-action="VerifyEmailMsg">Resend Email</a>
+    <div class="form-group">
+        <label asp-for="EmailAddress">Email address</label>
+        <input asp-for="EmailAddress" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" />
+        <span asp-validation-for="EmailAddress"></span>
     </div>
 
-
+    @*<div class="form-group center-block">
+            <a type="submit" class="btn btn-white center-button-form" asp-controller="Account" asp-action="VerifyEmailMsg">Resend Email</a>
+        </div>*@
+    <div class="form-group">
+        <button type="submit" class="btn btn-white btn-block">Resend Email</button>
+    </div>
 </form>

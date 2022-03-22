@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
@@ -88,19 +84,45 @@ namespace OverTheBoard.WebUI.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult VerifyEmailMsg(VerifyEmailMsgViewModel model)
+        public IActionResult EmailSent()
         {
-            return View(model);
+            //Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/dashboard");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyEmailMsg(VerifyEmailMsgViewModel model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.EmailAddress) ?? await _userManager.FindByNameAsync(model.EmailAddress);
+                if (user != null)
+                {
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var tokenLink = Url.Action("EmailVerification", "Account",
+                        new { token, idToken = user.Id, returnUrl }, "https");
+                    await _emailService.SendRegistrationEmailAsync(user.Email, tokenLink);
+                    return View("EmailSent");
+                }
+            }
+            
+            return View("ErrorVerify");
         }
 
         [HttpGet]
         //TODO: Have a resend verification email on the page
-        public IActionResult VerifyEmailMsg(string email, string userId)
+        public IActionResult VerifyEmailMsg()
         {
-            var model = new VerifyEmailMsgViewModel();
-            model.Email = email;
-            return View(model);
+            //Checking if user is logged on and redirecting to Dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/dashboard");
+            }
+            return View();
         }
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -131,7 +153,7 @@ namespace OverTheBoard.WebUI.Controllers
                     // Defines a new user
                     var userId = Guid.NewGuid().ToString();
                     var uniqueDisplayNameAndId = await GenerateUniqueDisplayName(model.DisplayName);
-                    user = new OverTheBoardUser()
+                    user = new OverTheBoardUser
                     {
                         Id = userId,
                         DisplayName = uniqueDisplayNameAndId.Item1,
@@ -147,8 +169,8 @@ namespace OverTheBoard.WebUI.Controllers
 
                     var result = await _userManager.CreateAsync(user, model.Password);
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var tokenLink = Url.Action("VerifyEmail", "Account",
-                        new { token = token, idToken = userId, returnUrl = returnUrl }, "https");
+                    var tokenLink = Url.Action("EmailVerification", "Account",
+                        new {token, idToken = userId, returnUrl }, "https");
 
                     //TODO: Add implementation of Visitor Role for unverified accounts [Maybe]
                     await _emailService.SendRegistrationEmailAsync(user.Email, tokenLink);
@@ -156,26 +178,17 @@ namespace OverTheBoard.WebUI.Controllers
                     {
                         return RedirectToAction("Success");
                     }
-                    else
+
+                    foreach (IdentityError error in result.Errors)
                     {
-                        foreach (IdentityError error in result.Errors)
-                        {
-                            var safeErrorCode = error.Code ?? "";
-                            ModelState.AddModelError(safeErrorCode, error.Description);
-                        }
+                        var safeErrorCode = error.Code ?? "";
+                        ModelState.AddModelError(safeErrorCode, error.Description);
                     }
                 }
             }
             return View("Register", model);
         }
-
-        //private async Task<IActionResult> SendVerification(string email)
-        //{
-        //    var model = new VerifyEmailMsgViewModel();
-        //    model.Email = email;
-        //    //var user = await _userService.GetUserAsync()
-        //}
-
+        
         [HttpGet]
         public async Task<IActionResult> EmailVerification(string token, string idToken, string returnUrl)
         {
@@ -188,6 +201,7 @@ namespace OverTheBoard.WebUI.Controllers
                 return View(result.Succeeded ? nameof(EmailVerification) : "ErrorVerify");
             }
 
+            //Checks if user is signed in and redirects to dashboard
             if (_signInManager.IsSignedIn(User))
             {
                 return LocalRedirect("~/dashboard");
@@ -198,6 +212,11 @@ namespace OverTheBoard.WebUI.Controllers
 
         public IActionResult ErrorVerify()
         {
+            //Checks if user is signed in and redirects to dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                return LocalRedirect("~/dashboard");
+            }
             return View();
         }
 
