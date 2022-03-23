@@ -5,12 +5,13 @@ using OverTheBoard.ObjectModel;
 
 namespace OverTheBoard.Infrastructure.Queueing
 {
+    //TODO: Test this new queue system and make method async or revamp it.
     public class UnrankedGameQueue : IUnrankedGameQueue
     {
         public string Name => GameType.Unranked.ToString();
 
         //public Queue<UnrankedGameQueueItem> Queue = new();
-        public List<UnrankedGameQueueItem> UserQueue = new();
+        public List<UnrankedGameQueueItem> UserQueue = new List<UnrankedGameQueueItem>();
 
         public List<UnrankedGameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem)
         {
@@ -43,6 +44,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                             }
                         }
                     }
+
                 }
             }
 
