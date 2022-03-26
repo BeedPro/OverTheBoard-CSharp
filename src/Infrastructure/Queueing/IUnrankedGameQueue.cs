@@ -7,5 +7,7 @@ namespace OverTheBoard.Infrastructure.Queueing
     public interface IUnrankedGameQueue
     {
         List<UnrankedGameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem);
+        bool AddPlayerToQueue(UnrankedGameQueueItem queueItem);
+        List<UnrankedGameQueueItem> GetQueueAsync();
     }
 }

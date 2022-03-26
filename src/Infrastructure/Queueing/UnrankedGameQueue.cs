@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using OverTheBoard.ObjectModel;
 
 namespace OverTheBoard.Infrastructure.Queueing
@@ -50,6 +51,16 @@ namespace OverTheBoard.Infrastructure.Queueing
 
             UserQueue.Add(queueItem);
             return null;
+        }
+
+        public bool AddPlayerToQueue(UnrankedGameQueueItem queueItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UnrankedGameQueueItem> GetQueueAsync()
+        {
+            return UserQueue;
         }
 
         //TODO: Implement new Queueing Logic

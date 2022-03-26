@@ -33,6 +33,7 @@ namespace OverTheBoard.WebUI
             services.AddSignalR();
             services.AddInfrastructure();
             services.AddHostedService<GameOutcomeChecker>();
+            services.AddHostedService<MatchMakingUnrankedQueue>();
 
         }
 
