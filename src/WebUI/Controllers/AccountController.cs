@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using OverTheBoard.Data.Entities;
+using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 

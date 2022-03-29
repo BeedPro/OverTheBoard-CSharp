@@ -31,10 +31,7 @@ namespace OverTheBoard.Infrastructure.BackgroundServices
              _refreshIntervalInSeconds = 60;
         }
 
-   
-
-
-        protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {

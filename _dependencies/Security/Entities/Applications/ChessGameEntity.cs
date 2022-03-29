@@ -14,9 +14,7 @@ namespace OverTheBoard.Data.Entities.Applications
     {
         [Key]
         public int GameId { get; set; }
-
         public Guid Identifier { get; set; }
-
         public string Fen { get; set; }
         public DateTime StartTime { get; set; }
         public int Period { get; set; } //in minutes
@@ -25,5 +23,6 @@ namespace OverTheBoard.Data.Entities.Applications
         public ICollection<GamePlayerEntity> Players { get; set; }
         public string NextMoveColour { get; set; }
         public GameStatus Status { get; set; }
+        public GameType Type { get; set; }
     }
 }

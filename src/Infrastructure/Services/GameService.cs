@@ -9,6 +9,7 @@ using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
 using OverTheBoard.ObjectModel;
+using GameType = OverTheBoard.Data.Entities.GameType;
 
 namespace OverTheBoard.Infrastructure.Services
 {
@@ -38,6 +39,7 @@ namespace OverTheBoard.Infrastructure.Services
             game.StartTime = startTime;
             game.Period = periodInMinutes;
             game.Status = GameStatus.InProgress;
+            game.Type = GameType.Unranked;
             List<string> colours = new List<string> { "white", "black" };
             foreach (var item in queueItems)
             {
@@ -71,7 +73,8 @@ namespace OverTheBoard.Infrastructure.Services
                 Fen = gameEntity.Fen,
                 LastMoveAt = gameEntity.LastMoveAt,
                 NextMoveColour = gameEntity.NextMoveColour,
-                Status = gameEntity.Status
+                Status = gameEntity.Status,
+                Type = gameEntity.Type
             };
 
             game.Players = gameEntity.Players.Select(e => new GamePlayer()
@@ -168,7 +171,8 @@ namespace OverTheBoard.Infrastructure.Services
                     Colour = p.Colour,
                     TimeRemaining = p.TimeRemaining,
                 }).ToList(),
-                Status = e.Status
+                Status = e.Status,
+                Type = e.Type
             }).ToList();
             return gameInProgressInfo;
         }

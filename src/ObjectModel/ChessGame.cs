@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using OverTheBoard.Data.Entities;
 using OverTheBoard.Data.Entities.Applications;
 
 namespace OverTheBoard.ObjectModel
@@ -18,5 +19,6 @@ namespace OverTheBoard.ObjectModel
         public DateTime? LastMoveAt { get; set; }
         public string NextMoveColour { get; set; }
         public GameStatus Status { get; set; }
+        public GameType Type { get; set; }
     }
 }

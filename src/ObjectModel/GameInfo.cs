@@ -1,4 +1,5 @@
-﻿using OverTheBoard.Data.Entities.Applications;
+﻿using OverTheBoard.Data.Entities;
+using OverTheBoard.Data.Entities.Applications;
 
 namespace OverTheBoard.ObjectModel
 {

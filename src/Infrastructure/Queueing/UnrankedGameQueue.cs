@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OverTheBoard.Data.Entities;
+using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.ObjectModel;
 
 namespace OverTheBoard.Infrastructure.Queueing

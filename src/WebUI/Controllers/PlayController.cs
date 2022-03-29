@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data;
+using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 using OverTheBoard.Data.Entities.Applications;
