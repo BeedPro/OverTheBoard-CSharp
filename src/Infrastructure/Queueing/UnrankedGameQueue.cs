@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using OverTheBoard.Data.Entities;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.ObjectModel;
+using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.Infrastructure.Queueing
 {
@@ -13,7 +14,8 @@ namespace OverTheBoard.Infrastructure.Queueing
     {
         public string Name => GameType.Unranked.ToString();
 
-        public Queue<UnrankedGameQueueItem> Queue = new();
+        public Queue<GameQueueItem> Queue = new Queue<GameQueueItem>();
+
         //
         //TODO: This is the new queue system that has been removed
         //public List<UnrankedGameQueueItem> UserQueue = new List<UnrankedGameQueueItem>();
@@ -57,14 +59,14 @@ namespace OverTheBoard.Infrastructure.Queueing
         //}
 
         //TODO: Implement new Queueing Logic
-        public List<UnrankedGameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem)
+        public List<GameQueueItem> GetQueueGame(GameQueueItem queueItem)
         {
             if (Queue.Any())
             {
                 var item = Queue.Dequeue();
                 if (!item.UserId.Equals(queueItem.UserId, StringComparison.OrdinalIgnoreCase))
                 {
-                    return new List<UnrankedGameQueueItem>()
+                    return new List<GameQueueItem>()
                     {
                         item,
                         queueItem

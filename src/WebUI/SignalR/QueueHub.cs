@@ -10,6 +10,7 @@ using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.Infrastructure.Services;
+using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.WebUI.SignalR
 {
@@ -31,7 +32,7 @@ namespace OverTheBoard.WebUI.SignalR
         public async Task Queue(string connectionId)
         {
             var queueItems = _gameQueue.GetQueueGame(
-                new UnrankedGameQueueItem()
+                new GameQueueItem()
                 {
                     UserId = GetUserId(), 
                     ConnectionId = connectionId,
@@ -41,9 +42,9 @@ namespace OverTheBoard.WebUI.SignalR
             if (queueItems?.Count == 2)
             {
                 var gameId = Guid.NewGuid().ToString();
-                await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, _options.UnrankTimeDuration);
+                await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, _options.UnrankTimeDuration, GameType.Unranked, string.Empty);
 
-                foreach (UnrankedGameQueueItem item in queueItems)
+                foreach (GameQueueItem item in queueItems)
                 {
                     await Clients.Client(item.ConnectionId).SendAsync("Play", gameId);
                 }

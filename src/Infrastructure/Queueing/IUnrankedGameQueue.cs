@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using OverTheBoard.ObjectModel;
+using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.Infrastructure.Queueing
 {
     public interface IUnrankedGameQueue
     {
-        List<UnrankedGameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem);
+        List<GameQueueItem> GetQueueGame(GameQueueItem queueItem);
     }
 }

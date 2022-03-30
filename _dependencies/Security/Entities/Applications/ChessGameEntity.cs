@@ -24,5 +24,6 @@ namespace OverTheBoard.Data.Entities.Applications
         public string NextMoveColour { get; set; }
         public GameStatus Status { get; set; }
         public GameType Type { get; set; }
+        public Guid? GroupIdentifier { get; set; }
     }
 }

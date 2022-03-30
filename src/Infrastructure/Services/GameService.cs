@@ -9,6 +9,7 @@ using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
 using OverTheBoard.ObjectModel;
+using OverTheBoard.ObjectModel.Queues;
 using GameType = OverTheBoard.Data.Entities.GameType;
 
 namespace OverTheBoard.Infrastructure.Services
@@ -31,7 +32,7 @@ namespace OverTheBoard.Infrastructure.Services
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
-        public async Task<bool> CreateGameAsync(string identifier, List<UnrankedGameQueueItem> queueItems, DateTime startTime, int periodInMinutes)
+        public async Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, string groupIdentifier)
         {
             ChessGameEntity game = new ChessGameEntity();
             game.Identifier = identifier.ToGuid();
@@ -39,7 +40,12 @@ namespace OverTheBoard.Infrastructure.Services
             game.StartTime = startTime;
             game.Period = periodInMinutes;
             game.Status = GameStatus.InProgress;
-            game.Type = GameType.Unranked;
+            game.Type = type;
+            if (!string.IsNullOrEmpty(groupIdentifier))
+            {
+                game.GroupIdentifier = groupIdentifier.ToGuid();
+            }
+
             List<string> colours = new List<string> { "white", "black" };
             foreach (var item in queueItems)
             {
@@ -208,7 +214,7 @@ namespace OverTheBoard.Infrastructure.Services
         private string GetDisplayNameById(string userId)
         {
             var user = _userService.GetUserAsync(userId).GetAwaiter().GetResult();
-            return user.DisplayName;
+            return user?.DisplayName ?? "No user";
         }
         private ChessGameEntity GetGameEntity(string gameId)
         {
