@@ -8,6 +8,7 @@ using OverTheBoard.Data.Entities;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
+using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.ObjectModel.Queues;
 using GameType = OverTheBoard.Data.Entities.GameType;
@@ -21,14 +22,22 @@ namespace OverTheBoard.Infrastructure.Services
         private readonly IUserService _userService;
         private readonly IEloService _eloService;
         public readonly UserManager<OverTheBoardUser> _userManager;
+        private readonly IGameCompletionQueue _completionQueue;
 
-        public GameService(IRepository<ChessGameEntity> repositoryChessGame, IRepository<GamePlayerEntity> repositoryGamePlayer, IUserService userService, IEloService eloService, UserManager<OverTheBoardUser> userManager)
+        public GameService(
+            IRepository<ChessGameEntity> repositoryChessGame, 
+            IRepository<GamePlayerEntity> repositoryGamePlayer, 
+            IUserService userService, 
+            IEloService eloService, 
+            UserManager<OverTheBoardUser> userManager,
+            IGameCompletionQueue completionQueue)
         {
             _repositoryChessGame = repositoryChessGame;
             _repositoryGamePlayer = repositoryGamePlayer;
             _userService = userService;
             _eloService = eloService;
             _userManager = userManager;
+            _completionQueue = completionQueue;
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
@@ -144,6 +153,7 @@ namespace OverTheBoard.Infrastructure.Services
             game.NextMoveColour = opponent.Colour;
 
             _repositoryChessGame.Save();
+           
             return opponent?.ConnectionId;
         }
 
@@ -205,6 +215,11 @@ namespace OverTheBoard.Infrastructure.Services
                 await _userManager.UpdateAsync(whiteUser);
                 await _userManager.UpdateAsync(blackUser);
                 _repositoryChessGame.Save();
+
+                await _completionQueue.AddQueueAsync(new GameCompletionQueueItem()
+                {
+                    GameId = gameId
+                });
             }
             
             return true;

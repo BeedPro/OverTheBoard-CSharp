@@ -10,11 +10,11 @@ using OverTheBoard.ObjectModel.Queues;
 namespace OverTheBoard.Infrastructure.Queueing
 {
     //TODO: Test this new queue system and make method async or revamp it.
-    public class UnrankedGameQueue : IUnrankedGameQueue
+        public class UnrankedGameQueue : IUnrankedGameQueue
     {
         public string Name => GameType.Unranked.ToString();
 
-        public Queue<GameQueueItem> Queue = new Queue<GameQueueItem>();
+        public Queue<UnrankedGameQueueItem> Queue = new Queue<UnrankedGameQueueItem>();
 
         //
         //TODO: This is the new queue system that has been removed
@@ -59,7 +59,7 @@ namespace OverTheBoard.Infrastructure.Queueing
         //}
 
         //TODO: Implement new Queueing Logic
-        public List<GameQueueItem> GetQueueGame(GameQueueItem queueItem)
+        public List<GameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem)
         {
             if (Queue.Any())
             {
@@ -74,7 +74,7 @@ namespace OverTheBoard.Infrastructure.Queueing
                 }
             }
             Queue.Enqueue(queueItem);
-            return null;
+            return new List<GameQueueItem>();
         }
     }
 }

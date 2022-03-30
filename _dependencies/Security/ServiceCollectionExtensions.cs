@@ -15,15 +15,19 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSecurity(
             this IServiceCollection services)
         {
-
             var path = Environment.CurrentDirectory;
-            var DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}SecurityDb.db";
+            var DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
+
+            //var path = Environment.CurrentDirectory;
+            //var DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}SecurityDb.db";
 
             services.AddDbContext<SecurityDbContext>(options =>
-                options.UseSqlite(DbPath, b => b.MigrationsAssembly("OverTheBoard.Data")));
-            
+                options.UseSqlite($"Data Source={DbPath}", b => 
+                    b.MigrationsAssembly("OverTheBoard.Data")));
+
+            //options.UseSqlite($"Data Source={DbPath}");
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(DbPath, b => b.MigrationsAssembly("OverTheBoard.Data")));
+                options.UseSqlite($"Data Source={DbPath}", b => b.MigrationsAssembly("OverTheBoard.Data")));
 
             
             //services.AddAuthentication(o =>

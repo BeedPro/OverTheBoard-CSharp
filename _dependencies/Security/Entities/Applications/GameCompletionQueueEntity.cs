@@ -5,6 +5,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OverTheBoard.Data.Entities.Applications
 {
+    [Table("CompletionQueue")]
+    public class GameCompletionQueueEntity
+    {
+        [Key] 
+        public int CompletionQueueId { get; set; }
+        public string GameId { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime CreatedDate { get; set; }
+    } 
+    
+    [Table("RankedGameQueue")]
+    public class RankedGameQueueEntity
+    {
+        [Key] 
+        public int RankedGameQueueId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid Identifier { get; set; }
+        public int Level { get; set; }
+    }
+
     //[Table("Rankings")]
     //public class UserRankingEntity
     //{

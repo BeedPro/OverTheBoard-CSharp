@@ -10,21 +10,9 @@ namespace OverTheBoard.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public string DbPath { get; private set; }
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-            var path = Environment.CurrentDirectory;
-            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlite($"Data Source={DbPath}");
-            options.EnableSensitiveDataLogging();
-            
-        }
+        {}
          
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,6 +27,8 @@ namespace OverTheBoard.Data
 
         public DbSet<ChessGameEntity> Games { get; set; }
         public DbSet<GamePlayerEntity> Players { get; set; }
+        public DbSet<GameCompletionQueueEntity> CompletionQueues { get; set; }
+        public DbSet<RankedGameQueueEntity> RankedGameQueues { get; set; }
 
     }
 }

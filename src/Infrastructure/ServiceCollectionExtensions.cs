@@ -20,6 +20,8 @@ namespace OverTheBoard.Infrastructure
             this IServiceCollection services)
         {
             services.AddSingleton<IUnrankedGameQueue, UnrankedGameQueue>();
+            services.AddScoped<IGameCompletionQueue, GameCompletionQueue>();
+            services.AddScoped<IRankedGameQueue, RankedGameQueue>();
 
             //services.AddScoped<IQueueSelector, QueueSelector>();
             services.AddScoped<IUserService, UserService>();
