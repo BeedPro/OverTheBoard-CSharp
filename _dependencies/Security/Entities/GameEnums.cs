@@ -17,10 +17,15 @@
     public enum UserRank
     {
         None = 0,
-        Unranked = 5,
-        Level4 = 4,
-        Level3 = 3,
-        Level2 = 2,
-        Level1 = 1
+        Level01 = 1,
+        Level02 = 2,
+        Level03 = 3,
+        Level04 = 4,
+        Level05 = 5,
+        Level06 = 6,
+        Level07 = 7,
+        Level08 = 8,
+        Level09 = 9,
+        Level10 = 10
     }
 }

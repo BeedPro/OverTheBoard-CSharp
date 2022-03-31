@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Data;
 
 namespace OverTheBoard.Data.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330191633_Adding-queue01")]
+    partial class Addingqueue01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +36,6 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
 
                     b.Property<DateTime?>("LastMoveAt")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("NextMoveColour")
                         .HasColumnType("TEXT");
@@ -71,9 +70,6 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Level")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("CompletionQueueId");
@@ -112,7 +108,7 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("OverTheBoard.Data.Entities.Applications.TournamentQueueEntity", b =>
+            modelBuilder.Entity("OverTheBoard.Data.Entities.Applications.RankedGameQueueEntity", b =>
                 {
                     b.Property<int>("RankedGameQueueId")
                         .ValueGeneratedOnAdd()
@@ -129,7 +125,7 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
 
                     b.HasKey("RankedGameQueueId");
 
-                    b.ToTable("TournamentQueue");
+                    b.ToTable("RankedGameQueue");
                 });
 
             modelBuilder.Entity("OverTheBoard.Data.Entities.Applications.GamePlayerEntity", b =>

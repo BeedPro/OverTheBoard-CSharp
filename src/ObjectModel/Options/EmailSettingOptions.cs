@@ -1,4 +1,4 @@
-﻿namespace OverTheBoard.ObjectModel
+﻿namespace OverTheBoard.ObjectModel.Options
 {
     public class EmailSettingOptions
     {

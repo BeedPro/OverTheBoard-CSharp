@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
@@ -9,17 +10,24 @@ using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.Infrastructure.Queueing
 {
-    public class RankedGameQueue : IRankedGameQueue
+    public class TournamentQueue : ITournamentQueue
     {
-        private readonly IRepository<RankedGameQueueEntity> _repository;
-        //private ConcurrentDictionary<Guid, RankedGameQueueItem> _queue = new ConcurrentDictionary<Guid, RankedGameQueueItem>();
+        private readonly IRepository<TournamentQueueEntity> _repository;
 
-        public RankedGameQueue(IRepository<RankedGameQueueEntity> repository)
+        public TournamentQueue(IRepository<TournamentQueueEntity> repository)
         {
             _repository = repository;
         }
 
-        public List<GameQueueItem> GetQueueGame(RankedGameQueueItem queueItem)
+        public async Task<bool> AddQueueAsync(TournamentQueueItem queueItem)
+        {
+            _repository.Add(new TournamentQueueEntity() { Identifier = queueItem.Identifier, UserId = queueItem.UserId.ToGuid(), Level = queueItem.Level });
+            _repository.Save();
+
+            return await Task.FromResult(true);
+        }
+
+        public List<GameQueueItem> GetQueueGame(TournamentQueueItem queueItem)
         {
             var item = _repository.Query().FirstOrDefault(e => e.Level == queueItem.Level);
             if (item != null)
@@ -30,12 +38,12 @@ namespace OverTheBoard.Infrastructure.Queueing
                     _repository.Save();
                     return new List<GameQueueItem>()
                     {
-                        new RankedGameQueueItem(){Identifier = item.Identifier, UserId = item.UserId.ToString(), Level = item.Level},
+                        new TournamentQueueItem(){Identifier = item.Identifier, UserId = item.UserId.ToString(), Level = item.Level},
                         queueItem
                     };
                 }
             }
-            _repository.Add(new RankedGameQueueEntity(){Identifier = queueItem.Identifier, UserId = queueItem.UserId.ToGuid(), Level = queueItem.Level});
+            _repository.Add(new TournamentQueueEntity(){Identifier = queueItem.Identifier, UserId = queueItem.UserId.ToGuid(), Level = queueItem.Level});
             _repository.Save();
             return new List<GameQueueItem>();
         }

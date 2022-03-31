@@ -13,10 +13,11 @@ namespace OverTheBoard.Data.Entities.Applications
         public string GameId { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int Level { get; set; }
     } 
     
-    [Table("RankedGameQueue")]
-    public class RankedGameQueueEntity
+    [Table("TournamentQueue")]
+    public class TournamentQueueEntity
     {
         [Key] 
         public int RankedGameQueueId { get; set; }

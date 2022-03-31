@@ -8,6 +8,7 @@ using OverTheBoard.Infrastructure.BackgroundServices;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
+using OverTheBoard.ObjectModel.Options;
 using OverTheBoard.WebUI.SignalR;
 
 namespace OverTheBoard.WebUI
@@ -26,13 +27,14 @@ namespace OverTheBoard.WebUI
         {
             services.Configure<GameSettingOptions>(Configuration.GetSection("GameSettings"));
             services.Configure<EmailSettingOptions>(Configuration.GetSection("EmailSettings"));
+            services.Configure<TournamentOptions>(Configuration.GetSection("Tournaments"));
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews();
             services.AddSecurity();
             services.AddScoped<IFileUploader, FileUploader>();
             services.AddSignalR();
             services.AddInfrastructure();
-            services.AddHostedService<GameOutcomeChecker>();
+            services.AddHostedService<GameBackgroundService>();
 
         }
 

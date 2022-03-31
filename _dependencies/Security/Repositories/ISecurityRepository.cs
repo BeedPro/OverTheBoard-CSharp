@@ -10,7 +10,6 @@ namespace OverTheBoard.Data.Repositories
     {
         IQueryable<TEntity> Query();
         void Add(TEntity entity);
-        void RemoveRange(ICollection<TEntity> list);
-        void Remove(TEntity entity);
+        bool Save();
     }
 }

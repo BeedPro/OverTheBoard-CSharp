@@ -24,6 +24,7 @@ namespace OverTheBoard.Infrastructure.Queueing
             {
                 GameId = queueItem.GameId,
                 IsActive = true,
+                Level = queueItem.Level,
                 CreatedDate = DateTime.Now
             });
 
@@ -32,13 +33,13 @@ namespace OverTheBoard.Infrastructure.Queueing
             return true;
         }
 
-        public async Task<bool> DeActivateAsync(GameCompletionQueueItem queueItem)
+        public async Task<bool> RemoveQueueAsync(GameCompletionQueueItem queueItem)
         {
             var entity = await _repositoryCompletionQueue.Query()
                 .FirstOrDefaultAsync(e => e.GameId == queueItem.GameId);
             if (entity != null)
             {
-                entity.IsActive = false;
+                _repositoryCompletionQueue.Remove(entity);
                 _repositoryCompletionQueue.Save();
                 return true;
             }
@@ -48,7 +49,7 @@ namespace OverTheBoard.Infrastructure.Queueing
 
         public async Task<List<GameCompletionQueueItem>> GetQueuesAsync()
         {
-            var entities = await _repositoryCompletionQueue.Query().Where(e => e.IsActive == true).ToListAsync();
+            var entities = await _repositoryCompletionQueue.Query().Where(e => e.IsActive).ToListAsync();
             return entities.Select(e => new GameCompletionQueueItem
             {
                 GameId = e.GameId

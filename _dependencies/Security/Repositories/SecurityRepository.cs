@@ -6,10 +6,12 @@ namespace OverTheBoard.Data.Repositories
 {
     public class SecurityRepository<TEntity> : ISecurityRepository<TEntity> where TEntity : class
     {
+        private readonly SecurityDbContext _dbContext;
         private readonly DbSet<TEntity> dbSet;
         
         public SecurityRepository(SecurityDbContext dbContext)
         {
+            _dbContext = dbContext;
             this.dbSet = dbContext.Set<TEntity>();
         }
 
@@ -22,27 +24,11 @@ namespace OverTheBoard.Data.Repositories
         {
             dbSet.Add(entity);
         }
-        public void RemoveRange(ICollection<TEntity> list)
+
+        public bool Save()
         {
-            dbSet.RemoveRange(list);
+            _dbContext.SaveChanges();
+            return true;
         }
-
-        public IEnumerable<TEntity> GetAll()
-        {
-            return GetQuery().ToList();
-        }
-
-        public void Remove(TEntity entity)
-        {
-            if (entity == null) return;
-
-            dbSet.Remove(entity);
-        }
-
-        public IQueryable<TEntity> GetQuery()
-        {
-            return dbSet;
-        }
-
     }
 }

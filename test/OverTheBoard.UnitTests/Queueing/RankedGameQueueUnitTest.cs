@@ -29,7 +29,7 @@ namespace OverTheBoard.UnitTests.Queueing
         [TestMethod]
         public async Task GetQueueGame_Should_Queue_The_RankedGame()
         {
-            var result = builder.Build().GetQueueGame(new RankedGameQueueItem()
+            var result = builder.Build().GetQueueGame(new TournamentQueueItem()
                 {Identifier = Guid.NewGuid(), UserId = GameConstantsTest.UserId, Level = 1});
 
             result.Count.Should().Be(0);
@@ -40,10 +40,10 @@ namespace OverTheBoard.UnitTests.Queueing
         {
             var sut = builder.Build();
 
-            var result1 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result1 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.UserId, Level = 1 });
 
-            var result2 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result2 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.OpponentUserId, Level = 1 });
 
             result2.Count.Should().Be(2);
@@ -54,10 +54,10 @@ namespace OverTheBoard.UnitTests.Queueing
         {
             var sut = builder.Build();
 
-            var result1 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result1 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.UserId, Level = 1 });
 
-            var result2 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result2 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.UserId, Level = 1 });
 
             result2.Count.Should().Be(0);
@@ -69,10 +69,10 @@ namespace OverTheBoard.UnitTests.Queueing
         {
             var sut = builder.Build();
 
-            var result1 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result1 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.UserId, Level = 1 });
 
-            var result2 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result2 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.OpponentUserId, Level = 2 });
 
             result2.Count.Should().Be(0);
@@ -83,13 +83,13 @@ namespace OverTheBoard.UnitTests.Queueing
         {
             var sut = builder.Build();
 
-            var result1 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result1 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.UserId, Level = 1 });
 
-            var result2 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result2 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.OpponentUserId, Level = 1});
 
-            var result3 = sut.GetQueueGame(new RankedGameQueueItem()
+            var result3 = sut.GetQueueGame(new TournamentQueueItem()
                 { Identifier = Guid.NewGuid(), UserId = GameConstantsTest.OpponentUserId, Level = 1 });
 
 
@@ -103,11 +103,11 @@ namespace OverTheBoard.UnitTests.Queueing
     internal class RankedGameQueueBuilder
     {
 
-        public RankedGameQueue Build()
+        public TournamentQueue Build()
         {
             WithDefault();
-            IRepository<RankedGameQueueEntity> repository = new Repository<RankedGameQueueEntity>(ContextMock.GetApplicationDbContext());
-            var sut = new RankedGameQueue(repository);
+            IRepository<TournamentQueueEntity> repository = new Repository<TournamentQueueEntity>(ContextMock.GetApplicationDbContext());
+            var sut = new TournamentQueue(repository);
             return sut;
         }
 

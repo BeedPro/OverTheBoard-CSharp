@@ -29,4 +29,9 @@
     <ProjectReference Include="..\..\_dependencies\Security\OverTheBoard.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Tournaments\" />
+  </ItemGroup>
+
 </Project>

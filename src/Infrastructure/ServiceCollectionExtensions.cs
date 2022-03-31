@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using OverTheBoard.Infrastructure.Common;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
+using OverTheBoard.Infrastructure.Tournaments;
+using OverTheBoard.Infrastructure.Tournaments.Processors;
 
 namespace OverTheBoard.Infrastructure
 {
@@ -19,9 +22,10 @@ namespace OverTheBoard.Infrastructure
         public static IServiceCollection AddInfrastructure(
             this IServiceCollection services)
         {
+            services.AddScoped(typeof(ILocatorService<,>), typeof(LocatorService<,>));
             services.AddSingleton<IUnrankedGameQueue, UnrankedGameQueue>();
             services.AddScoped<IGameCompletionQueue, GameCompletionQueue>();
-            services.AddScoped<IRankedGameQueue, RankedGameQueue>();
+            services.AddScoped<ITournamentQueue, TournamentQueue>();
 
             //services.AddScoped<IQueueSelector, QueueSelector>();
             services.AddScoped<IUserService, UserService>();
@@ -31,6 +35,15 @@ namespace OverTheBoard.Infrastructure
             services.AddScoped<IEloService, EloService>();
 
             services.AddScoped<IEmailService, EmailService>();
+
+            //League/Ranking Locators
+            services.AddScoped<IGameBackgroundService, GameOutcomeChecker>();
+            services.AddScoped<IGameBackgroundService, GameCompletionQueueReceiver>();
+
+            // League / Ranking Locators
+            services.AddScoped<IGameCompletionProcessor, UnrankingGameCompletionProcessor>();
+            services.AddScoped<IGameCompletionProcessor, TournamentGameCompletionProcessor>();
+
             return services;
         }
 

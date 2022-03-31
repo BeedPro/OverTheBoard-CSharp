@@ -169,7 +169,7 @@ namespace OverTheBoard.WebUI.Controllers
                         UserName = model.EmailAddress,
                         Email = model.EmailAddress,
                         DisplayImagePath = "defaultDisplayPic.jpeg",
-                        Rank = UserRank.Unranked,
+                        Rank = UserRank.None,
                         Rating = 1200,
                         LockoutEnabled = true,
                         EmailConfirmed = false

@@ -15,7 +15,7 @@ namespace OverTheBoard.ObjectModel.Queues
         public int Rating { get; set; }
     }
     
-    public class RankedGameQueueItem : GameQueueItem
+    public class TournamentQueueItem : GameQueueItem
     {
         public Guid Identifier { get; set; }
         public int Level { get; set; }
@@ -25,5 +25,6 @@ namespace OverTheBoard.ObjectModel.Queues
     public class GameCompletionQueueItem
     {
         public string GameId { get; set; }
+        public int Level { get; set; }
     }
 }

@@ -8,9 +8,4 @@ namespace OverTheBoard.Infrastructure.Queueing
     {
         List<GameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem);
     }
-    
-    public interface IRankedGameQueue
-    {
-        List<GameQueueItem> GetQueueGame(RankedGameQueueItem queueItem);
-    }
 }

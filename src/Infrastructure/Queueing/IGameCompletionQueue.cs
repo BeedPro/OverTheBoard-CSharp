@@ -7,7 +7,7 @@ namespace OverTheBoard.Infrastructure.Queueing
     public interface IGameCompletionQueue
     {
         Task<bool> AddQueueAsync(GameCompletionQueueItem queueItem);
-        Task<bool> DeActivateAsync(GameCompletionQueueItem queueItem);
+        Task<bool> RemoveQueueAsync(GameCompletionQueueItem queueItem);
         Task<List<GameCompletionQueueItem>> GetQueuesAsync();
     }
 }

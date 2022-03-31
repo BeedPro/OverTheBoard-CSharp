@@ -218,7 +218,8 @@ namespace OverTheBoard.Infrastructure.Services
 
                 await _completionQueue.AddQueueAsync(new GameCompletionQueueItem()
                 {
-                    GameId = gameId
+                    GameId = gameId,
+                    Level = gameEntity.Level
                 });
             }
             

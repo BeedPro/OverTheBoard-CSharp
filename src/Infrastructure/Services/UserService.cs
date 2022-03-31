@@ -26,5 +26,17 @@ namespace OverTheBoard.Infrastructure.Services
             return await _securityRepository.Query().FirstOrDefaultAsync(e =>
                 e.Id == userId);
         }
+
+        public async Task<bool> UpdateUserRankAsync(string userId, UserRank rank)
+        {
+            var entity = await _securityRepository.Query().FirstOrDefaultAsync(e =>e.Id == userId);
+            if (entity != null)
+            {
+                entity.Rank = rank;
+                _securityRepository.Save();
+            }
+
+            return true;
+        }
     }
 }

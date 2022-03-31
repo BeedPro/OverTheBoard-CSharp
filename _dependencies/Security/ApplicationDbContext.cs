@@ -28,7 +28,7 @@ namespace OverTheBoard.Data
         public DbSet<ChessGameEntity> Games { get; set; }
         public DbSet<GamePlayerEntity> Players { get; set; }
         public DbSet<GameCompletionQueueEntity> CompletionQueues { get; set; }
-        public DbSet<RankedGameQueueEntity> RankedGameQueues { get; set; }
+        public DbSet<TournamentQueueEntity> RankedGameQueues { get; set; }
 
     }
 }

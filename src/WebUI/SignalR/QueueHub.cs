@@ -10,6 +10,7 @@ using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.Infrastructure.Services;
+using OverTheBoard.ObjectModel.Options;
 using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.WebUI.SignalR
