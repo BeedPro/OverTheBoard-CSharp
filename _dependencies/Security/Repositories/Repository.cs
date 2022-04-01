@@ -51,8 +51,8 @@ namespace OverTheBoard.Data.Repositories
 
         public bool Save()
         {
-            _dbContext.SaveChanges();
-            return true;
+            var result = _dbContext.SaveChanges();
+            return result > 0;
         }
     }
 }

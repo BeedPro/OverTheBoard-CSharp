@@ -20,10 +20,11 @@ namespace OverTheBoard.Data.Entities.Applications
     public class TournamentQueueEntity
     {
         [Key] 
-        public int RankedGameQueueId { get; set; }
+        public int TournamentQueueId { get; set; }
         public Guid UserId { get; set; }
-        public Guid Identifier { get; set; }
+        //public Guid Identifier { get; set; }
         public int Level { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 
     //[Table("Rankings")]

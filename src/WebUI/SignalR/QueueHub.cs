@@ -43,6 +43,7 @@ namespace OverTheBoard.WebUI.SignalR
             if (queueItems?.Count == 2)
             {
                 var gameId = Guid.NewGuid().ToString();
+                SetColour(ref queueItems);
                 await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, _options.UnrankTimeDuration, GameType.Unranked, string.Empty);
 
                 foreach (UnrankedGameQueueItem item in queueItems)
@@ -51,6 +52,19 @@ namespace OverTheBoard.WebUI.SignalR
                 }
                 
             }
+        }
+
+        List<string> colours = new List<string> { "white", "black" };
+        private void SetColour(ref List<GameQueueItem> queueItems)
+        {
+            Random rand = new Random();
+            int index = rand.Next(colours.Count);
+            foreach (var item in queueItems)
+            {
+                item.Colour = colours[index];
+                index = (index + 1) % 2;
+            }
+           
         }
 
         private string GetUserId()

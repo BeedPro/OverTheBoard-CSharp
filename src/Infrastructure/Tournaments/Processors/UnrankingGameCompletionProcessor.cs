@@ -40,7 +40,6 @@ namespace OverTheBoard.Infrastructure.Tournaments.Processors
                 {
                     await _tournamentQueue.AddQueueAsync(new TournamentQueueItem()
                     {
-                        Identifier = Guid.NewGuid(),
                         UserId = user.Id,
                         Level = 1
                     });

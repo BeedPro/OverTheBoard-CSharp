@@ -50,25 +50,21 @@ namespace OverTheBoard.Infrastructure.Services
             game.Period = periodInMinutes;
             game.Status = GameStatus.InProgress;
             game.Type = type;
+            
             if (!string.IsNullOrEmpty(groupIdentifier))
             {
                 game.GroupIdentifier = groupIdentifier.ToGuid();
             }
-
-            List<string> colours = new List<string> { "white", "black" };
+            
             foreach (var item in queueItems)
             {
-                Random rand = new Random();
-                int index = rand.Next(colours.Count);
-                var colour = colours[index];
-                var player = new GamePlayerEntity()
+               var player = new GamePlayerEntity()
                 {
                     UserId = item.UserId.ToGuid(),
-                    Colour = colour,
+                    Colour = item.Colour,
                     ConnectionId = item.ConnectionId,
                     TimeRemaining = new TimeSpan(0, 0, periodInMinutes, 0),
                 };
-                colours.Remove(colour);
                 game.Players.Add(player);
             }
             _repositoryChessGame.Context.Add(game);

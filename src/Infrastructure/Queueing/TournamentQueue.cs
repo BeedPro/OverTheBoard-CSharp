@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
@@ -10,6 +11,9 @@ using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.Infrastructure.Queueing
 {
+
+    
+
     public class TournamentQueue : ITournamentQueue
     {
         private readonly IRepository<TournamentQueueEntity> _repository;
@@ -21,31 +25,54 @@ namespace OverTheBoard.Infrastructure.Queueing
 
         public async Task<bool> AddQueueAsync(TournamentQueueItem queueItem)
         {
-            _repository.Add(new TournamentQueueEntity() { Identifier = queueItem.Identifier, UserId = queueItem.UserId.ToGuid(), Level = queueItem.Level });
-            _repository.Save();
-
-            return await Task.FromResult(true);
+            _repository.Add(new TournamentQueueEntity() { UserId = queueItem.UserId.ToGuid(), Level = queueItem.Level, CreatedDate = DateTime.Now});
+            var result =  _repository.Save();
+            return await Task.FromResult(result);
         }
 
-        public List<GameQueueItem> GetQueueGame(TournamentQueueItem queueItem)
+        public async Task<List<int>> GetAvailableLevels()
         {
-            var item = _repository.Query().FirstOrDefault(e => e.Level == queueItem.Level);
-            if (item != null)
+            var results = _repository.Query().GroupBy(e => e.Level).Select(e => e.Key);
+            return await results.ToListAsync();
+        }
+
+        public async Task<bool> HasRequiredPlayersInLevel(int playersPerGroup, int level)
+        {
+            var count = await _repository.Query().CountAsync(e=>e.Level == level);
+            return count >= playersPerGroup;
+        }
+
+        public async Task<List<TournamentQueueItem>> GetGameQueueItems(int playersPerGroup, int level)
+        {
+            var results = _repository.Query()
+                    .OrderByDescending(o=>o.TournamentQueueId)
+                    .Where(e=>e.Level == level)
+                    .Take(playersPerGroup)
+                    .Select(s=> new TournamentQueueItem(){UserId =  s.UserId.ToString(), Level = s.Level, TournamentQueueId = s.TournamentQueueId});
+
+            var items = await results.ToListAsync();
+
+            if (items.Count() == playersPerGroup)
             {
-                if (!item.UserId.ToString().Equals(queueItem.UserId, StringComparison.OrdinalIgnoreCase))
+                return items;
+            }
+
+            return new List<TournamentQueueItem>();
+        }
+
+        public async Task<bool> RemoveGameQueueItems(List<TournamentQueueItem> items)
+        {
+            foreach (var item in items)
+            {
+                var entity = _repository.Query().FirstOrDefault(e => e.TournamentQueueId == item.TournamentQueueId);
+                if (entity != null)
                 {
-                    _repository.Remove(item);
-                    _repository.Save();
-                    return new List<GameQueueItem>()
-                    {
-                        new TournamentQueueItem(){Identifier = item.Identifier, UserId = item.UserId.ToString(), Level = item.Level},
-                        queueItem
-                    };
+                    _repository.Remove(entity);
                 }
             }
-            _repository.Add(new TournamentQueueEntity(){Identifier = queueItem.Identifier, UserId = queueItem.UserId.ToGuid(), Level = queueItem.Level});
-            _repository.Save();
-            return new List<GameQueueItem>();
+            var result = _repository.Save();
+            return result;
         }
+        
     }
 }
