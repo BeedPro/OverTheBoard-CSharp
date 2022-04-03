@@ -25,6 +25,6 @@ namespace OverTheBoard.Data.Entities.Applications
         public GameStatus Status { get; set; }
         public GameType Type { get; set; }
         public int Level { get; set; }
-        public Guid? GroupIdentifier { get; set; }
+        public Guid? TournamentId { get; set; }
     }
 }

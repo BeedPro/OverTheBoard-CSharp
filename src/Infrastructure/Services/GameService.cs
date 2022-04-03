@@ -52,7 +52,7 @@ namespace OverTheBoard.Infrastructure.Services
             
             if (!string.IsNullOrEmpty(tournamentIdentifier))
             {
-                game.GroupIdentifier = tournamentIdentifier.ToGuid();
+                game.TournamentId = tournamentIdentifier.ToGuid();
             }
             
             foreach (var item in queueItems)
@@ -214,11 +214,21 @@ namespace OverTheBoard.Infrastructure.Services
                 .Include(i => i.Players)
                 .Where(e => 
                     e.Players.Any(f => f.UserId == userId.ToGuid()) && 
-                    e.GroupIdentifier.HasValue && 
-                    e.GroupIdentifier.Value == tournamentIdentifier.ToGuid());
+                    e.TournamentId.HasValue && 
+                    e.TournamentId.Value == tournamentIdentifier.ToGuid());
 
             var gameInProgressInfo = gameInProgress.Select(entity => PopulateChessGame(entity)).ToList();
             return gameInProgressInfo;
+        }
+
+        public string GetTournamentIdByUserAsync(string userId)
+        {
+            var games = _repositoryChessGame.Query()
+                .Include(i => i.Players)
+                .Where(e =>
+                    e.Players.Any(f => f.UserId == userId.ToGuid()) && e.TournamentId != null);
+
+            throw new NotImplementedException();
         }
 
 

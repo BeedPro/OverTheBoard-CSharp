@@ -55,6 +55,7 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet("brackets")]
         public IActionResult Brackets()
         {
+            var model = new BracketsViewModel();
             return View();
         }
 
