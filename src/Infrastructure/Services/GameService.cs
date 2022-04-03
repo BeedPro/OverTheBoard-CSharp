@@ -11,7 +11,6 @@ using OverTheBoard.Infrastructure.Extensions;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.ObjectModel.Queues;
-using GameType = OverTheBoard.Data.Entities.GameType;
 
 namespace OverTheBoard.Infrastructure.Services
 {
@@ -41,7 +40,7 @@ namespace OverTheBoard.Infrastructure.Services
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
-        public async Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, string groupIdentifier)
+        public async Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, string tournamentIdentifier)
         {
             ChessGameEntity game = new ChessGameEntity();
             game.Identifier = identifier.ToGuid();
@@ -51,9 +50,9 @@ namespace OverTheBoard.Infrastructure.Services
             game.Status = GameStatus.InProgress;
             game.Type = type;
             
-            if (!string.IsNullOrEmpty(groupIdentifier))
+            if (!string.IsNullOrEmpty(tournamentIdentifier))
             {
-                game.GroupIdentifier = groupIdentifier.ToGuid();
+                game.GroupIdentifier = tournamentIdentifier.ToGuid();
             }
             
             foreach (var item in queueItems)
@@ -170,24 +169,11 @@ namespace OverTheBoard.Infrastructure.Services
         public async Task<List<ChessGame>> GetGamesInProgress()
         {
             var gameInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Status == GameStatus.InProgress);
-            var gameInProgressInfo = gameInProgress.Select(e => new ChessGame()
-            {
-                Identifier = e.Identifier.ToString(),
-                Fen = e.Fen,
-                LastMoveAt = e.LastMoveAt,
-                NextMoveColour = e.NextMoveColour,
-                Players = e.Players.Select(p => new GamePlayer()
-                {
-                    UserId = p.UserId.ToString(),
-                    ConnectionId = p.ConnectionId,
-                    Colour = p.Colour,
-                    TimeRemaining = p.TimeRemaining,
-                }).ToList(),
-                Status = e.Status,
-                Type = e.Type
-            }).ToList();
+            var gameInProgressInfo = gameInProgress.Select(entity => PopulateChessGame(entity)).ToList();
             return gameInProgressInfo;
         }
+
+        
 
         public async Task<bool> SaveGameOutcomeAsync(string gameId, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
         {
@@ -222,6 +208,19 @@ namespace OverTheBoard.Infrastructure.Services
             return true;
         }
 
+        public async Task<List<ChessGame>> GetMatchesByTournamentAsync(string userId, string tournamentIdentifier)
+        {
+            var gameInProgress = _repositoryChessGame.Query()
+                .Include(i => i.Players)
+                .Where(e => 
+                    e.Players.Any(f => f.UserId == userId.ToGuid()) && 
+                    e.GroupIdentifier.HasValue && 
+                    e.GroupIdentifier.Value == tournamentIdentifier.ToGuid());
+
+            var gameInProgressInfo = gameInProgress.Select(entity => PopulateChessGame(entity)).ToList();
+            return gameInProgressInfo;
+        }
+
 
         private string GetDisplayNameById(string userId)
         {
@@ -236,6 +235,27 @@ namespace OverTheBoard.Infrastructure.Services
                 .Include(i => i.Players)
                 .FirstOrDefault(e => e.Identifier == id);
             return gameEntity;
+        }
+
+        private static ChessGame PopulateChessGame(ChessGameEntity e)
+        {
+            return new ChessGame()
+            {
+                Identifier = e.Identifier.ToString(),
+                Fen = e.Fen,
+                LastMoveAt = e.LastMoveAt,
+                NextMoveColour = e.NextMoveColour,
+                Players = e.Players.Select(p => new GamePlayer()
+                {
+                    UserId = p.UserId.ToString(),
+                    ConnectionId = p.ConnectionId,
+                    Colour = p.Colour,
+                    TimeRemaining = p.TimeRemaining,
+                }).ToList(),
+                Status = e.Status,
+                Type = e.Type,
+                StartTime = e.StartTime
+            };
         }
     }
 }

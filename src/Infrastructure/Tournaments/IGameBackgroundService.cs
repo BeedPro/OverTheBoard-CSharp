@@ -4,7 +4,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
 {
     public interface IGameBackgroundService
     {
-        Task<bool> ProcessAsync();
+        Task<bool> ExecuteAsync();
     }
     
    

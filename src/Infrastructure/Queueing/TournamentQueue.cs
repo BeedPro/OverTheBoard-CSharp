@@ -11,9 +11,6 @@ using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.Infrastructure.Queueing
 {
-
-    
-
     public class TournamentQueue : ITournamentQueue
     {
         private readonly IRepository<TournamentQueueEntity> _repository;

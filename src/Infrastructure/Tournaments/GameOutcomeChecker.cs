@@ -15,7 +15,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
             _gameService = gameService;
         }
 
-        public async Task<bool> ProcessAsync()
+        public async Task<bool> ExecuteAsync()
         {
             var gamesInProgress = await _gameService.GetGamesInProgress();
             foreach (var game in gamesInProgress)

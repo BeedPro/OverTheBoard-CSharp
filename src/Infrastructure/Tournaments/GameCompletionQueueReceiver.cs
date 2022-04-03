@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
             _processor = processor;
         }
 
-        public async Task<bool> ProcessAsync()
+        public async Task<bool> ExecuteAsync()
         {
             var queueItem = await _completionQueue.GetQueuesAsync();
 

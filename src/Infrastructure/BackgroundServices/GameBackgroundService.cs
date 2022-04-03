@@ -41,7 +41,7 @@ namespace OverTheBoard.Infrastructure.BackgroundServices
                     var services = scope.ServiceProvider.GetService<IEnumerable<IGameBackgroundService>>();
                     foreach (var service in services)
                     {
-                        await service.ProcessAsync();
+                        await service.ExecuteAsync();
                     }
                 }
                 await Task.Delay(TimeSpan.FromSeconds(_refreshIntervalInSeconds), stoppingToken);

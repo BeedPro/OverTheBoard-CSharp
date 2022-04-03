@@ -19,21 +19,21 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly UserManager<OverTheBoardUser> _userManager;
         private readonly ILogger<AccountController> _logger;
         private readonly IUserService _userService;
-        private readonly IEmailService _emailService;
+        private readonly IAccountEmailService _accountEmailService;
 
         public AccountController(
             SignInManager<OverTheBoardUser> signInManager,
             UserManager<OverTheBoardUser> userManager,
             ILogger<AccountController> logger,
             IUserService userService,
-            IEmailService emailService
+            IAccountEmailService accountEmailService
             )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _userService = userService;
-            _emailService = emailService;
+            _accountEmailService = accountEmailService;
         }
         [HttpGet]
         public IActionResult Login()
@@ -111,7 +111,7 @@ namespace OverTheBoard.WebUI.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var tokenLink = Url.Action("EmailVerification", "Account",
                         new { token, idToken = user.Id, returnUrl }, Request.Scheme);
-                    await _emailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
+                    await _accountEmailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
                     return View("EmailSent");
                 }
             }
@@ -181,7 +181,7 @@ namespace OverTheBoard.WebUI.Controllers
                         new {token, idToken = userId, returnUrl }, Request.Scheme);
 
                     //TODO: Add implementation of Visitor Role for unverified accounts [Maybe]
-                    await _emailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
+                    await _accountEmailService.SendRegistrationEmailAsync(user.Email, user.DisplayName,tokenLink);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Success");
@@ -214,7 +214,7 @@ namespace OverTheBoard.WebUI.Controllers
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                     var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
-                    await _emailService.SendPasswordResetEmailAsync(user.Email, user.DisplayName,token, callback);
+                    await _accountEmailService.SendPasswordResetEmailAsync(user.Email, user.DisplayName,token, callback);
                 }
 
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));

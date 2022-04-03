@@ -20,5 +20,6 @@ namespace OverTheBoard.ObjectModel
         public string NextMoveColour { get; set; }
         public GameStatus Status { get; set; }
         public GameType Type { get; set; }
+        public DateTime StartTime { get; set; }
     }
 }

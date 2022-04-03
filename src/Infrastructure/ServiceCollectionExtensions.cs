@@ -34,11 +34,14 @@ namespace OverTheBoard.Infrastructure
 
             services.AddScoped<IEloService, EloService>();
 
-            services.AddScoped<IEmailService, EmailService>();
+            //Register Email services
+            services.AddScoped<IAccountEmailService, AccountEmailService>();
+            services.AddScoped<ITournamentEmailService, TournamentEmailService>();
 
             //League/Ranking Locators
             services.AddScoped<IGameBackgroundService, GameOutcomeChecker>();
             services.AddScoped<IGameBackgroundService, GameCompletionQueueReceiver>();
+            services.AddScoped<IGameBackgroundService, TournamentQueueReceiver>();
 
             // League / Ranking Locators
             services.AddScoped<IGameCompletionProcessor, UnrankingGameCompletionProcessor>();

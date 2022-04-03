@@ -11,7 +11,7 @@ namespace OverTheBoard.Infrastructure.Common
     {
         private static readonly List<string> Colours = new List<string> { "white", "black" };
 
-        public List<DivisionItem> BuildMatches(IList<GameQueueItem> players, int numberOfIteration)
+        public List<DivisionItem> BuildMatches<TType>(List<TType> players, int numberOfIteration) where TType : GameQueueItem
         {
             var matches = new List<DivisionItem>();
             int startRound = 0;
@@ -30,7 +30,7 @@ namespace OverTheBoard.Infrastructure.Common
         }
 
 
-        public List<DivisionItem> BuildMatches(IList<GameQueueItem> players, int startRound, int iterationIndex, int numberOfIteration)
+        public List<DivisionItem> BuildMatches<TType>(List<TType> players, int startRound, int iterationIndex, int numberOfIteration) where TType : GameQueueItem
         {
             var matches = new List<DivisionItem>();
             if (players == null || players.Count < 2)
