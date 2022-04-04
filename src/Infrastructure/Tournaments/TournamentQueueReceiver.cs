@@ -16,19 +16,22 @@ namespace OverTheBoard.Infrastructure.Tournaments
     {
         private readonly ITournamentQueue _tournamentQueue;
         private readonly IGameService _gameService;
+        private readonly ITournamentService _tournamentService;
         private readonly ITournamentEmailService _emailService;
         private readonly IUserService _userService;
         private readonly TournamentOptions _options;
 
         public TournamentQueueReceiver(
             ITournamentQueue tournamentQueue, 
-            IGameService gameService, 
+            IGameService gameService,
+            ITournamentService tournamentService,
             ITournamentEmailService emailService, 
             IUserService userService,
             IOptions<TournamentOptions> options)
         {
             _tournamentQueue = tournamentQueue;
             _gameService = gameService;
+            _tournamentService = tournamentService;
             _emailService = emailService;
             _userService = userService;
             _options = options.Value;
@@ -45,7 +48,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
                     var players = await _tournamentQueue.GetGameQueueItems(_options.PlayersPerGroup, level);
                     var robinEngine = new RoundRobinEngine();
                     var divisions = robinEngine.BuildMatches(players, _options.NumberOfIteration);
-                    var tournamentIdentifier = await CreateGameAsync(divisions);
+                    var tournamentIdentifier = await CreateGameAsync(divisions, players);
                     await SendInitialEmailAsync(players, tournamentIdentifier);
                     await _tournamentQueue.RemoveGameQueueItems(players);
                 }
@@ -64,9 +67,14 @@ namespace OverTheBoard.Infrastructure.Tournaments
             }
         }
 
-        private async Task<string> CreateGameAsync(List<DivisionItem> divisions)
+        private async Task<string> CreateGameAsync(List<DivisionItem> divisions, List<TournamentQueueItem> players)
         {
             var tournamentIdentifier = Guid.NewGuid().ToString();
+            DateTime startDate = DateTime.Now;
+            var numberOfRound = divisions.GroupBy(e => e.RoundNumber).Count();
+            DateTime endDate = DateTime.Now.AddDays(numberOfRound + 2);
+            await _tournamentService.CreateTournamentAsync(tournamentIdentifier, players, startDate, endDate);
+
             foreach (var division in divisions)
             {
                 var gameIdentifier = Guid.NewGuid().ToString();

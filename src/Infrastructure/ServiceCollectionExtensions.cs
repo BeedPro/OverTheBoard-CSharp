@@ -31,6 +31,7 @@ namespace OverTheBoard.Infrastructure
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<ITournamentService, TournamentService>();
 
             services.AddScoped<IEloService, EloService>();
 
