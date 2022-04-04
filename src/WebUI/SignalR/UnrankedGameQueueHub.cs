@@ -15,7 +15,7 @@ using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.WebUI.SignalR
 {
-    public class QueueHub : Hub
+    public class UnrankedGameQueueHub : Hub
     {
         private readonly IUnrankedGameQueue _gameQueue;
         private readonly IGameService _gameService;
@@ -23,7 +23,7 @@ namespace OverTheBoard.WebUI.SignalR
         private readonly GameSettingOptions _options;
 
 
-        public QueueHub(IUnrankedGameQueue gameQueue, IGameService gameService, IUserService userService, IOptions<GameSettingOptions> options)
+        public UnrankedGameQueueHub(IUnrankedGameQueue gameQueue, IGameService gameService, IUserService userService, IOptions<GameSettingOptions> options)
         {
             _gameQueue = gameQueue;
             _gameService = gameService;

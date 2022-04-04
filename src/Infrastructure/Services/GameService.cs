@@ -221,16 +221,7 @@ namespace OverTheBoard.Infrastructure.Services
             return gameInProgressInfo;
         }
 
-        public string GetTournamentIdByUserAsync(string userId)
-        {
-            var games = _repositoryChessGame.Query()
-                .Include(i => i.Players)
-                .Where(e =>
-                    e.Players.Any(f => f.UserId == userId.ToGuid()) && e.TournamentId != null);
-
-            throw new NotImplementedException();
-        }
-
+        
 
         private string GetDisplayNameById(string userId)
         {

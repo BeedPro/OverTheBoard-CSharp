@@ -21,6 +21,5 @@ namespace OverTheBoard.Infrastructure.Services
         Task<bool> SaveGameOutcomeAsync(string gameId, EloOutcomesType whitePlayerOutcome,
             EloOutcomesType blackPlayerOutcome);
         Task<List<ChessGame>> GetMatchesByTournamentAsync(string playerUserId, string tournamentIdentifier);
-        string GetTournamentIdByUserAsync(string userId);
     }
 }
