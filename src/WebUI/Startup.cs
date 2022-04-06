@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OverTheBoard.Infrastructure;
-using OverTheBoard.Infrastructure.BackgroundServices;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.ObjectModel.Options;
+using OverTheBoard.WebUI.BackgroundServices;
 using OverTheBoard.WebUI.SignalR;
 
 namespace OverTheBoard.WebUI
@@ -35,6 +35,7 @@ namespace OverTheBoard.WebUI
             services.AddSignalR();
             services.AddInfrastructure();
             services.AddHostedService<GameBackgroundService>();
+            services.AddHostedService<GameInitialiserBackgroundService>();
 
         }
 

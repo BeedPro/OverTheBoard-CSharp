@@ -21,15 +21,15 @@ namespace OverTheBoard.WebUI.SignalR
         private readonly IGameService _gameService;
         private readonly IUserService _userService;
         private readonly GameSettingOptions _options;
-
-
+        
         public UnrankedGameQueueHub(IUnrankedGameQueue gameQueue, IGameService gameService, IUserService userService, IOptions<GameSettingOptions> options)
         {
             _gameQueue = gameQueue;
-            _gameService = gameService;
+            _gameService = gameService;    
             _userService = userService;
             _options = options.Value;
         }
+        
         public async Task Queue(string connectionId)
         {
             var queueItems = _gameQueue.GetQueueGame(

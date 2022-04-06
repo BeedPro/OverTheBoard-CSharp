@@ -47,7 +47,7 @@ namespace OverTheBoard.Infrastructure.Services
             game.Players = new List<GamePlayerEntity>();
             game.StartTime = startTime;
             game.Period = periodInMinutes;
-            game.Status = GameStatus.InProgress;
+            game.Status = GameStatus.NotStarted;
             game.Type = type;
             
             if (!string.IsNullOrEmpty(tournamentIdentifier))
@@ -72,28 +72,27 @@ namespace OverTheBoard.Infrastructure.Services
         }
 
 
-        public async Task<ChessGame> GetPlayersAsync(string gameId)
+        public async Task<ChessGame> GetChessGameOnlyAsync(string gameId)
         {
-            var id = gameId.ToGuid();
             var gameEntity = GetGameEntity(gameId);
 
-            var game = new ChessGame()
+           return new ChessGame()
             {
                 Identifier = gameEntity.Identifier.ToString(),
                 Fen = gameEntity.Fen,
                 LastMoveAt = gameEntity.LastMoveAt,
                 NextMoveColour = gameEntity.NextMoveColour,
                 Status = gameEntity.Status,
-                Type = gameEntity.Type
+                Type = gameEntity.Type,
+                StartTime = gameEntity.StartTime
             };
+        }
 
-            game.Players = gameEntity.Players.Select(e => new GamePlayer()
-            {
-                UserId = e.UserId.ToString(),
-                ConnectionId = e.ConnectionId,
-                Colour = e.Colour,
-                TimeRemaining = e.TimeRemaining,
-            }).ToList();
+        public async Task<ChessGame> GetChessGameWithPlayersAsync(string gameId)
+        {
+            var gameEntity = GetGameEntity(gameId);
+            var game = PopulateChessGame(gameEntity);
+            
 
             if (game.LastMoveAt.HasValue)
             {
@@ -110,23 +109,58 @@ namespace OverTheBoard.Infrastructure.Services
 
         public async Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId)
         {
-            var gameEntity = GetGameEntity(gameId);
+            var userGuid = userId.ToGuid();
+            var gameGuid = gameId.ToGuid();
+            var entity = _repositoryGamePlayer.Query()
+                .FirstOrDefault(e => e.UserId == userGuid && e.Game.Identifier == gameGuid);
 
-            if (!gameEntity.LastMoveAt.HasValue)
+            if (entity != null)
             {
-                gameEntity.LastMoveAt = DateTime.Now;
-                gameEntity.NextMoveColour = "white";
+                entity.ConnectionId = connectionId;
+                entity.LastConnectedTime = DateTime.Now;
+                _repositoryGamePlayer.Save();
             }
+           
+            return true;
+        } 
+        
+        public async Task<bool> UpdateStatusAsync(string gameId, GameStatus status)
+        {
+            var gameGuid = gameId.ToGuid();
+            var entity = _repositoryChessGame.Query()
+                .FirstOrDefault(e => e.Identifier == gameGuid);
 
-            var player = gameEntity.Players.FirstOrDefault(e => e.UserId == userId.ToGuid());
-            if (player != null)
+            if (entity != null)
             {
-                player.ConnectionId = connectionId;
+                entity.Status = status;
+                _repositoryGamePlayer.Save();
             }
-
-            _repositoryGamePlayer.Save();
+           
             return true;
         }
+        
+       
+
+
+ //public async Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId)
+ //       {
+ //           var gameEntity = GetGameEntity(gameId);
+
+ //           if (!gameEntity.LastMoveAt.HasValue)
+ //           {
+ //               gameEntity.LastMoveAt = DateTime.Now;
+ //               gameEntity.NextMoveColour = "white";
+ //           }
+
+ //           var player = gameEntity.Players.FirstOrDefault(e => e.UserId == userId.ToGuid());
+ //           if (player != null)
+ //           {
+ //               player.ConnectionId = connectionId;
+ //           }
+
+ //           _repositoryGamePlayer.Save();
+ //           return true;
+ //       }
 
 
 
@@ -180,22 +214,26 @@ namespace OverTheBoard.Infrastructure.Services
             var gameEntity = GetGameEntity(gameId);
             if (gameEntity.Status != GameStatus.Completed)
             {
-                var whiteUser =
-                    await _userService.GetUserAsync(gameEntity.Players.FirstOrDefault(f => f.Colour == "white")?.UserId
-                        .ToString());
-                var blackUser =
-                    await _userService.GetUserAsync(gameEntity.Players.FirstOrDefault(f => f.Colour == "black")?.UserId
-                        .ToString());
+                var whitePlayer = gameEntity.Players.FirstOrDefault(f => f.Colour == "white");
+                var blackPlayer = gameEntity.Players.FirstOrDefault(f => f.Colour == "black");
+                
+                var whiteUser = await _userService.GetUserAsync(whitePlayer?.UserId.ToString());
+                var blackUser = await _userService.GetUserAsync(blackPlayer?.UserId.ToString());
 
-                var newRatings = await _eloService.CalculateEloAsync(whiteUser.Rating, blackUser.Rating,
-                    whitePlayerOutcome, blackPlayerOutcome);
+                var newRatings = await _eloService.CalculateEloAsync(whiteUser.Rating, blackUser.Rating,whitePlayerOutcome, blackPlayerOutcome);
                 //TODO change the indexing to properties
                 //newRating index 0 is whitePlayers and newRating index 1 is blackPlayers
                 whiteUser.Rating = newRatings.WhitePlayerRating;
                 blackUser.Rating = newRatings.BlackPlayerRating;
+                
                 gameEntity.Status = GameStatus.Completed;
+                whitePlayer.Outcome = whitePlayerOutcome.ToString();
+                blackPlayer.Outcome = blackPlayerOutcome.ToString();
+
+
                 await _userManager.UpdateAsync(whiteUser);
                 await _userManager.UpdateAsync(blackUser);
+                
                 _repositoryChessGame.Save();
 
                 await _completionQueue.AddQueueAsync(new GameCompletionQueueItem()
@@ -221,7 +259,40 @@ namespace OverTheBoard.Infrastructure.Services
             return gameInProgressInfo;
         }
 
-        
+        public async Task<Dictionary<string, ChessMove>> InitialiseChessGameAsync(string gameId, string userId)
+        {
+            Dictionary<string, ChessMove> chessMoves = new Dictionary<string, ChessMove>();
+            var chessGame = await GetChessGameWithPlayersAsync(gameId);
+            if (chessGame != null)
+            {
+                var whitePlayer = chessGame.Players.FirstOrDefault(e => e.Colour == "white");
+                var blackPlayer = chessGame.Players.FirstOrDefault(e => e.Colour == "black");
+
+                await UpdateStatusAsync(gameId, GameStatus.InProgress);
+                
+                //if (!string.IsNullOrEmpty(whitePlayer?.ConnectionId) &&
+                //    !string.IsNullOrEmpty(blackPlayer?.ConnectionId))
+                //{}
+                
+                int whiteTimer = Convert.ToInt32(whitePlayer?.TimeRemaining.TotalSeconds) * 10;
+                var blackTimer = Convert.ToInt32(blackPlayer?.TimeRemaining.TotalSeconds) * 10;
+                
+                foreach (var player in chessGame.Players)
+                {
+                    var chessMove = new ChessMove() { Orientation = player.Colour };
+                    if (!string.IsNullOrEmpty(userId) && player.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        chessMove.Fen = chessGame.Fen;
+                    }
+                    chessMove.whiteRemaining = whiteTimer;
+                    chessMove.blackRemaining = blackTimer;
+                    chessMoves.Add(player.ConnectionId, chessMove);
+                }
+            }
+
+            return chessMoves;
+        }
+
 
         private string GetDisplayNameById(string userId)
         {
@@ -250,8 +321,10 @@ namespace OverTheBoard.Infrastructure.Services
                 {
                     UserId = p.UserId.ToString(),
                     ConnectionId = p.ConnectionId,
+                    LastConnectedTime = p.LastConnectedTime,
                     Colour = p.Colour,
                     TimeRemaining = p.TimeRemaining,
+                    Outcome = p.Outcome
                 }).ToList(),
                 Status = e.Status,
                 Type = e.Type,

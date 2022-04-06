@@ -20,23 +20,28 @@ namespace OverTheBoard.Infrastructure.Tournaments
             var gamesInProgress = await _gameService.GetGamesInProgress();
             foreach (var game in gamesInProgress)
             {
+                var gameLastMoveAt = game.StartTime;
+                var nextMoveColour = "white";
                 if (game.LastMoveAt.HasValue)
                 {
-                    var player = game.Players.FirstOrDefault(e => e.Colour == game.NextMoveColour);
-                    player.TimeRemaining = player.TimeRemaining - (DateTime.Now - game.LastMoveAt.Value);
-                    var intTimeRemaining = Convert.ToInt32(player.TimeRemaining.TotalSeconds);
-                    if (intTimeRemaining <= 0)
+                    gameLastMoveAt = game.LastMoveAt.Value;
+                    nextMoveColour = game.NextMoveColour;
+                }
+
+                var player = game.Players.FirstOrDefault(e => e.Colour == nextMoveColour) ?? new GamePlayer();
+                player.TimeRemaining = player.TimeRemaining - (DateTime.Now - gameLastMoveAt);
+                var intTimeRemaining = Convert.ToInt32(player.TimeRemaining.TotalSeconds);
+
+                if (intTimeRemaining <= 0)
+                {
+                    player.TimeRemaining = new TimeSpan(0, 0, 0);
+                    if (player.Colour == "white")
                     {
-                        player.TimeRemaining = new TimeSpan(0, 0, 0);
-                        if (player.Colour == "white")
-                        {
-                            await _gameService.SaveGameOutcomeAsync(game.Identifier, EloOutcomesType.Lose, EloOutcomesType.Win);
-                        }
-                        else
-                        {
-                            await _gameService.SaveGameOutcomeAsync(game.Identifier, EloOutcomesType.Win,
-                                EloOutcomesType.Lose);
-                        }
+                        await _gameService.SaveGameOutcomeAsync(game.Identifier, EloOutcomesType.Lose, EloOutcomesType.Win);
+                    }
+                    else
+                    {
+                        await _gameService.SaveGameOutcomeAsync(game.Identifier, EloOutcomesType.Win,EloOutcomesType.Lose);
                     }
                 }
             }

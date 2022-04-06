@@ -1,21 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OverTheBoard.Data.Entities.Applications;
-using OverTheBoard.Data.Repositories;
-using OverTheBoard.Infrastructure.Extensions;
-using OverTheBoard.Infrastructure.Services;
-using OverTheBoard.ObjectModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using OverTheBoard.Infrastructure.Tournaments;
 
-namespace OverTheBoard.Infrastructure.BackgroundServices
+namespace OverTheBoard.WebUI.BackgroundServices
 {
     public class GameBackgroundService : BackgroundService
     {
@@ -25,7 +17,7 @@ namespace OverTheBoard.Infrastructure.BackgroundServices
 
         private readonly int _refreshIntervalInSeconds;
 
-        public GameBackgroundService(ILogger<GameBackgroundService> logger, IServiceProvider services)
+        public GameBackgroundService(IServiceProvider services, ILogger<GameBackgroundService> logger)
         {
             _logger = logger;
             _services = services;

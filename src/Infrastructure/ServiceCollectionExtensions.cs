@@ -24,6 +24,7 @@ namespace OverTheBoard.Infrastructure
         {
             services.AddScoped(typeof(ILocatorService<,>), typeof(LocatorService<,>));
             services.AddSingleton<IUnrankedGameQueue, UnrankedGameQueue>();
+            services.AddSingleton<IUnrankedInitialiserQueue, UnrankedInitialiserQueue>();
             services.AddScoped<IGameCompletionQueue, GameCompletionQueue>();
             services.AddScoped<ITournamentQueue, TournamentQueue>();
 

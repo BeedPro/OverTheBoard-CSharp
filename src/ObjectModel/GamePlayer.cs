@@ -12,6 +12,7 @@ namespace OverTheBoard.ObjectModel
         public TimeSpan TimeRemaining { get; set; }
         public List<int> GameOutcome { get; set; }
         public List<GamePlayerEloOutcomes> EloOutcomes { get; set; }
-        
+        public DateTime LastConnectedTime { get; set; }
+        public string Outcome { get; set; }
     }
 }

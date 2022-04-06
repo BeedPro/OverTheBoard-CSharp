@@ -72,7 +72,7 @@ namespace OverTheBoard.WebUI.Controllers
             
             var model = new GameViewModel();
             var userId = GetUserId();
-            var game =  await _gameService.GetPlayersAsync(gameId);
+            var game =  await _gameService.GetChessGameWithPlayersAsync(gameId);
             var currentPlayer = game.Players.FirstOrDefault(e => e.UserId.Equals(userId));
             var opponentPlayer = game.Players.FirstOrDefault(e => !e.UserId.Equals(userId));
 
