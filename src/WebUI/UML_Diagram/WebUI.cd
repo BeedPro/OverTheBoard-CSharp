@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OverTheBoard.WebUI.Controllers.AccountController" Collapsed="true">
+    <Position X="6" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAhAAgAAAQACABAAAIAJgAJAAAAAEEUAAAAAEA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Controllers.DashboardController" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAABAAAAAAAAAAAAABgAAAAAAiAAAAAiAMEBAAAAAA=</HashCode>
+      <FileName>Controllers\DashboardController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Controllers.HomeController" Collapsed="true">
+    <Position X="13" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAABAAAAAIAAAAAAAAAMAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Controllers.PlayController" Collapsed="true">
+    <Position X="9.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAABAAAAAAiAAAASAAMECAAAAAA=</HashCode>
+      <FileName>Controllers\PlayController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Extensions.UrlHelperExtensions" Collapsed="true">
+    <Position X="7.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Extensions\UrlHelperExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.BracketsViewModel" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BracketsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.DashboardViewModel" Collapsed="true">
+    <Position X="11.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAA=</HashCode>
+      <FileName>Models\DashboardViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.ErrorViewModel" Collapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ErrorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.ForgotPasswordViewModel" Collapsed="true">
+    <Position X="6" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\ForgotPasswordViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.GameHistoryViewModel" Collapsed="true">
+    <Position X="7.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Models\GameHistoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.GameViewModel" Collapsed="true">
+    <Position X="11.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAwAAAAAEEAAIAAAAAAAAAAAqAAAAAAABAAA=</HashCode>
+      <FileName>Models\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.LeaderboardViewModel" Collapsed="true">
+    <Position X="6" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\LeaderboardViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.LoginViewModel" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAgAAA=</HashCode>
+      <FileName>Models\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.PlayViewModel" Collapsed="true">
+    <Position X="11.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PlayViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.RegistrationViewModel" Collapsed="true">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAgAAIAA=</HashCode>
+      <FileName>Models\RegistrationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.ResetPasswordViewModel" Collapsed="true">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgABIAA=</HashCode>
+      <FileName>Models\ResetPasswordViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.SettingsViewModel" Collapsed="true">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAABACAAAAAAAFAAAAAAAEAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Models\SettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.VerifyEmailMsgViewModel" Collapsed="true">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\VerifyEmailMsgViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.SignalR.GameMessageHub" Collapsed="true">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQQAAEAAAAAAAACAAAAAAAIEAAAAAAA=</HashCode>
+      <FileName>SignalR\GameMessageHub.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.SignalR.UnrankedGameQueueHub" Collapsed="true">
+    <Position X="6" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAQAAAAIAAAAAAAAAYBCAAAAAAAIEAAAAAAA=</HashCode>
+      <FileName>SignalR\UnrankedGameQueueHub.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Program" Collapsed="true">
+    <Position X="13" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Startup" Collapsed="true">
+    <Position X="11.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAACAAAAAA=</HashCode>
+      <FileName>Startup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.Infrastructure.Queueing.GameCompletionQueue" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="0.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAADAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\GameCompletionQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Queueing.TournamentQueue" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="3" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABAABAAKAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Queueing\TournamentQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Queueing.UnrankedGameQueue" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="6" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAQAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\UnrankedGameQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="OverTheBoard.Infrastructure.Queueing.IGameCompletionQueue">
+    <Position X="6.75" Y="0.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAADAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\IGameCompletionQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Queueing.ITournamentQueue">
+    <Position X="6.75" Y="3" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABAAAAAKAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Queueing\ITournamentQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Queueing.IUnrankedGameQueue">
+    <Position X="6.75" Y="6" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\IUnrankedGameQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

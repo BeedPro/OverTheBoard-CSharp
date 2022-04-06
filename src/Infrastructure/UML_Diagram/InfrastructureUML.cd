@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.Infrastructure.BackgroundServices.GameBackgroundService" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAIAAAAAAIAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>BackgroundServices\GameBackgroundService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Common.LocatorService&lt;TInterface, TObject&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Common\LocatorService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Common.RoundRobinEngine" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAgACAAAAAAAAAAABA=</HashCode>
+      <FileName>Common\RoundRobinEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Extensions.StringExtensions" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Extensions\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Queueing.GameCompletionQueue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAADAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\GameCompletionQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Queueing.TournamentQueue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABAABAAKAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Queueing\TournamentQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Queueing.UnrankedGameQueue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAQAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\UnrankedGameQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.AccountEmailService" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\AccountEmailService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.EmailServiceBase" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\EmailServiceBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.TournamentEmailService" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\TournamentEmailService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.EloService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAACCBAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EloService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.FileUploader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAgAAAAEEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\FileUploader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.GameConstants" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\GameConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.GameService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAABAEABAAIBAAAQAgAAIAABAAEAACQAAAEAAJEAAA=</HashCode>
+      <FileName>Services\GameService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.TournamentService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAABAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\TournamentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.UserService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAgAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Tournaments.Processors.TournamentGameCompletionProcessor" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tournaments\Processors\TournamentGameCompletionProcessor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Tournaments.Processors.UnrankingGameCompletionProcessor" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAIBAAAAAAAIEAAAAIAA=</HashCode>
+      <FileName>Tournaments\Processors\UnrankingGameCompletionProcessor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Tournaments.GameCompletionQueueReceiver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAgAAAAAAAAAAEA=</HashCode>
+      <FileName>Tournaments\GameCompletionQueueReceiver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Tournaments.GameOutcomeChecker" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEA=</HashCode>
+      <FileName>Tournaments\GameOutcomeChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Tournaments.TournamentQueueReceiver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAQEIAAAAAAAAAAgQAAAAAAAAAAIEAAAAIEA=</HashCode>
+      <FileName>Tournaments\TournamentQueueReceiver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.ServiceCollectionExtensions" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>ServiceCollectionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OverTheBoard.Infrastructure.Common.ILocatorInterface&lt;TObject&gt;" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\ILocatorInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Common.ILocatorService&lt;TInterface, TObject&gt;" Collapsed="true">
+    <Position X="8.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\ILocatorService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Queueing.IGameCompletionQueue" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAADAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\IGameCompletionQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Queueing.ITournamentQueue" Collapsed="true">
+    <Position X="12.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABAAAAAKAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Queueing\ITournamentQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Queueing.IUnrankedGameQueue" Collapsed="true">
+    <Position X="7" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Queueing\IUnrankedGameQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IAccountEmailService" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\IAccountEmailService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.ITournamentEmailService" Collapsed="true">
+    <Position X="10.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\IAccountEmailService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IEloService" Collapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAACAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IEloService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IFileUploader" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IFileUploader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IGameService" Collapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAAAAAAAAAIBAAAAAgAAIAABAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IGameService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.ITournamentService" Collapsed="true">
+    <Position X="14" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ITournamentService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IUserService" Collapsed="true">
+    <Position X="8.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Services\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Tournaments.Processors.IGameCompletionProcessor" Collapsed="true">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tournaments\Processors\IGameCompletionProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Tournaments.IGameBackgroundService" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Tournaments\IGameBackgroundService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

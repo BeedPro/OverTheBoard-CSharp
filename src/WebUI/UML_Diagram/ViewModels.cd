@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.WebUI.Models.BracketsViewModel">
+    <Position X="13" Y="1" Width="2.75" />
+    <AssociationLine Name="tournamentInfo" Type="OverTheBoard.ObjectModel.GameInfo">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.906" Y="0.84" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BracketsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="tournamentInfo" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.DashboardViewModel">
+    <Position X="10" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAA=</HashCode>
+      <FileName>Models\DashboardViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.ErrorViewModel">
+    <Position X="4.75" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ErrorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.ForgotPasswordViewModel">
+    <Position X="4.75" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\ForgotPasswordViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.GameHistoryViewModel">
+    <Position X="17.75" Y="1" Width="2.75" />
+    <AssociationLine Name="gamesCompleted" Type="OverTheBoard.ObjectModel.GameInfo">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.837" Y="0.964" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Models\GameHistoryViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="gamesCompleted" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.GameViewModel">
+    <Position X="1.75" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAwAAAAAEEAAIAAAAAAAAAAAqAAAAAAABAAA=</HashCode>
+      <FileName>Models\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.LoginViewModel">
+    <Position X="10" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAgAAA=</HashCode>
+      <FileName>Models\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.PlayViewModel">
+    <Position X="15.75" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PlayViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="gameInProgress" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.RegistrationViewModel">
+    <Position X="4.75" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAgAAIAA=</HashCode>
+      <FileName>Models\RegistrationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.ResetPasswordViewModel">
+    <Position X="7.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgABIAA=</HashCode>
+      <FileName>Models\ResetPasswordViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.SettingsViewModel">
+    <Position X="7.5" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAABACAAAAAAAFAAAAAAAEAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Models\SettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Models.VerifyEmailMsgViewModel">
+    <Position X="1.75" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\VerifyEmailMsgViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.GameInfo" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

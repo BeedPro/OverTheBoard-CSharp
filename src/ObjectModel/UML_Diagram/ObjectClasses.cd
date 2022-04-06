@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.ObjectModel.ChessGame">
+    <Position X="6" Y="0.5" Width="2.5" />
+    <AssociationLine Name="Players" Type="OverTheBoard.ObjectModel.GamePlayer">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.089" Y="0.393" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAgAAAAgAAAIAAgAACIAQAAQAAAAAA=</HashCode>
+      <FileName>ChessGame.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.ChessMove">
+    <Position X="14.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAgAAEAkAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>ChessMove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.GameInfo">
+    <Position X="14.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAQAAAAAAABAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>GameInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.GameOverStatus">
+    <Position X="6" Y="5.25" Width="2.5" />
+    <AssociationLine Name="WhiteOutcome" Type="OverTheBoard.ObjectModel.EloOutcomesType">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.002" Y="0.704" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="BlackOutcome" Type="OverTheBoard.ObjectModel.EloOutcomesType">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.716" Y="0.714" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAgAAAAgAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameOverStatus.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WhiteOutcome" />
+      <Property Name="BlackOutcome" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.GamePlayer">
+    <Position X="9.75" Y="3.25" Width="3.25" />
+    <AssociationLine Name="EloOutcomes" Type="OverTheBoard.ObjectModel.GamePlayerEloOutcomes">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.846" Y="1.662" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAgAAAAAAAAAAACAwBAAAAA=</HashCode>
+      <FileName>GamePlayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="EloOutcomes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.GamePlayerEloOutcomes">
+    <Position X="10.5" Y="8.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>GamePlayerEloOutcomes.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.GamePlayerRatings">
+    <Position X="6" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>GamePlayerRatings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.ObjectModel.InitialisationMessage">
+    <Position X="14.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAEAAAgAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>InitialisationMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="OverTheBoard.ObjectModel.EloOutcomesType">
+    <Position X="5.75" Y="8.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>EloOutcomesType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

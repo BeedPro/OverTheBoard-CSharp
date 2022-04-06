@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.ObjectModel", "src\ObjectModel\OverTheBoard.ObjectModel.csproj", "{F0FEED54-C621-40C3-BF4D-E1FA8BCA4FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverTheBoard.UnitTests", "test\OverTheBoard.UnitTests\OverTheBoard.UnitTests.csproj", "{3FC10335-60F2-49DF-9EAB-4134CE30CCE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverTheBoard.UnitTests", "test\OverTheBoard.UnitTests\OverTheBoard.UnitTests.csproj", "{3FC10335-60F2-49DF-9EAB-4134CE30CCE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

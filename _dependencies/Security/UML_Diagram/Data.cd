@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OverTheBoard.Data.Entities.Applications.ChessGameEntity" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAgAAEAAAAAIAAkAACJAQAAQAAAAAI=</HashCode>
+      <FileName>Entities\Applications\ChessGameEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.GameCompletionQueueEntity" Collapsed="true">
+    <Position X="8.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAEAEAAAAAAAAAAAABAgAAAAAAAAA=</HashCode>
+      <FileName>Entities\Applications\GameCompletionQueueEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.TournamentQueueEntity" Collapsed="true">
+    <Position X="8.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAABAgAAAAAAAAg=</HashCode>
+      <FileName>Entities\Applications\GameCompletionQueueEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.GamePlayerEntity" Collapsed="true">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAEAgAgAAAgAAAAAAAAIQBAAAAA=</HashCode>
+      <FileName>Entities\Applications\GamePlayerEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.TournamentEntity" Collapsed="true">
+    <Position X="7" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAgAAAkIAAAAgAAAEAAAAA=</HashCode>
+      <FileName>Entities\Applications\TournamentUserEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.TournamentUserEntity" Collapsed="true">
+    <Position X="10.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Applications\TournamentUserEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.OverTheBoardUser" Collapsed="true">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABEAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAA=</HashCode>
+      <FileName>Entities\Secutiries\OverTheBoardUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Applicationinit" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220226224659_Application-init.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.ApplicationGameID" Collapsed="true">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220226235420_Application-GameID.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Addingpgn" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220227234219_Adding-pgn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Addingtimer" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220227235749_Adding-timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Addingtimer001" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220228002153_Adding-timer001.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Checkany" Collapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220303211456_Check-any.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Checkany1" Collapsed="true">
+    <Position X="12.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220303220721_Check-any1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Checkany2" Collapsed="true">
+    <Position X="14" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220303221518_Check-any2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Checkany3" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220303222554_Check-any3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.AddedGameStatus" Collapsed="true">
+    <Position X="5.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220304212409_Added-GameStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Addinggametype" Collapsed="true">
+    <Position X="12.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220329215624_Adding-game-type.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Addinggroupidentifier" Collapsed="true">
+    <Position X="14" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220329224840_Adding-group-identifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.Addingqueue01" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220330191633_Adding-queue01.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.AddingLevel" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220331164903_AddingLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.RemoveQueueIdentifier" Collapsed="true">
+    <Position X="14" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220331204722_Remove-Queue-Identifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.AddedTournamentUsers" Collapsed="true">
+    <Position X="10.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220403150255_Added-TournamentUsers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.tournamentdetails" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\ApplicationDb\20220404142311_tournament-details.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.ApplicationDb.ApplicationDbContextModelSnapshot" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Migrations\ApplicationDb\ApplicationDbContextModelSnapshot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.Securityinit" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20220226224617_Security-init.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.AddedRatingToUser" Collapsed="true">
+    <Position X="8.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20220306134037_Added-Rating-To-User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.AddedRanks" Collapsed="true">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20220321204429_Added-Ranks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Migrations.SecurityDbContextModelSnapshot" Collapsed="true">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Migrations\SecurityDbContextModelSnapshot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Repositories.Repository&lt;TEntity&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAIAAAgAAAAAAAAAABAAAAAAAAAgACgAAAIAAACA=</HashCode>
+      <FileName>Repositories\Repository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OverTheBoard.Data.Repositories.SecurityRepository&lt;TEntity&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAIAAAAAAAAAAAAAAAAAAAAAAAAgACAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\SecurityRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OverTheBoard.Data.ApplicationDbContext" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAACAAAAAAAAAAACAAAAAAAEAAggAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.SecurityDbContext" Collapsed="true">
+    <Position X="7" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SecurityDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions" Collapsed="true">
+    <Position X="14" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>ServiceCollectionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OverTheBoard.Data.Repositories.IRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="5.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAgAAAAAAAAAABAAAAAAAAAgAAAAAAIAAAAA=</HashCode>
+      <FileName>Repositories\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Data.Repositories.ISecurityRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="7" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\ISecurityRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="OverTheBoard.Data.Entities.GameStatus" Collapsed="true">
+    <Position X="5.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABEAAAA=</HashCode>
+      <FileName>Entities\GameEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OverTheBoard.Data.Entities.GameType" Collapsed="true">
+    <Position X="7" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAACAAAAAAEAAAA=</HashCode>
+      <FileName>Entities\GameEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OverTheBoard.Data.Entities.UserRank" Collapsed="true">
+    <Position X="8.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAADgnwEAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Entities\GameEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

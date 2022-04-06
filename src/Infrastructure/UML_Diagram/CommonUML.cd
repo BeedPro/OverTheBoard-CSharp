@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.Infrastructure.Common.LocatorService&lt;TInterface, TObject&gt;" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Common\LocatorService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Common.RoundRobinEngine">
+    <Position X="7.25" Y="2" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAgACAAAAAAAAAAABA=</HashCode>
+      <FileName>Common\RoundRobinEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OverTheBoard.Infrastructure.Common.ILocatorInterface&lt;TObject&gt;">
+    <Position X="7.25" Y="4.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\ILocatorInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Common.ILocatorService&lt;TInterface, TObject&gt;">
+    <Position X="4" Y="4.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\ILocatorService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

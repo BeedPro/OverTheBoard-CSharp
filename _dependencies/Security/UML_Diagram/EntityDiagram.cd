@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.Data.Entities.Applications.ChessGameEntity">
+    <Position X="15.25" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAgAAEAAAAAIAAkAACJAQAAQAAAAAI=</HashCode>
+      <FileName>Entities\Applications\ChessGameEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Status" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.GameCompletionQueueEntity">
+    <Position X="19" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAEAEAAAAAAAAAAAABAgAAAAAAAAA=</HashCode>
+      <FileName>Entities\Applications\GameCompletionQueueEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.TournamentQueueEntity">
+    <Position X="15.25" Y="0.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAABAgAAAAAAAAg=</HashCode>
+      <FileName>Entities\Applications\GameCompletionQueueEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.GamePlayerEntity">
+    <Position X="15.75" Y="6.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAEAgAgAAAgAAAAAAAAIQBAAAAA=</HashCode>
+      <FileName>Entities\Applications\GamePlayerEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Game" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.TournamentEntity">
+    <Position X="9.5" Y="0.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAgAAAkIAAAAgAAAEAAAAA=</HashCode>
+      <FileName>Entities\Applications\TournamentUserEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.Applications.TournamentUserEntity">
+    <Position X="10" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Applications\TournamentUserEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Data.Entities.OverTheBoardUser">
+    <Position X="6.25" Y="6.75" Width="3" />
+    <AssociationLine Name="Rank" Type="OverTheBoard.Data.Entities.UserRank">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.234" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAABEAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAA=</HashCode>
+      <FileName>Entities\Secutiries\OverTheBoardUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Rank" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="OverTheBoard.Data.Entities.GameStatus">
+    <Position X="19" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABEAAAA=</HashCode>
+      <FileName>Entities\GameEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OverTheBoard.Data.Entities.GameType">
+    <Position X="19" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAACAAAAAAEAAAA=</HashCode>
+      <FileName>Entities\GameEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OverTheBoard.Data.Entities.UserRank">
+    <Position X="10.25" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAADgnwEAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Entities\GameEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

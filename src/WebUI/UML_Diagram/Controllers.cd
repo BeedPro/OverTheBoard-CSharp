@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.WebUI.Controllers.AccountController">
+    <Position X="3" Y="6.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAhAAgAAAQACABAAAIAJgAJAAAAAEEUAAAAAEA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Controllers.DashboardController">
+    <Position X="7.25" Y="6.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AgAABAAAAAAAAAAAAABgAAAAAAiAAAAAiAMEBAAAAAA=</HashCode>
+      <FileName>Controllers\DashboardController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Controllers.HomeController">
+    <Position X="15.75" Y="6.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAABAAAAAIAAAAAAAAAMAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.Controllers.PlayController">
+    <Position X="11.25" Y="6.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAABAAAAAAiAAAASAAMECAAAAAA=</HashCode>
+      <FileName>Controllers\PlayController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Mvc.Controller">
+    <Position X="9.5" Y="2" Width="4" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

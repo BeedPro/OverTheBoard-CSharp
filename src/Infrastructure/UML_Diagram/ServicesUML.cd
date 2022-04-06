@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.Infrastructure.Services.AccountEmailService">
+    <Position X="1.75" Y="4.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\AccountEmailService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.EmailServiceBase">
+    <Position X="3.75" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\EmailServiceBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.TournamentEmailService">
+    <Position X="5.25" Y="4.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\TournamentEmailService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.EloCalculator">
+    <Position X="11.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAABAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EloCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.EloService" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="2.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAACCBAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EloService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.FileUploader" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="4.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAgAAAAEEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\FileUploader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.GameConstants">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\GameConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.GameService" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="2.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>BQAABAEABAAIBAAAQAgAAIAABAAEAACQAAAEAAJEAAA=</HashCode>
+      <FileName>Services\GameService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.TournamentService" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="4.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAABAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\TournamentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OverTheBoard.Infrastructure.Services.UserService" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="2.25" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAgAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IAccountEmailService">
+    <Position X="9.25" Y="12" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\IAccountEmailService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.ITournamentEmailService">
+    <Position X="13.5" Y="11.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Emails\IAccountEmailService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IEloService">
+    <Position X="13.5" Y="7.75" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAACAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IEloService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IFileUploader">
+    <Position X="9.25" Y="13.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IFileUploader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IGameService">
+    <Position X="9.25" Y="7.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>BQAAAAAAAAAIBAAAAAgAAIAABAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IGameService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.ITournamentService">
+    <Position X="9.25" Y="10.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ITournamentService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OverTheBoard.Infrastructure.Services.IUserService">
+    <Position X="13.5" Y="9.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Services\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
