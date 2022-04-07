@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.Infrastructure.Extensions;
+using OverTheBoard.ObjectModel;
 using OverTheBoard.ObjectModel.Queues;
 
 namespace OverTheBoard.Infrastructure.Services
@@ -30,10 +31,10 @@ namespace OverTheBoard.Infrastructure.Services
                 CreatedDate = DateTime.Now
             };
 
-            entityTournament.Players = new List<TournamentUserEntity>();
+            entityTournament.Players = new List<TournamentPlayerEntity>();
             foreach (var player in players)
             {
-                entityTournament.Players.Add(new TournamentUserEntity()
+                entityTournament.Players.Add(new TournamentPlayerEntity()
                 {
                     UserId = player.UserId.ToGuid(),
                 });
@@ -48,11 +49,40 @@ namespace OverTheBoard.Infrastructure.Services
         {
             var hasActiveTournament = await _repositoryTournament.Query()
                 .Include(i => i.Players)
+                .OrderByDescending(e=>e.TournamentId)
                 .FirstOrDefaultAsync(e =>
                     e.Players.Any(f => f.UserId == userId.ToGuid()) && e.IsActive);
 
             return hasActiveTournament?.TournamentIdentifier.ToString();
         }
 
+        public async Task<Tournament> GetTournamentAsync(string tournamentIdentifier)
+        {
+            var tournamentEntity = await _repositoryTournament.Query()
+                .Include(i => i.Players)
+                .OrderByDescending(e => e.TournamentId)
+                .FirstOrDefaultAsync(e => e.TournamentIdentifier == tournamentIdentifier.ToGuid());
+
+            return GetTournament(tournamentEntity);
+        }
+
+        private Tournament GetTournament(TournamentEntity entity)
+        {
+            return new Tournament()
+            {
+                TournamentId = entity.TournamentId,
+                Identifier = entity.TournamentIdentifier.ToString(),
+                IsActive = entity.IsActive,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate,
+                CreatedDate = entity.CreatedDate,
+                Players = entity.Players.Select(p => new TournamentPlayer()
+                {
+                    TournamentPlayerId = p.TournamentPlayerId,
+                    TournamentId = p.TournamentId,
+                    UserId = p.UserId.ToString(),
+                }).ToList()
+            };
+        }
     }
 }

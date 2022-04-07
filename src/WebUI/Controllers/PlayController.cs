@@ -23,16 +23,16 @@ namespace OverTheBoard.WebUI.Controllers
     [Route("play")]
     public class PlayController : Controller
     {
-        private readonly IHubContext<GameMessageHub> _gameMessageHubContext;
         private readonly IGameService _gameService;
+        private readonly ITournamentService _tournamentService;
         private readonly IUserService _userService;
         private readonly IEloService _eloService;
 
-        public PlayController(IHubContext<GameMessageHub> gameMessageHubContext, IGameService gameService,
+        public PlayController(IGameService gameService, ITournamentService tournamentService,
             IUserService userService, IEloService eloService)
         {
-            _gameMessageHubContext = gameMessageHubContext;
             _gameService = gameService;
+            _tournamentService = tournamentService;
             _userService = userService;
             _eloService = eloService;
         }
@@ -53,8 +53,10 @@ namespace OverTheBoard.WebUI.Controllers
         }
 
         [HttpGet("brackets")]
-        public IActionResult Brackets()
+        public async Task<IActionResult> Brackets()
         {
+            var userId = GetUserId();
+            var activeTournament = await _tournamentService.GetTournamentIdentifierByUserAsync(userId);
             var model = new BracketsViewModel();
             return View();
         }
@@ -113,13 +115,6 @@ namespace OverTheBoard.WebUI.Controllers
         }
         
         
-        [HttpGet("game/send/message")]
-        public async Task<IActionResult> Game1()
-        {
-            await _gameMessageHubContext.Clients.All.SendAsync("Registered", $"Instance is {DateTime.Now.ToString()}");
-            return Ok(true);
-        }
-
         private string GetUserId()
         {
             return User

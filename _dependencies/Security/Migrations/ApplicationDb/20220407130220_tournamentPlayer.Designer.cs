@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Data;
 
 namespace OverTheBoard.Data.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220407130220_tournamentPlayer")]
+    partial class tournamentPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,7 +162,7 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
 
                     b.HasIndex("TournamentId");
 
-                    b.ToTable("TournamentPlayers");
+                    b.ToTable("TournamentUsers");
                 });
 
             modelBuilder.Entity("OverTheBoard.Data.Entities.Applications.TournamentQueueEntity", b =>
