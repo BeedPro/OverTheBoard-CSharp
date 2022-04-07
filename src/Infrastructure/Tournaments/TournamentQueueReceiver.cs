@@ -61,7 +61,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
         {
             foreach (var player in players)
             {
-                var matches = await _gameService.GetMatchesByTournamentAsync(player.UserId, tournamentIdentifier);
+                var matches = await _gameService.GetMatchesByTournamentAndUserAsync(player.UserId, tournamentIdentifier);
                 var user = await _userService.GetUserAsync(player.UserId);
                 await _emailService.SendInitialEmailAsync(user.Email, matches);
             }

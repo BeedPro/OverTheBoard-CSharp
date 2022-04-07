@@ -246,16 +246,29 @@ namespace OverTheBoard.Infrastructure.Services
             return true;
         }
 
-        public async Task<List<ChessGame>> GetMatchesByTournamentAsync(string userId, string tournamentIdentifier)
+        public async Task<List<ChessGame>> GetMatchesByTournamentAsync(string tournamentIdentifier)
         {
             var gameInProgress = _repositoryChessGame.Query()
                 .Include(i => i.Players)
-                .Where(e => 
-                    e.Players.Any(f => f.UserId == userId.ToGuid()) && 
-                    e.TournamentId.HasValue && 
+                .Where(e => e.TournamentId.HasValue && 
                     e.TournamentId.Value == tournamentIdentifier.ToGuid());
 
             var gameInProgressInfo = gameInProgress.Select(entity => PopulateChessGame(entity)).ToList();
+
+            return gameInProgressInfo;
+        }
+
+        public async Task<List<ChessGame>> GetMatchesByTournamentAndUserAsync(string userId, string tournamentIdentifier)
+        {
+            var gameInProgress = _repositoryChessGame.Query()
+                .Include(i => i.Players)
+                .Where(e =>
+                    e.Players.Any(f => f.UserId == userId.ToGuid()) &&
+                    e.TournamentId.HasValue &&
+                    e.TournamentId.Value == tournamentIdentifier.ToGuid());
+
+            var gameInProgressInfo = gameInProgress.Select(entity => PopulateChessGame(entity)).ToList();
+
             return gameInProgressInfo;
         }
 

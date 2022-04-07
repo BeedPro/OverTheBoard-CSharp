@@ -56,9 +56,18 @@ namespace OverTheBoard.WebUI.Controllers
         public async Task<IActionResult> Brackets()
         {
             var userId = GetUserId();
-            var activeTournament = await _tournamentService.GetTournamentIdentifierByUserAsync(userId);
-            var model = new BracketsViewModel();
-            return View();
+            var activeTournamentIdentifier = await _tournamentService.GetTournamentIdentifierByUserAsync(userId);
+            var tournament = await _tournamentService.GetTournamentAsync(activeTournamentIdentifier);
+            var games = await _gameService.GetMatchesByTournamentAsync(activeTournamentIdentifier);
+
+            BracketsViewModel model = PopulateTournament(userId, tournament, games);
+            return View(model);
+        }
+
+        private BracketsViewModel PopulateTournament(string userId, Tournament tournament, List<ChessGame> games)
+        {
+
+            return new BracketsViewModel();
         }
 
         [HttpGet("game/start-unranked")]
