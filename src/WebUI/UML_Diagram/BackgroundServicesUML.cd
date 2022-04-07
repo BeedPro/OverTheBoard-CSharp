@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="OverTheBoard.WebUI.BackgroundServices.GameBackgroundService">
+    <Position X="5.75" Y="4.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAIAAAAAAIAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>BackgroundServices\GameBackgroundService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverTheBoard.WebUI.BackgroundServices.GameInitialiserBackgroundService">
+    <Position X="9.25" Y="4.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAQAAAAAAAAAAAAAEAAAAAAAAAAAEA=</HashCode>
+      <FileName>BackgroundServices\GameInitialiserBackgroundService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.Extensions.Hosting.BackgroundService" Collapsed="true">
+    <Position X="8.5" Y="2" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
