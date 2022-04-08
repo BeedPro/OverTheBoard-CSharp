@@ -16,6 +16,7 @@ using OverTheBoard.Data.Entities;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.WebUI.Models;
 using OverTheBoard.Data.Entities.Applications;
+using OverTheBoard.WebUI.ModelPopulators;
 
 namespace OverTheBoard.WebUI.Controllers
 {
@@ -27,14 +28,16 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly ITournamentService _tournamentService;
         private readonly IUserService _userService;
         private readonly IEloService _eloService;
+        private readonly IBracketsViewModelPopulator _bracketsViewModelPopulator;
 
         public PlayController(IGameService gameService, ITournamentService tournamentService,
-            IUserService userService, IEloService eloService)
+            IUserService userService, IEloService eloService, IBracketsViewModelPopulator bracketsViewModelPopulator)
         {
             _gameService = gameService;
             _tournamentService = tournamentService;
             _userService = userService;
             _eloService = eloService;
+            _bracketsViewModelPopulator = bracketsViewModelPopulator;
         }
         public async Task<IActionResult> Index()
         {
@@ -60,16 +63,18 @@ namespace OverTheBoard.WebUI.Controllers
             var tournament = await _tournamentService.GetTournamentAsync(activeTournamentIdentifier);
             var games = await _gameService.GetMatchesByTournamentAsync(activeTournamentIdentifier);
 
-            BracketsViewModel model = PopulateTournament(userId, tournament, games);
+            Dictionary<string, OverTheBoardUser> users = new Dictionary<string, OverTheBoardUser>(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var player in tournament.Players)
+            {
+                var user = await _userService.GetUserAsync(player.UserId);
+                users.Add(player.UserId, user);
+            }
+
+            BracketsViewModel model = _bracketsViewModelPopulator.Populate(userId, tournament, games, users);
             return View(model);
         }
 
-        private BracketsViewModel PopulateTournament(string userId, Tournament tournament, List<ChessGame> games)
-        {
-
-            return new BracketsViewModel();
-        }
-
+        
         [HttpGet("game/start-unranked")]
         public IActionResult StartUnranked(string sessionId)
         {
@@ -85,6 +90,10 @@ namespace OverTheBoard.WebUI.Controllers
             var userId = GetUserId();
             var game =  await _gameService.GetChessGameWithPlayersAsync(gameId);
             var currentPlayer = game.Players.FirstOrDefault(e => e.UserId.Equals(userId));
+            if (currentPlayer == null)
+            {
+                throw new Exception("User does not exists");
+            }
             var opponentPlayer = game.Players.FirstOrDefault(e => !e.UserId.Equals(userId));
 
             if (opponentPlayer != null && currentPlayer != null)

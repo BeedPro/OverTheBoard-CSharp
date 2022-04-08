@@ -9,6 +9,7 @@ using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.ObjectModel.Options;
 using OverTheBoard.WebUI.BackgroundServices;
+using OverTheBoard.WebUI.ModelPopulators;
 using OverTheBoard.WebUI.SignalR;
 
 namespace OverTheBoard.WebUI
@@ -36,6 +37,8 @@ namespace OverTheBoard.WebUI
             services.AddInfrastructure();
             services.AddHostedService<GameBackgroundService>();
             services.AddHostedService<GameInitialiserBackgroundService>();
+
+            services.AddScoped<IBracketsViewModelPopulator, BracketsViewModelPopulator>();
 
         }
 

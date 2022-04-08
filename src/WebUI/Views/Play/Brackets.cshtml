@@ -1,29 +1,28 @@
-﻿@model OverTheBoard.WebUI.Models.BracketsViewModel
+﻿@using OverTheBoard.Data.Entities
+@model OverTheBoard.WebUI.Models.BracketsViewModel
 @{
     int i = 1;
     ViewData["Title"] = "Brackets";
 }
-
+<br />
+<br />
+<br />
+<br />
 <div class="gtco-container">
-    <table class="tg center-table">
-        <thead>
-        <tr>
-            <th class="tg-0pky">Round Number</th>
-            @for (var j = 1; j <= 4; j++)
+    <div class="row row-pb-md">
+        @foreach (var round in Model.Items)
+        {
+            <div class="col-md-12 col-sm-12 service-header">
+                <div>
+                    <h2>Round @round.Key</h2>
+                </div>
+            </div>
+            <div class="clearfix visible-md-block visible-sm-block"></div>
+            @foreach (var game in round.Value.Games)
             {
-                <th class="tg-0pky">Game @j</th>
+                <partial name="Brackets/BracketsGame" model="@game" />
             }
-        </tr>
-        </thead>
-        <tbody>
-        @for(var j = 1; j <= 9; j++) { 
-            <tr>
-                <td class="tg-0pky"><span>@j</span></td>
-                <td class="tg-0pky"><a href="#">Open Game</a></td>
-            </tr>
+
         }
-        </tbody>
-    </table>
+    </div>
 </div>
-
-

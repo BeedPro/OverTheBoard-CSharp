@@ -44,7 +44,7 @@ namespace OverTheBoard.WebUI.SignalR
             {
                 var gameId = Guid.NewGuid().ToString();
                 SetColour(ref queueItems);
-                await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, _options.UnrankTimeDuration, GameType.Unranked, string.Empty);
+                await _gameService.CreateGameAsync(gameId, queueItems, DateTime.Now, _options.UnrankTimeDuration, GameType.Unranked, 0,0,string.Empty);
 
                 foreach (UnrankedGameQueueItem item in queueItems)
                 {

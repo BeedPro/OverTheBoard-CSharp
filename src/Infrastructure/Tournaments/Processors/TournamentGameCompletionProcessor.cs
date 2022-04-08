@@ -11,9 +11,10 @@ namespace OverTheBoard.Infrastructure.Tournaments.Processors
             return isDefault;
         }
 
-        public Task<bool> ProcessAsync(GameCompletionQueueItem item)
+        public async Task<bool> ProcessAsync(GameCompletionQueueItem item)
         {
-            throw new NotImplementedException();
+
+            return true;
         }
     }
 }

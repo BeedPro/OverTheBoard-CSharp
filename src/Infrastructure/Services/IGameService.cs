@@ -12,7 +12,7 @@ namespace OverTheBoard.Infrastructure.Services
 {
     public interface IGameService
     {
-        Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, string tournamentIdentifier);
+        Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, int roundNumber, int level, string tournamentIdentifier);
         Task<ChessGame> GetChessGameOnlyAsync(string gameId);
         Task<ChessGame> GetChessGameWithPlayersAsync(string gameId);
         Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId);

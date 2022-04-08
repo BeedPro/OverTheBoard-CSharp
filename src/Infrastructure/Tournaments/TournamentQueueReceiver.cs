@@ -48,7 +48,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
                     var players = await _tournamentQueue.GetGameQueueItems(_options.PlayersPerGroup, level);
                     var robinEngine = new RoundRobinEngine();
                     var divisions = robinEngine.BuildMatches(players, _options.NumberOfIteration);
-                    var tournamentIdentifier = await CreateGameAsync(divisions, players);
+                    var tournamentIdentifier = await CreateGameAsync(divisions, players, level);
                     await SendInitialEmailAsync(players, tournamentIdentifier);
                     await _tournamentQueue.RemoveGameQueueItems(players);
                 }
@@ -67,7 +67,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
             }
         }
 
-        private async Task<string> CreateGameAsync(List<DivisionItem> divisions, List<TournamentQueueItem> players)
+        private async Task<string> CreateGameAsync(List<DivisionItem> divisions, List<TournamentQueueItem> players, int level)
         {
             var tournamentIdentifier = Guid.NewGuid().ToString();
             DateTime startDate = DateTime.Now;
@@ -77,9 +77,10 @@ namespace OverTheBoard.Infrastructure.Tournaments
 
             foreach (var division in divisions)
             {
+                var divisionRoundNumber = division.RoundNumber + 1;
                 var gameIdentifier = Guid.NewGuid().ToString();
-                await _gameService.CreateGameAsync(gameIdentifier, division.GameQueueItems, GetDate(division.RoundNumber), 15,
-                    GameType.Ranked, tournamentIdentifier);
+                await _gameService.CreateGameAsync(gameIdentifier, division.GameQueueItems, GetDate(divisionRoundNumber), 15,
+                    GameType.Ranked, divisionRoundNumber, level, tournamentIdentifier);
             }
 
             return tournamentIdentifier;

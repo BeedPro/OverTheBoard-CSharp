@@ -40,7 +40,7 @@ namespace OverTheBoard.Infrastructure.Services
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
-        public async Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, string tournamentIdentifier)
+        public async Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, int roundNumber, int level, string tournamentIdentifier)
         {
             ChessGameEntity game = new ChessGameEntity();
             game.Identifier = identifier.ToGuid();
@@ -53,6 +53,8 @@ namespace OverTheBoard.Infrastructure.Services
             if (!string.IsNullOrEmpty(tournamentIdentifier))
             {
                 game.TournamentId = tournamentIdentifier.ToGuid();
+                game.RoundNumber = roundNumber;
+                game.Level = level;
             }
             
             foreach (var item in queueItems)
@@ -281,8 +283,10 @@ namespace OverTheBoard.Infrastructure.Services
                 var whitePlayer = chessGame.Players.FirstOrDefault(e => e.Colour == "white");
                 var blackPlayer = chessGame.Players.FirstOrDefault(e => e.Colour == "black");
 
-                await UpdateStatusAsync(gameId, GameStatus.InProgress);
-                
+                if (chessGame.Status == GameStatus.NotStarted)
+                {
+                    await UpdateStatusAsync(gameId, GameStatus.InProgress);
+                }
                 //if (!string.IsNullOrEmpty(whitePlayer?.ConnectionId) &&
                 //    !string.IsNullOrEmpty(blackPlayer?.ConnectionId))
                 //{}
@@ -328,6 +332,7 @@ namespace OverTheBoard.Infrastructure.Services
             {
                 Identifier = e.Identifier.ToString(),
                 Fen = e.Fen,
+                Period = e.Period,
                 LastMoveAt = e.LastMoveAt,
                 NextMoveColour = e.NextMoveColour,
                 Players = e.Players.Select(p => new GamePlayer()
@@ -341,7 +346,10 @@ namespace OverTheBoard.Infrastructure.Services
                 }).ToList(),
                 Status = e.Status,
                 Type = e.Type,
-                StartTime = e.StartTime
+                StartTime = e.StartTime,
+                RoundNumber = e.RoundNumber,
+                Level = e.Level,
+                TournamentId = e.TournamentId?.ToString()
             };
         }
     }

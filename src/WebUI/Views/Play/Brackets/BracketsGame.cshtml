@@ -1,0 +1,57 @@
+﻿@using OverTheBoard.Data.Entities
+@model OverTheBoard.WebUI.Models.BracketsGameModel
+@{
+    var cssName = "";
+    if (Model.Status == GameStatus.Completed)
+    {
+        cssName = "service-finished";
+    }
+    if (Model.CanPlay)
+    {
+        cssName = "service-border";
+    }
+}
+<div class="col-md-4 col-sm-4 service-wrap">
+    <div class="service @cssName">
+        @if (Model.CanPlay)
+        {
+            <h3>
+                <a asp-controller="Play" asp-action="Game" asp-route-gameId="@Model.Identifier">
+                    @{
+                        var index = 0;
+                    }
+                    @foreach (var player in Model.Players)
+                    {
+                        <partial name="Brackets/BracketsPlayer" model="@player" />
+                        if (index == 0)
+                        {
+                            <text> <br /> vs <br /> </text>
+                        }
+                        index = 1;
+                    }
+                </a>
+            </h3>
+            <p>@Model.StartDate at @Model.StartAt</p>
+        }
+        else
+        {
+            <h3>
+                @{
+                    var index = 0;
+                }
+                @foreach (var player in Model.Players)
+                {
+                    <partial name="Brackets/BracketsPlayer" model="@player" />
+                    if (index == 0)
+                    {
+                        <text> <br /> vs <br /> </text>
+                    }
+                    index = 1;
+                }
+            </h3>
+            <p>@Model.StartDate at @Model.StartAt</p>
+
+        }
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@model OverTheBoard.WebUI.Models.BracketsPlayerModel
+    @{
+    var outcome = "";
+    if (!string.IsNullOrEmpty(Model.Outcome))
+    {
+        outcome = $"({Model.Outcome})";
+    }
+    }
+
+    @if (Model.IsSelf)
+    {
+    <strong>@Model.DisplayName - @Model.Colour @outcome</strong>
+    }
+    else
+    {
+    <text>@Model.DisplayName - @Model.Colour @outcome</text>
+    }

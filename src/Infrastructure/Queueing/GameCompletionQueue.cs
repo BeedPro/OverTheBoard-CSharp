@@ -52,7 +52,8 @@ namespace OverTheBoard.Infrastructure.Queueing
             var entities = await _repositoryCompletionQueue.Query().Where(e => e.IsActive).ToListAsync();
             return entities.Select(e => new GameCompletionQueueItem
             {
-                GameId = e.GameId
+                GameId = e.GameId,
+                Level = e.Level
             }).ToList();
         }
     }
