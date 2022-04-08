@@ -27,7 +27,63 @@ namespace OverTheBoard.WebUI.ModelPopulators
                 }
             }
 
+            bracketsViewModel.StatModels = GetStats(currentUserId, tournament, games, users);
+
+
             return bracketsViewModel;
+        }
+
+        private List<BracketsPlayerStatsModel> GetStats(string currentUserId, Tournament tournament, List<ChessGame> games, Dictionary<string, OverTheBoardUser> users)
+        {
+            var players = GetPlayers(games);
+            var statsModels = new List<BracketsPlayerStatsModel>();
+            foreach (var player in tournament.Players)
+            {
+                var user = users.ContainsKey(player.UserId) ? users[player.UserId] : new OverTheBoardUser() { DisplayName = "No User" };
+                var stats = new BracketsPlayerStatsModel();
+                stats.DisplayName = user.DisplayName;
+                stats.Win = StatsForOutcome(players, player, EloOutcomesType.Win);
+                stats.Lose = StatsForOutcome(players, player, EloOutcomesType.Lose);
+                stats.Draw = StatsForOutcome(players, player, EloOutcomesType.Draw);
+                stats.Point = GetPoints(stats);
+                stats.Matches = stats.Win + stats.Lose + stats.Draw;
+                stats.TotalMatches = StatsForTotalMatches(players, player);
+                statsModels.Add(stats);
+            }
+
+            return statsModels.OrderByDescending(e => $"{(e.Point * 10) + e.Matches}").ToList();
+        }
+
+        private decimal GetPoints(BracketsPlayerStatsModel stats)
+        {
+            decimal statsWin = stats.Win * 2;
+            decimal statsDraw = stats.Draw * 1;
+            return statsWin + statsDraw;
+        }
+
+        private static int StatsForOutcome(List<GamePlayer> players, TournamentPlayer player, EloOutcomesType eloOutcomesType)
+        {
+            return players.Count(e =>
+                e.UserId.Equals(player.UserId, StringComparison.InvariantCultureIgnoreCase) &&
+                (e.Outcome??string.Empty).Equals(eloOutcomesType.ToString(), StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private static int StatsForTotalMatches(List<GamePlayer> players, TournamentPlayer player)
+        {
+            return players.Count(e =>
+                e.UserId.Equals(player.UserId, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private List<GamePlayer> GetPlayers(List<ChessGame> games)
+        {
+            var gamePlayers = new List<GamePlayer>();
+
+            foreach (var game in games)
+            {
+                gamePlayers.AddRange(game.Players);
+            }
+
+            return gamePlayers;
         }
 
         private BracketsGameModel GetGame(ChessGame game, Dictionary<string, OverTheBoardUser> users, string currentUserId)

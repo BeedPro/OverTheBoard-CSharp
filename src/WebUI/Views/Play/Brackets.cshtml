@@ -1,14 +1,43 @@
 ﻿@using OverTheBoard.Data.Entities
 @model OverTheBoard.WebUI.Models.BracketsViewModel
 @{
-    int i = 1;
+    int index = 1;
     ViewData["Title"] = "Brackets";
 }
 <br />
 <br />
-<br />
-<br />
 <div class="gtco-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Matches</th>
+            <th scope="col">Win</th>
+            <th scope="col">Lose</th>
+            <th scope="col">Draw</th>
+            <th scope="col">Point</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var stats in Model.StatModels)
+        {
+            
+            <tr>
+                <th scope="row">@index</th>
+                <td>@stats.DisplayName</td>
+                <td>@stats.Matches/@stats.TotalMatches</td>
+                <td>@stats.Win</td>
+                <td>@stats.Lose</td>
+                <td>@stats.Draw</td>
+                <td>@stats.Point</td>
+            </tr>
+            index++;
+        }
+       
+        </tbody>
+    </table>
+
     <div class="row row-pb-md">
         @foreach (var round in Model.Items)
         {
@@ -20,7 +49,7 @@
             <div class="clearfix visible-md-block visible-sm-block"></div>
             @foreach (var game in round.Value.Games)
             {
-                <partial name="Brackets/BracketsGame" model="@game" />
+                <partial name="Brackets/BracketsGame" model="@game"/>
             }
 
         }
