@@ -11,6 +11,8 @@ using OverTheBoard.ObjectModel.Options;
 using OverTheBoard.WebUI.BackgroundServices;
 using OverTheBoard.WebUI.ModelPopulators;
 using OverTheBoard.WebUI.SignalR;
+using Serilog;
+using Serilog.Events;
 
 namespace OverTheBoard.WebUI
 {
@@ -39,6 +41,8 @@ namespace OverTheBoard.WebUI
             services.AddHostedService<GameInitialiserBackgroundService>();
 
             services.AddScoped<IBracketsViewModelPopulator, BracketsViewModelPopulator>();
+
+            
 
         }
 

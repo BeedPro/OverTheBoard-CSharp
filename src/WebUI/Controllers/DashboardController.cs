@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 using OverTheBoard.Data.Entities.Applications;
 
 namespace OverTheBoard.WebUI.Controllers
@@ -25,12 +26,14 @@ namespace OverTheBoard.WebUI.Controllers
         private readonly SignInManager<OverTheBoardUser> _signInManager;
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
+        private readonly ILogger<DashboardController> _logger;
 
         public DashboardController(IFileUploader fileUploader, 
             UserManager<OverTheBoardUser> userManager, 
             SignInManager<OverTheBoardUser> signInManager,
             IUserService userService,
-            IGameService gameService
+            IGameService gameService,
+            ILogger<DashboardController> logger
             )
         {
             _fileUploader = fileUploader;
@@ -38,12 +41,15 @@ namespace OverTheBoard.WebUI.Controllers
             _signInManager = signInManager;
             _userService = userService;
             _gameService = gameService;
+            _logger = logger;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("FM Info");
+            _logger.LogWarning("FM Warning");
             // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
             var model = new DashboardViewModel();
             var user = await _userManager.GetUserAsync(User);

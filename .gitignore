@@ -348,3 +348,4 @@ healthchecksdb
 *.vs/
 
 *.suo
+/src/WebUI/logs
