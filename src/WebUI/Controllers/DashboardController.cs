@@ -48,8 +48,6 @@ namespace OverTheBoard.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            _logger.LogInformation("FM Info");
-            _logger.LogWarning("FM Warning");
             // Gets the users DisplayName and DisplayImage and returns the model to output it on the view
             var model = new DashboardViewModel();
             var user = await _userManager.GetUserAsync(User);
