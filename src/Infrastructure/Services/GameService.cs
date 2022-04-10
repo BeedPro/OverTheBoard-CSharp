@@ -164,14 +164,20 @@ namespace OverTheBoard.Infrastructure.Services
             return gamesInfo;
         }
 
-        public async Task<List<ChessGame>> GetGamesInProgress()
+        public async Task<List<ChessGame>> GetGamesInprogressAsync()
         {
             var gameInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Status == GameStatus.InProgress);
-            var gameInProgressInfo = gameInProgress.Select(entity => PopulateChessGame(entity)).ToList();
+            var gameInProgressInfo = await gameInProgress.Select(entity => PopulateChessGame(entity)).ToListAsync();
             return gameInProgressInfo;
         }
 
-        
+        public async Task<List<ChessGame>> GetGamesNotStartedAndExpiredAsync()
+        {
+            var gameEntities = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Status == GameStatus.NotStarted && e.StartTime.AddMinutes(e.Period + 5) <= DateTime.Now);
+            var chessGames = await gameEntities.Select(entity => PopulateChessGame(entity)).ToListAsync();
+            return chessGames;
+        }
+
 
         public async Task<bool> SaveGameOutcomeAsync(string identifier, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
         {

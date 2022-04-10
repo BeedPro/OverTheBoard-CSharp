@@ -51,7 +51,7 @@ namespace OverTheBoard.WebUI.ModelPopulators
                 statsModels.Add(stats);
             }
 
-            return statsModels.OrderByDescending(e => $"{(e.Point * 10) + e.Matches}").ToList();
+            return statsModels.OrderByDescending(e => $"{((e.Point * 10) + e.Matches):00}").ToList();
         }
 
         private decimal GetPoints(BracketsPlayerStatsModel stats)
