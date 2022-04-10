@@ -79,7 +79,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
             {
                 var divisionRoundNumber = division.RoundNumber + 1;
                 var gameIdentifier = Guid.NewGuid().ToString();
-                await _gameService.CreateGameAsync(gameIdentifier, division.GameQueueItems, GetDate(divisionRoundNumber), 15,
+                await _gameService.CreateGameAsync(gameIdentifier, division.GameQueueItems, GetDate(divisionRoundNumber), _options.Duration,
                     GameType.Ranked, divisionRoundNumber, level, tournamentIdentifier);
             }
 
