@@ -32,7 +32,7 @@ namespace OverTheBoard.Infrastructure.Tournaments.Processors
 
         public async Task<bool> ProcessAsync(GameCompletionQueueItem item)
         {
-            var game = await _gameService.GetChessGameWithPlayersAsync(item.GameId);
+            var game = await _gameService.GetChessGameWithPlayersAsync(item.Identifier);
             foreach (var player in game.Players)
             {
                 var user = await _userService.GetUserAsync(player.UserId);

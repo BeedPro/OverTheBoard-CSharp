@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using OverTheBoard.Infrastructure.Services;
 using OverTheBoard.ObjectModel;
 
@@ -9,10 +10,12 @@ namespace OverTheBoard.Infrastructure.Tournaments
     public class GameOutcomeChecker : IGameBackgroundService
     {
         private readonly IGameService _gameService;
+        private readonly ILogger<GameOutcomeChecker> _logger;
 
-        public GameOutcomeChecker(IGameService gameService)
+        public GameOutcomeChecker(IGameService gameService, ILogger<GameOutcomeChecker> logger)
         {
             _gameService = gameService;
+            _logger = logger;
         }
 
         public async Task<bool> ExecuteAsync()
@@ -20,6 +23,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
             var gamesInProgress = await _gameService.GetGamesInProgress();
             foreach (var game in gamesInProgress)
             {
+                _logger.LogInformation("Calculating outcome started for {Identifier}", game.Identifier);
                 var gameLastMoveAt = game.StartTime;
                 var nextMoveColour = "white";
                 if (game.LastMoveAt.HasValue)
@@ -44,6 +48,7 @@ namespace OverTheBoard.Infrastructure.Tournaments
                         await _gameService.SaveGameOutcomeAsync(game.Identifier, EloOutcomesType.Win,EloOutcomesType.Lose);
                     }
                 }
+                _logger.LogInformation("Calculating outcome ended for {Identifier}", game.Identifier);
             }
 
             return true;

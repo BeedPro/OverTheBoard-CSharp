@@ -13,14 +13,13 @@ namespace OverTheBoard.Infrastructure.Services
     public interface IGameService
     {
         Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, int roundNumber, int level, string tournamentIdentifier);
-        Task<ChessGame> GetChessGameOnlyAsync(string gameId);
         Task<ChessGame> GetChessGameWithPlayersAsync(string gameId);
         Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId);
         Task<bool> UpdateStatusAsync(string gameId, GameStatus status);
         Task<string> SaveGameMoveAsync(string userId, ChessMove move);
         Task<List<GameInfo>> GetGameByUserIdAsync(string userId);
         Task<List<ChessGame>> GetGamesInProgress();
-        Task<bool> SaveGameOutcomeAsync(string gameId, EloOutcomesType whitePlayerOutcome,
+        Task<bool> SaveGameOutcomeAsync(string identifier, EloOutcomesType whitePlayerOutcome,
             EloOutcomesType blackPlayerOutcome);
         Task<List<ChessGame>> GetMatchesByTournamentAsync(string tournamentIdentifier);
         Task<List<ChessGame>> GetMatchesByTournamentAndUserAsync(string userId, string tournamentIdentifier);

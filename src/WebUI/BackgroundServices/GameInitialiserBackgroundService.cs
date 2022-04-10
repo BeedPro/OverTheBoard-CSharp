@@ -20,12 +20,17 @@ namespace OverTheBoard.WebUI.BackgroundServices
         private readonly IServiceProvider _services;
         private readonly IUnrankedInitialiserQueue _initialiserQueue;
         private readonly IHubContext<GameMessageHub> _hubContext;
+        private readonly ILogger<GameBackgroundService> _logger;
 
-        public GameInitialiserBackgroundService(IServiceProvider services, IUnrankedInitialiserQueue initialiserQueue, IHubContext<GameMessageHub> hubContext, ILogger<GameBackgroundService> logger)
+        public GameInitialiserBackgroundService(IServiceProvider services, 
+            IUnrankedInitialiserQueue initialiserQueue, 
+            IHubContext<GameMessageHub> hubContext, 
+            ILogger<GameBackgroundService> logger)
         {
             _services = services;
             _initialiserQueue = initialiserQueue;
             _hubContext = hubContext;
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,11 +44,13 @@ namespace OverTheBoard.WebUI.BackgroundServices
                     var nextItem = _initialiserQueue.GetNextItem();
                     while (nextItem != null)
                     {
+                        _logger.LogInformation("Game Initialisation started for {Identifier}", nextItem.GameId);
                         var chessMoves = await gameService.InitialiseChessGameAsync(nextItem.GameId, string.Empty);
                         foreach (var move in chessMoves)
                         {
                             await _hubContext.Clients.Client(move.Key).SendAsync("Initialised", move.Value);
                         }
+                        _logger.LogInformation("Game Initialisation ended for {Identifier}", nextItem.GameId);
                         nextItem = _initialiserQueue.GetNextItem();
                     }
                 }

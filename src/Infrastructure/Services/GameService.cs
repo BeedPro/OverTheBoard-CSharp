@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OverTheBoard.Data.Entities;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
@@ -22,6 +23,7 @@ namespace OverTheBoard.Infrastructure.Services
         private readonly IEloService _eloService;
         public readonly UserManager<OverTheBoardUser> _userManager;
         private readonly IGameCompletionQueue _completionQueue;
+        private readonly ILogger<GameService> _logger;
 
         public GameService(
             IRepository<ChessGameEntity> repositoryChessGame, 
@@ -29,7 +31,8 @@ namespace OverTheBoard.Infrastructure.Services
             IUserService userService, 
             IEloService eloService, 
             UserManager<OverTheBoardUser> userManager,
-            IGameCompletionQueue completionQueue)
+            IGameCompletionQueue completionQueue,
+            ILogger<GameService> logger)
         {
             _repositoryChessGame = repositoryChessGame;
             _repositoryGamePlayer = repositoryGamePlayer;
@@ -37,6 +40,7 @@ namespace OverTheBoard.Infrastructure.Services
             _eloService = eloService;
             _userManager = userManager;
             _completionQueue = completionQueue;
+            _logger = logger;
         }
 
         List<ChessGame> _chessGames = new List<ChessGame>();
@@ -71,23 +75,6 @@ namespace OverTheBoard.Infrastructure.Services
             _repositoryChessGame.Context.Add(game);
             _repositoryChessGame.Save();
             return true;
-        }
-
-
-        public async Task<ChessGame> GetChessGameOnlyAsync(string gameId)
-        {
-            var gameEntity = GetGameEntity(gameId);
-
-           return new ChessGame()
-            {
-                Identifier = gameEntity.Identifier.ToString(),
-                Fen = gameEntity.Fen,
-                LastMoveAt = gameEntity.LastMoveAt,
-                NextMoveColour = gameEntity.NextMoveColour,
-                Status = gameEntity.Status,
-                Type = gameEntity.Type,
-                StartTime = gameEntity.StartTime
-            };
         }
 
         public async Task<ChessGame> GetChessGameWithPlayersAsync(string gameId)
@@ -141,31 +128,6 @@ namespace OverTheBoard.Infrastructure.Services
             return true;
         }
         
-       
-
-
- //public async Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId)
- //       {
- //           var gameEntity = GetGameEntity(gameId);
-
- //           if (!gameEntity.LastMoveAt.HasValue)
- //           {
- //               gameEntity.LastMoveAt = DateTime.Now;
- //               gameEntity.NextMoveColour = "white";
- //           }
-
- //           var player = gameEntity.Players.FirstOrDefault(e => e.UserId == userId.ToGuid());
- //           if (player != null)
- //           {
- //               player.ConnectionId = connectionId;
- //           }
-
- //           _repositoryGamePlayer.Save();
- //           return true;
- //       }
-
-
-
         public async Task<string> SaveGameMoveAsync(string userId, ChessMove move)
         {
             //var game = _chessGames.FirstOrDefault(e => e.Identifier.Equals(move.GameId, StringComparison.OrdinalIgnoreCase));
@@ -211,11 +173,12 @@ namespace OverTheBoard.Infrastructure.Services
 
         
 
-        public async Task<bool> SaveGameOutcomeAsync(string gameId, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
+        public async Task<bool> SaveGameOutcomeAsync(string identifier, EloOutcomesType whitePlayerOutcome, EloOutcomesType blackPlayerOutcome)
         {
-            var gameEntity = GetGameEntity(gameId);
+            var gameEntity = GetGameEntity(identifier);
             if (gameEntity.Status != GameStatus.Completed)
             {
+                _logger.LogInformation("Saving Game outcome started for {Identifier}", gameEntity.Identifier);
                 var whitePlayer = gameEntity.Players.FirstOrDefault(f => f.Colour == "white");
                 var blackPlayer = gameEntity.Players.FirstOrDefault(f => f.Colour == "black");
                 
@@ -237,10 +200,11 @@ namespace OverTheBoard.Infrastructure.Services
                 await _userManager.UpdateAsync(blackUser);
                 
                 _repositoryChessGame.Save();
+                _logger.LogInformation("Saving Game outcome started for {Identifier}", gameEntity.Identifier);
 
                 await _completionQueue.AddQueueAsync(new GameCompletionQueueItem()
                 {
-                    GameId = gameId,
+                    Identifier = identifier,
                     Level = gameEntity.Level
                 });
             }

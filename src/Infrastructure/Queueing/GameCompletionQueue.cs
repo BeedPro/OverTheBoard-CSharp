@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OverTheBoard.Data.Entities.Applications;
 using OverTheBoard.Data.Repositories;
 using OverTheBoard.ObjectModel.Queues;
@@ -12,21 +13,24 @@ namespace OverTheBoard.Infrastructure.Queueing
     public class GameCompletionQueue : IGameCompletionQueue
     {
         private readonly IRepository<GameCompletionQueueEntity> _repositoryCompletionQueue;
+        private readonly ILogger<GameCompletionQueue> _logger;
 
-        public GameCompletionQueue(IRepository<GameCompletionQueueEntity> repositoryCompletionQueue)
+        public GameCompletionQueue(IRepository<GameCompletionQueueEntity> repositoryCompletionQueue, ILogger<GameCompletionQueue> logger)
         {
             _repositoryCompletionQueue = repositoryCompletionQueue;
+            _logger = logger;
         }
 
         public async Task<bool> AddQueueAsync(GameCompletionQueueItem queueItem)
         {
             _repositoryCompletionQueue.Add(new GameCompletionQueueEntity()
             {
-                GameId = queueItem.GameId,
+                GameId = queueItem.Identifier,
                 IsActive = true,
                 Level = queueItem.Level,
                 CreatedDate = DateTime.Now
             });
+            _logger.LogInformation("Saving Game outcome started for {Identifier}", queueItem.Identifier);
 
             _repositoryCompletionQueue.Save();
 
@@ -36,7 +40,7 @@ namespace OverTheBoard.Infrastructure.Queueing
         public async Task<bool> RemoveQueueAsync(GameCompletionQueueItem queueItem)
         {
             var entity = await _repositoryCompletionQueue.Query()
-                .FirstOrDefaultAsync(e => e.GameId == queueItem.GameId);
+                .FirstOrDefaultAsync(e => e.GameId == queueItem.Identifier);
             if (entity != null)
             {
                 _repositoryCompletionQueue.Remove(entity);
@@ -52,7 +56,7 @@ namespace OverTheBoard.Infrastructure.Queueing
             var entities = await _repositoryCompletionQueue.Query().Where(e => e.IsActive).ToListAsync();
             return entities.Select(e => new GameCompletionQueueItem
             {
-                GameId = e.GameId,
+                Identifier = e.GameId,
                 Level = e.Level
             }).ToList();
         }

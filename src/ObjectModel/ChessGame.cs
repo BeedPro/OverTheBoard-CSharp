@@ -11,7 +11,6 @@ namespace OverTheBoard.ObjectModel
         {
             Players = new List<GamePlayer>();
         }
-
         public string Identifier { get; set; }
         public List<GamePlayer> Players { get; set; }
         public string Fen { get; set; }

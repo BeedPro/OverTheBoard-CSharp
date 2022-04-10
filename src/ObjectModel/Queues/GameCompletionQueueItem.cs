@@ -2,7 +2,7 @@
 {
     public class GameCompletionQueueItem
     {
-        public string GameId { get; set; }
+        public string Identifier { get; set; }
         public int Level { get; set; }
     }
 }
