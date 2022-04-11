@@ -48,16 +48,10 @@
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Matches', 'Rating'],
-                ['2004',  10,      400],
-                ['2005',  11,      460],
-                ['2006',  66,       1120],
-                ['2007',  10,      540]
-            ]);
+            var data = google.visualization.arrayToDataTable(@Html.Raw(Model.Charts));
 
             var options = {
-                title: 'Ranking',
+                title: 'Rating Earned',
                 curveType: 'function',
                 legend: { position: 'bottom' }
             };

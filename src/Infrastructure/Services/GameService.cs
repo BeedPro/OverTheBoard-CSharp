@@ -200,7 +200,8 @@ namespace OverTheBoard.Infrastructure.Services
                 gameEntity.Status = GameStatus.Completed;
                 whitePlayer.Outcome = whitePlayerOutcome.ToString();
                 blackPlayer.Outcome = blackPlayerOutcome.ToString();
-
+                whitePlayer.DeltaRating = newRatings.WhiteDeltaRating;
+                blackPlayer.DeltaRating = newRatings.BlackDeltaRating;
 
                 await _userManager.UpdateAsync(whiteUser);
                 await _userManager.UpdateAsync(blackUser);
@@ -278,6 +279,14 @@ namespace OverTheBoard.Infrastructure.Services
             }
 
             return chessMoves;
+        }
+
+        public async Task<List<ChessData>> GetChartsDataAsync(string userId)
+        {
+            var entities = await _repositoryGamePlayer.Query().Where(e => e.UserId == userId.ToGuid() && e.Game.Status == GameStatus.Completed)
+                .Select(s => new ChessData { StartDate = s.Game.StartTime, DeltaRate = s.DeltaRating}).ToListAsync();
+
+            return entities;
         }
 
 

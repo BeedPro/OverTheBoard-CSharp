@@ -13,8 +13,10 @@ using System.Threading.Tasks;
 using OverTheBoard.Data;
 using OverTheBoard.Data.Entities;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.Extensions.Logging;
 using OverTheBoard.Data.Entities.Applications;
+using OverTheBoard.Infrastructure.Common;
 
 namespace OverTheBoard.WebUI.Controllers
 {
@@ -54,8 +56,14 @@ namespace OverTheBoard.WebUI.Controllers
             model.DisplayName = user.DisplayName;
             model.DisplayImagePath = $"{user.DisplayImagePath}";
             model.Rating = user.Rating;
+
+            var chartData = await _gameService.GetChartsDataAsync(user.Id);
+
+            model.Charts = new ChessDataEngine(chartData).Build().ToString();
             return View(model);
         }
+        
+
         [HttpGet]
         public async Task<IActionResult> Settings()
         {

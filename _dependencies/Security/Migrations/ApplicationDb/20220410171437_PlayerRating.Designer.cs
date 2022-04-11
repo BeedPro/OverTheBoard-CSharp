@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OverTheBoard.Data;
 
 namespace OverTheBoard.Data.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220410171437_PlayerRating")]
+    partial class PlayerRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,9 +98,6 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                     b.Property<string>("ConnectionId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DeltaRating")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("GameId")
                         .HasColumnType("INTEGER");
 
@@ -110,6 +109,9 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
 
                     b.Property<string>("Pgn")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("INTEGER");
 
                     b.Property<TimeSpan>("TimeRemaining")
                         .HasColumnType("TEXT");

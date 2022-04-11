@@ -19,6 +19,7 @@ namespace OverTheBoard.Data.Entities.Applications
         public string Pgn { get; set; }
         public TimeSpan TimeRemaining { get; set; }
         public string Outcome { get; set; }
+        public int DeltaRating { get; set; }
     }
 
 }

@@ -10,20 +10,21 @@ namespace OverTheBoard.Infrastructure.Services
         public async Task<GamePlayerRatings> CalculateEloAsync(int playerWhiteRating, int playerBlackRating, EloOutcomesType gameOutcomeForPlayerWhite, EloOutcomesType gameOutcomeForPlayerBlack, int kFactorA = GameConstants.EloK, int kFactorB = GameConstants.EloK)
         {
             var expectedResults = await PredictResultAsync(playerWhiteRating, playerBlackRating);
-            var deltaPlayerWhite = kFactorA * (GetEloOutcomeValue(gameOutcomeForPlayerWhite) - expectedResults[0]);
-            var deltaPlayerBlack = kFactorB * (GetEloOutcomeValue(gameOutcomeForPlayerBlack)- expectedResults[1]);
+            var deltaPlayerWhite = kFactorA * (GetEloOutcomeValue(gameOutcomeForPlayerWhite) - expectedResults.eloPlayerOne);
+            var deltaPlayerBlack = kFactorB * (GetEloOutcomeValue(gameOutcomeForPlayerBlack)- expectedResults.eloPlayerTwo);
 
             var newEloWhiteRating = (int)(playerWhiteRating + deltaPlayerWhite);
             var newEloBlackRating = (int)(playerBlackRating + deltaPlayerBlack);
-            return new GamePlayerRatings() { WhitePlayerRating = newEloWhiteRating, BlackPlayerRating = newEloBlackRating };
+
+            return new GamePlayerRatings() { WhitePlayerRating = newEloWhiteRating, WhiteDeltaRating = (int) deltaPlayerWhite, BlackPlayerRating = newEloBlackRating, BlackDeltaRating = (int)deltaPlayerBlack };
         }
 
         //TODO: Make sure to return Array into an object with whitePlayerRating, blackPlayerRating or use ref it
-        public async Task<decimal[]> PredictResultAsync(int playerOneRating, int playerTwoRating)
+        private async Task<(decimal eloPlayerOne, decimal eloPlayerTwo)> PredictResultAsync(int playerOneRating, int playerTwoRating)
         {
             var eloPlayerOne = 1 / (1 + (decimal)Math.Pow(10, (double)(playerTwoRating - playerOneRating) / 400));
             var eloPlayerTwo = 1 / (1 + (decimal)Math.Pow(10, (double)(playerOneRating - playerTwoRating) / 400));
-            return new decimal[] { eloPlayerOne, eloPlayerTwo };
+            return (eloPlayerOne, eloPlayerTwo);
         }
 
         public async Task<List<GamePlayerEloOutcomes>> CalculateEloRatingChangeAsync(int currentPlayerRating, int opponentPlayerRating)
@@ -58,7 +59,7 @@ namespace OverTheBoard.Infrastructure.Services
         private async Task<int> CalculateDeltaElo(int currentPlayerRating, int opponentPlayerRating, decimal gameOutcomeForCurrentPlayer, int kFactor = GameConstants.EloK)
         {
             var expectedResults = await PredictResultAsync(currentPlayerRating, opponentPlayerRating);
-            var delta = (int)(kFactor * (gameOutcomeForCurrentPlayer - expectedResults[0]));
+            var delta = (int)(kFactor * (gameOutcomeForCurrentPlayer - expectedResults.eloPlayerOne));
             return delta;
         }
         private decimal GetEloOutcomeValue(EloOutcomesType type)
