@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (false)
             {
                 string connectionString =
-                    "Server=192.168.1.229;Database=OverTheBoard;User Id=OverTheBoead;Password=Asdf1234!;";
+                    "";
                 services.AddDbContext<SecurityDbContext>(options =>
                     options.UseSqlServer(connectionString, b =>
                         b.MigrationsAssembly("OverTheBoard.Data")));
