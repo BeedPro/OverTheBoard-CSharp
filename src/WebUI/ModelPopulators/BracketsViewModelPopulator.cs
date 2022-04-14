@@ -33,14 +33,14 @@ namespace OverTheBoard.WebUI.ModelPopulators
             return bracketsViewModel;
         }
 
-        private List<BracketsPlayerStatsModel> GetStats(string currentUserId, Tournament tournament, List<ChessGame> games, Dictionary<string, OverTheBoardUser> users)
+        private List<GamePlayerStatsModel> GetStats(string currentUserId, Tournament tournament, List<ChessGame> games, Dictionary<string, OverTheBoardUser> users)
         {
             var players = GetPlayers(games);
-            var statsModels = new List<BracketsPlayerStatsModel>();
+            var statsModels = new List<GamePlayerStatsModel>();
             foreach (var player in tournament.Players)
             {
                 var user = users.ContainsKey(player.UserId) ? users[player.UserId] : new OverTheBoardUser() { DisplayName = "No User" };
-                var stats = new BracketsPlayerStatsModel();
+                var stats = new GamePlayerStatsModel();
                 stats.DisplayName = user.DisplayName;
                 stats.Win = StatsForOutcome(players, player, EloOutcomesType.Win);
                 stats.Lose = StatsForOutcome(players, player, EloOutcomesType.Lose);
@@ -54,7 +54,7 @@ namespace OverTheBoard.WebUI.ModelPopulators
             return statsModels.OrderByDescending(e => $"{((e.Point * 10) + e.Matches):00}").ToList();
         }
 
-        private decimal GetPoints(BracketsPlayerStatsModel stats)
+        private decimal GetPoints(GamePlayerStatsModel stats)
         {
             decimal statsWin = stats.Win * 2;
             decimal statsDraw = stats.Draw * 1;

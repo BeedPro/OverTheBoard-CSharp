@@ -135,9 +135,41 @@ namespace OverTheBoard.WebUI.Controllers
             model.gamesCompleted = gamesCompleted;
             return View(model);
         }
-        public IActionResult Leaderboard()
+        public async Task<IActionResult> Leaderboard()
         {
-            return View();
+            var model = new LeaderboardViewModel();
+            
+            model.YourDetails = await GetYourDetailsAsync();
+            model.TopRanks = await GetTopRanksAsync();
+            return View(model);
+        }
+
+        private async Task<List<GamePlayerStatsModel>> GetTopRanksAsync()
+        {
+            var statsModels = new List<GamePlayerStatsModel>();
+            var users = await _userService.GetTopRatingUsersAsync(10);
+            foreach (var user in users)
+            {
+                var stats = await _gameService.GetStatsByUserAsync(user.Id);
+                statsModels.Add(new GamePlayerStatsModel() { DisplayName =user.DisplayName, Matches = stats.TotalGame, Win = stats.TotalWin, Lose = stats.TotalLose, Draw = stats.TotalDraw, Point = user.Rating });
+            }
+
+            return statsModels;
+        }
+
+        private async Task<List<KeyValuePair<string,string>>> GetYourDetailsAsync()
+        {
+            
+            var user = await _userManager.GetUserAsync(User);
+            var stats = await _gameService.GetStatsByUserAsync(user.Id);
+            var keyValuePairs = new List<KeyValuePair<string, string>>();
+            keyValuePairs.Add(new KeyValuePair<string, string>("Rating", user.Rating.ToString()));
+            keyValuePairs.Add(new KeyValuePair<string, string>("Rank", user.Rank.ToString()));
+            keyValuePairs.Add(new KeyValuePair<string, string>("Total Games", stats.TotalGame.ToString()));
+            keyValuePairs.Add(new KeyValuePair<string, string>("Total Win", stats.TotalWin.ToString()));
+            keyValuePairs.Add(new KeyValuePair<string, string>("Total Lose", stats.TotalLose.ToString()));
+            keyValuePairs.Add(new KeyValuePair<string, string>("Total Draw", stats.TotalDraw.ToString()));
+            return keyValuePairs;
         }
 
         public IActionResult Analysis()

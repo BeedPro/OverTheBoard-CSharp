@@ -9,10 +9,10 @@ namespace OverTheBoard.Infrastructure.Common
 {
     public class ChessDataEngine
     {
-        private readonly List<ChessData> _data;
+        private readonly List<ChessChartData> _data;
         private ChartType Type;
-        List<ChessData> Datas = new List<ChessData>();
-        public ChessDataEngine(List<ChessData> data)
+        List<ChessChartData> Datas = new List<ChessChartData>();
+        public ChessDataEngine(List<ChessChartData> data)
         {
             _data = data;
         }
@@ -35,7 +35,7 @@ namespace OverTheBoard.Infrastructure.Common
             else
             {
                 Type = ChartType.Day;
-                Datas = _data.GroupBy(e=>e.StartDate.Date).Select(s=> new ChessData(){StartDate = s.Key, DeltaRate = s.Sum(e=>e.DeltaRate)}).ToList();
+                Datas = _data.GroupBy(e=>e.StartDate.Date).Select(s=> new ChessChartData(){StartDate = s.Key, DeltaRate = s.Sum(e=>e.DeltaRate)}).ToList();
             }
 
             return this;
@@ -49,7 +49,7 @@ namespace OverTheBoard.Infrastructure.Common
             for (int i = 0; i < times; i++)
             {
                 var total = _data.Where(e => e.StartDate > dateFrom && e.StartDate <= dateTo).Sum(e => e.DeltaRate);
-                Datas.Add(new ChessData() {StartDate = dateTo, DeltaRate = total});
+                Datas.Add(new ChessChartData() {StartDate = dateTo, DeltaRate = total});
                 dateTo = dateFrom;
                 dateFrom = dateTo.AddDays(period * -1);
             }
@@ -75,7 +75,8 @@ namespace OverTheBoard.Infrastructure.Common
             Day,
             Week,
             Month
-        } 
-        
+        }
+
+       
     }
 }

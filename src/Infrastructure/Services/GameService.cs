@@ -261,10 +261,15 @@ namespace OverTheBoard.Infrastructure.Services
                 //if (!string.IsNullOrEmpty(whitePlayer?.ConnectionId) &&
                 //    !string.IsNullOrEmpty(blackPlayer?.ConnectionId))
                 //{}
-                
-                int whiteTimer = Convert.ToInt32(whitePlayer?.TimeRemaining.TotalSeconds) * 10;
-                var blackTimer = Convert.ToInt32(blackPlayer?.TimeRemaining.TotalSeconds) * 10;
-                
+
+                int whiteTimer = 0;
+                var blackTimer = 0;
+                if (chessGame.Status != GameStatus.Completed)
+                {
+                    whiteTimer = Convert.ToInt32(whitePlayer?.TimeRemaining.TotalSeconds) * 10;
+                    blackTimer = Convert.ToInt32(blackPlayer?.TimeRemaining.TotalSeconds) * 10;
+                }
+
                 foreach (var player in chessGame.Players)
                 {
                     var chessMove = new ChessMove() { Orientation = player.Colour };
@@ -281,14 +286,29 @@ namespace OverTheBoard.Infrastructure.Services
             return chessMoves;
         }
 
-        public async Task<List<ChessData>> GetChartsDataAsync(string userId)
+        public async Task<List<ChessChartData>> GetChartsDataAsync(string userId)
         {
             var entities = await _repositoryGamePlayer.Query().Where(e => e.UserId == userId.ToGuid() && e.Game.Status == GameStatus.Completed)
-                .Select(s => new ChessData { StartDate = s.Game.StartTime, DeltaRate = s.DeltaRating}).ToListAsync();
+                .Select(s => new ChessChartData { StartDate = s.Game.StartTime, DeltaRate = s.DeltaRating}).ToListAsync();
 
             return entities;
         }
 
+        public async Task<ChessGameStats> GetStatsByUserAsync(string userId)
+        {
+            ChessGameStats stats = new ChessGameStats();
+            var query = _repositoryGamePlayer.Query()
+                .Where(e => e.UserId == userId.ToGuid() && e.Game.Status == GameStatus.Completed);
+
+            stats.TotalGame = await query.CountAsync();
+            stats.TotalWin = await query.CountAsync(e=> e.Outcome == EloOutcomesType.Win.ToString());
+            stats.TotalLose = await query.CountAsync(e=> e.Outcome == EloOutcomesType.Lose.ToString());
+            stats.TotalDraw = await query.CountAsync(e=> e.Outcome == EloOutcomesType.Draw.ToString());
+
+
+            return stats;
+        }
+        
 
         private string GetDisplayNameById(string userId)
         {

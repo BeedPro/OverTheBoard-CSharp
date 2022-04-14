@@ -12,5 +12,6 @@ namespace OverTheBoard.Infrastructure.Services
         Task<OverTheBoardUser> GetUserDisplayNameAndyNameIdAsync(string displayName, string number);
         Task<OverTheBoardUser> GetUserAsync(string userId);
         Task<bool> UpdateUserRankAsync(string userId, UserRank rank);
+        Task<List<OverTheBoardUser>> GetTopRatingUsersAsync(int count);
     }
 }

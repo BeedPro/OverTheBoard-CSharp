@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OverTheBoard.Data.Entities;
 using OverTheBoard.Data.Repositories;
@@ -37,6 +39,11 @@ namespace OverTheBoard.Infrastructure.Services
             }
 
             return true;
+        }
+
+        public async Task<List<OverTheBoardUser>> GetTopRatingUsersAsync(int count)
+        {
+            return await _securityRepository.Query().OrderByDescending(e => e.Rating).Take(count).ToListAsync();
         }
     }
 }

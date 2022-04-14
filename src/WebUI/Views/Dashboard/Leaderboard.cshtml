@@ -1,42 +1,64 @@
 ﻿@model OverTheBoard.WebUI.Models.LeaderboardViewModel
 @{
     Layout = "_Layout";
+    var index = 1;
 }
-
-    <div class="">
-        <table class="tg center-table">
+<br/>
+<br/>
+<div class="gtco-container">
+    <h2>Leaderboard </h2>
+    <div class="col-md-4 col-sm-4">
+        <table class="table">
             <thead>
-                <tr>
-                    <th class="tg-0pky">Rank</th>
-                    <th class="tg-0pky">Diamond</th>
-                    <th class="tg-0pky">Gold</th>
-                    <th class="tg-0pky">Silver</th>
-                    <th class="tg-0pky">Bronze</th>
-                </tr>
+            <tr>
+                <th scope="col">Your details</th>
+                <th scope="col"></th>
+            </tr>
             </thead>
             <tbody>
+            @foreach (var item in Model.YourDetails)
+            {
                 <tr>
-                    <td class="tg-0pky">1</td>
-                    <td class="tg-0pky">PlaceholderUser<br></td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
+                    <td>@item.Key</td>
+                    <td class="leaderboard-item">@item.Value</td>
                 </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1 col-sm-1"></div>
+    <div class="col-md-7 col-sm-7">
+        <h4>Top ranking</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Matches</th>
+                <th scope="col">Win</th>
+                <th scope="col">Lose</th>
+                <th scope="col">Draw</th>
+                <th scope="col" class="leaderboard-item">Point</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var stats in Model.TopRanks)
+            {
+
                 <tr>
-                    <td class="tg-0pky">2<br></td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
+                    <th scope="row">@index</th>
+                    <td>@stats.DisplayName</td>
+                    <td>@stats.Matches</td>
+                    <td>@stats.Win</td>
+                    <td>@stats.Lose</td>
+                    <td>@stats.Draw</td>
+                    <td class="leaderboard-item">@stats.Point</td>
                 </tr>
-                <tr>
-                    <td class="tg-0pky">3</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                    <td class="tg-0pky">PlaceholderUser</td>
-                </tr>
+                index++;
+            }
+
             </tbody>
         </table>
     </div>
 
+</div>

@@ -2,7 +2,7 @@
 
 namespace OverTheBoard.ObjectModel
 {
-    public class ChessData
+    public class ChessChartData
     {
         public DateTime StartDate { get; set; }
         public int DeltaRate { get; set; }

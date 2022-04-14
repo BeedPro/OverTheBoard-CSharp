@@ -25,6 +25,8 @@ namespace OverTheBoard.Infrastructure.Services
         Task<List<ChessGame>> GetMatchesByTournamentAsync(string tournamentIdentifier);
         Task<List<ChessGame>> GetMatchesByTournamentAndUserAsync(string userId, string tournamentIdentifier);
         Task<Dictionary<string, ChessMove>> InitialiseChessGameAsync(string nextItemGameId, string userId);
-        Task<List<ChessData>> GetChartsDataAsync(string userId);
+        Task<List<ChessChartData>> GetChartsDataAsync(string userId);
+        Task<ChessGameStats> GetStatsByUserAsync(string userId);
+        
     }
 }

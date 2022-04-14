@@ -9,7 +9,7 @@ namespace OverTheBoard.WebUI.Models
 {
     public class BracketsViewModel
     {
-        public List<BracketsPlayerStatsModel> StatModels { get; set; }
+        public List<GamePlayerStatsModel> StatModels { get; set; }
         public Dictionary<int, BracketsRoundItemModel> Items { get; set; }
     }
 
@@ -36,7 +36,7 @@ namespace OverTheBoard.WebUI.Models
         public string Colour { get; set; }
     }
 
-    public class BracketsPlayerStatsModel
+    public class GamePlayerStatsModel
     {
         public string DisplayName { get; set; }
         public int Matches { get; set; }

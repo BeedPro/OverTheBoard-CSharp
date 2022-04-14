@@ -2575,3 +2575,11 @@ img {
 .service-header {
     margin: 20px 2px 0px 0px;
 }
+
+td.leaderboard-item {
+    color: #00ffa3;
+    text-align: center;
+}
+th.leaderboard-item {
+    text-align: center;
+}
