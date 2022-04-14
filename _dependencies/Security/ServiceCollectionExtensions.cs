@@ -15,27 +15,31 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSecurity(
             this IServiceCollection services)
         {
-            var path = Environment.CurrentDirectory;
-            var DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
+            if (false)
+            {
+                string connectionString =
+                    "Server=192.168.1.229;Database=OverTheBoard;User Id=OverTheBoead;Password=Asdf1234!;";
+                services.AddDbContext<SecurityDbContext>(options =>
+                    options.UseSqlServer(connectionString, b =>
+                        b.MigrationsAssembly("OverTheBoard.Data")));
 
-            //var path = Environment.CurrentDirectory;
-            //var DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}SecurityDb.db";
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("OverTheBoard.Data")));
+            }
+            else
+            {
+                var path = Environment.CurrentDirectory;
+                var DbPath =
+                    $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
 
-            services.AddDbContext<SecurityDbContext>(options =>
-                options.UseSqlite($"Data Source={DbPath}", b => 
-                    b.MigrationsAssembly("OverTheBoard.Data")));
+                services.AddDbContext<SecurityDbContext>(options =>
+                    options.UseSqlite($"Data Source={DbPath}", b =>
+                        b.MigrationsAssembly("OverTheBoard.Data")));
 
-            //options.UseSqlite($"Data Source={DbPath}");
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite($"Data Source={DbPath}", b => b.MigrationsAssembly("OverTheBoard.Data")));
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlite($"Data Source={DbPath}", b => b.MigrationsAssembly("OverTheBoard.Data")));
 
-            
-            //services.AddAuthentication(o =>
-            //    {
-            //        o.DefaultScheme = IdentityConstants.ApplicationScheme;
-            //        o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-            //    })
-            //    .AddIdentityCookies(o => { });
+            }
 
             services.AddIdentity<OverTheBoardUser, IdentityRole>(options =>
                 {

@@ -2583,3 +2583,10 @@ td.leaderboard-item {
 th.leaderboard-item {
     text-align: center;
 }
+
+.curve-chart {
+    border: 1px solid white;
+    width: 900px;
+    height: 500px;
+    background-color: white;
+}

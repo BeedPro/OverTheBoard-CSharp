@@ -59,6 +59,10 @@ namespace OverTheBoard.WebUI.Controllers
         {
             var userId = GetUserId();
             var activeTournamentIdentifier = await _tournamentService.GetTournamentIdentifierByUserAsync(userId);
+            if (string.IsNullOrEmpty(activeTournamentIdentifier))
+            {
+                return View(new BracketsViewModel(){Items = new Dictionary<int, BracketsRoundItemModel>(), StatModels = new List<GamePlayerStatsModel>()});
+            }
             var tournament = await _tournamentService.GetTournamentAsync(activeTournamentIdentifier);
             var games = await _gameService.GetMatchesByTournamentAsync(activeTournamentIdentifier);
 

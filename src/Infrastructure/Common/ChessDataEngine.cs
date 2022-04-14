@@ -19,6 +19,11 @@ namespace OverTheBoard.Infrastructure.Common
 
         public ChessDataEngine Build()
         {
+            if (_data.Count == 0)
+            {
+                return this;
+            }
+
             var max = _data.Max(e => e.StartDate);
             var min = _data.Min(e => e.StartDate);
             var dateDef = max - min;
@@ -57,6 +62,10 @@ namespace OverTheBoard.Infrastructure.Common
 
         public override string ToString()
         {
+            if (Datas.Count == 0)
+            {
+                return string.Empty;
+            }
             var sb = new StringBuilder();
             sb.AppendLine("[");
             sb.Append($"['{Type}',  'Rating']");

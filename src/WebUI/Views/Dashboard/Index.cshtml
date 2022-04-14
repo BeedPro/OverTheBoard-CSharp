@@ -28,7 +28,7 @@
         <!--This would be the place where the ELO rating graph of the user is outputted, the image is just a placeholder for the graph-->
         <!--Graph can be made using html and jquery-->
         <div class="col-md-5 padding-100">
-            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+            <div id="curve_chart" class="curve-chart"></div>
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-4">
@@ -42,23 +42,27 @@
 </div>
 
 @section scripts {
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+    @if (!string.IsNullOrEmpty(Model.Charts))
+    {
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable(@Html.Raw(Model.Charts));
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(@Html.Raw(Model.Charts));
 
-            var options = {
-                title: 'Rating Earned',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
+                var options = {
+                    title: 'Rating Earned',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
 
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
-            chart.draw(data, options);
-        }
-    </script>
+                chart.draw(data, options);
+            }
+        </script>
+    }
+    
 }
