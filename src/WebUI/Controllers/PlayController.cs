@@ -43,9 +43,8 @@ namespace OverTheBoard.WebUI.Controllers
         {
             var model = new PlayViewModel();
             var userId = GetUserId();
-            var games = await _gameService.GetGameByUserIdAsync(userId);
-            var gamesInProgress = games.Where(e => e.Status == GameStatus.InProgress).ToList();
-            model.gameInProgress = gamesInProgress;
+            var games = await _gameService.GetGameByUserIdAsync(userId, GameStatus.InProgress);
+            model.gameInProgress = games;
             return View(model);
         }
 

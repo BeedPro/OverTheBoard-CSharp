@@ -150,16 +150,20 @@ namespace OverTheBoard.Infrastructure.Services
             return opponent?.ConnectionId;
         }
 
-        public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId)
+        public async Task<List<GameInfo>> GetGameByUserIdAsync(string userId, GameStatus status)
         {
-            var games = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
-            //var gamesInProgress = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Players.Any(f => f.UserId == userId.ToGuid())).ToList();
+            var games = await _repositoryChessGame.Query()
+                    .Include(i => i.Players)
+                    .Where(e => e.Players.Any(f => f.UserId == userId.ToGuid()) && e.Status == status)
+                    .OrderByDescending(e=>e.StartTime).ToListAsync();
+
             var gamesInfo = games.Select(e => new GameInfo()
             {
                 Identifier = e.Identifier.ToString(),
                 WhiteUser = GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "white")?.UserId.ToString()),
                 BlackUser = GetDisplayNameById(e.Players.FirstOrDefault(f => f.Colour == "black")?.UserId.ToString()),
-                Status = e.Status
+                Status = e.Status,
+                StartTime = e.StartTime
             }).ToList();
             return gamesInfo;
         }

@@ -130,9 +130,8 @@ namespace OverTheBoard.WebUI.Controllers
         {
             var model = new GameHistoryViewModel();
             var userId = GetUserId();
-            var games = await _gameService.GetGameByUserIdAsync(userId);
-            var gamesCompleted = games.Where(e => e.Status == GameStatus.Completed).ToList();
-            model.gamesCompleted = gamesCompleted;
+            var games = await _gameService.GetGameByUserIdAsync(userId, GameStatus.Completed);
+            model.gamesCompleted = games;
             return View(model);
         }
         public async Task<IActionResult> Leaderboard()

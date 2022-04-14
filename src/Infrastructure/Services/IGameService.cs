@@ -17,7 +17,7 @@ namespace OverTheBoard.Infrastructure.Services
         Task<bool> UpdateConnectionAsync(string userId, string gameId, string connectionId);
         Task<bool> UpdateStatusAsync(string gameId, GameStatus status);
         Task<string> SaveGameMoveAsync(string userId, ChessMove move);
-        Task<List<GameInfo>> GetGameByUserIdAsync(string userId);
+        Task<List<GameInfo>> GetGameByUserIdAsync(string userId, GameStatus status);
         Task<List<ChessGame>> GetGamesInprogressAsync();
         Task<List<ChessGame>> GetGamesNotStartedAndExpiredAsync();
         Task<bool> SaveGameOutcomeAsync(string identifier, EloOutcomesType whitePlayerOutcome,

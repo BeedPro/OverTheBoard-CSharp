@@ -9,11 +9,11 @@
 <div class="gtco-container">
     <h2>Game History </h2>
     <div class="col-md-9 col-sm-9">
-        <h4>Top ranking</h4>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Date</th>
                 <th scope="col">White</th>
                 <th scope="col">Black</th>
                 <th scope="col">Link</th>
@@ -24,7 +24,8 @@
             {
                 <tr>
                     <td class="tg-0pky"><span>@(i++)</span></td>
-                    <td class="tg-0pky">@game.WhiteUser<br></td>
+                    <td class="tg-0pky">@game.StartTime.ToString("dd/MM/yy HH:mm")</td>
+                    <td class="tg-0pky">@game.WhiteUser</td>
                     <td class="tg-0pky">@game.BlackUser</td>
                     <td class="tg-0pky"><a  asp-controller="Play" asp-action="Game" asp-route-gameId="@game.Identifier">Open Game</a></td>
                 </tr>
