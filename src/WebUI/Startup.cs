@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OverTheBoard.Data;
 using OverTheBoard.Infrastructure;
 using OverTheBoard.Infrastructure.Queueing;
 using OverTheBoard.Infrastructure.Services;
@@ -31,6 +32,7 @@ namespace OverTheBoard.WebUI
             services.Configure<GameSettingOptions>(Configuration.GetSection("GameSettings"));
             services.Configure<EmailSettingOptions>(Configuration.GetSection("EmailSettings"));
             services.Configure<TournamentOptions>(Configuration.GetSection("Tournaments"));
+            services.Configure<DatabaseOptions>(Configuration.GetSection("Databases"));
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews();
             services.AddSecurity();
