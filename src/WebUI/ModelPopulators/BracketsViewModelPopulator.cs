@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OverTheBoard.Data.Entities;
+using OverTheBoard.Infrastructure.Tournaments.Processors;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.WebUI.Models;
 
@@ -51,13 +52,13 @@ namespace OverTheBoard.WebUI.ModelPopulators
                 statsModels.Add(stats);
             }
 
-            return statsModels.OrderByDescending(e => $"{((e.Point * 10) + e.Matches):00}").ToList();
+            return statsModels.OrderByDescending(e => e.Point).ToList();
         }
 
         private decimal GetPoints(GamePlayerStatsModel stats)
         {
-            decimal statsWin = stats.Win * 2;
-            decimal statsDraw = stats.Draw * 1;
+            decimal statsWin = stats.Win * TournamentConstants.WinPoint;
+            decimal statsDraw = stats.Draw * TournamentConstants.DrawPoint;
             return statsWin + statsDraw;
         }
 

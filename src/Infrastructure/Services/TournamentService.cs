@@ -66,6 +66,20 @@ namespace OverTheBoard.Infrastructure.Services
             return GetTournament(tournamentEntity);
         }
 
+        public async Task<bool> FinishTournamentAsync(string tournamentId)
+        {
+            var entity = _repositoryTournament.Query()
+                .FirstOrDefault(e => e.TournamentIdentifier == tournamentId.ToGuid());
+            if (entity != null)
+            {
+                entity.IsActive = false;
+                _repositoryTournament.Save();
+            }
+
+            return true;
+        }
+
+
         private Tournament GetTournament(TournamentEntity entity)
         {
             return new Tournament()

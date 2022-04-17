@@ -312,7 +312,15 @@ namespace OverTheBoard.Infrastructure.Services
 
             return stats;
         }
-        
+
+        public async Task<bool> HasAllGameFinishedForTournamentAsync(string tournamentId)
+        {
+            var isAnyRemain = await _repositoryChessGame.Query()
+                .AnyAsync(e => e.TournamentId == tournamentId.ToGuid() && (e.Status == GameStatus.InProgress || e.Status == GameStatus.NotStarted));
+
+            return !isAnyRemain;
+        }
+
 
         private string GetDisplayNameById(string userId)
         {

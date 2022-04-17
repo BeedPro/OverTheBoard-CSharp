@@ -12,5 +12,6 @@ namespace OverTheBoard.Infrastructure.Services
         Task<string> GetTournamentIdentifierByUserAsync(string userId);
         Task<Tournament> GetTournamentAsync(string tournamentIdentifier);
 
+        Task<bool> FinishTournamentAsync(string tournamentId);
     }
 }

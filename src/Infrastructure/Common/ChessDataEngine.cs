@@ -21,6 +21,7 @@ namespace OverTheBoard.Infrastructure.Common
         {
             if (_data.Count == 0)
             {
+                Datas.Add(new ChessChartData() { StartDate = DateTime.Now, DeltaRate = 0 });
                 return this;
             }
 
