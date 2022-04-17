@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Email\**" />
+    <Compile Remove="logs\**" />
+    <Content Remove="Email\**" />
+    <Content Remove="logs\**" />
+    <EmbeddedResource Remove="Email\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <None Remove="Email\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\uploads\DisplayImages\defaultDisplayPic.jpeg" />
   </ItemGroup>
 

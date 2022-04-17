@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OverTheBoard.ObjectModel;
 using OverTheBoard.ObjectModel.Options;
@@ -11,8 +12,8 @@ namespace OverTheBoard.Infrastructure.Services
     {
         private readonly EmailSettingOptions _options;
 
-        public AccountEmailService(IOptions<EmailSettingOptions> options)
-            :base(options.Value)
+        public AccountEmailService(IOptions<EmailSettingOptions> options, ILogger<EmailServiceBase> logger)
+            :base(options.Value, logger)
         {
             _options = options.Value;
         }

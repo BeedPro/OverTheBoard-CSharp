@@ -349,3 +349,4 @@ healthchecksdb
 
 *.suo
 /src/WebUI/logs
+/src/WebUI/Email

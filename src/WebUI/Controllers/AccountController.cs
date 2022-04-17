@@ -60,12 +60,12 @@ namespace OverTheBoard.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.EmailAddress) ?? await _userManager.FindByNameAsync(model.EmailAddress);
-                var emailVerified = await _userManager.IsEmailConfirmedAsync(user);
                 if (user != null)
                 {
                     var checkResult = await _signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
                     if (checkResult.Succeeded)
                     {
+                        var emailVerified = await _userManager.IsEmailConfirmedAsync(user);
                         if (emailVerified)
                         {
                             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, lockoutOnFailure: true);
