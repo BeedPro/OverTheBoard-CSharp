@@ -50,38 +50,30 @@ namespace OverTheBoard.Infrastructure.Tournaments.Processors
                 var stats = GetStatus(tournament.Players, gamePlayers);
                 var moveUpPoint = stats.Max(e=>e.point);
                 var moveDownPoint = stats.Min(e=>e.point);
-                var levelUp = item.Level + 1;
-                var levelDown = item.Level > 1 ? item.Level - 1 : 1;
-
-
                 foreach (var tuple in stats)
                 {
-                    
-                    if(tuple.point == moveDownPoint)
+                    var level = item.Level;
+                    var levelUpOrDown = false;
+                    if (tuple.point == moveDownPoint)
                     {
-                        await _tournamentQueue.AddQueueAsync(new TournamentQueueItem()
-                        {
-                            UserId = tuple.userId,
-                            Level = levelDown
-                        });
-                        await _userService.UpdateUserRankAsync(tuple.userId, (UserRank)levelDown);
+                        level = level > 1 ? level - 1 : 1;
+                        levelUpOrDown = true;
                     } 
                     else if (tuple.point == moveUpPoint)
                     {
-                        await _tournamentQueue.AddQueueAsync(new TournamentQueueItem()
-                        {
-                            UserId = tuple.userId,
-                            Level = levelUp
-                        });
-                        await _userService.UpdateUserRankAsync(tuple.userId, (UserRank)levelUp);
+                        level = item.Level + 1;
+                        levelUpOrDown = true;
                     }
-                    else
+                    
+                    await _tournamentQueue.AddQueueAsync(new TournamentQueueItem()
                     {
-                        await _tournamentQueue.AddQueueAsync(new TournamentQueueItem()
-                        {
-                            UserId = tuple.userId,
-                            Level = item.Level
-                        });
+                        UserId = tuple.userId,
+                        Level = level
+                    });
+
+                    if (levelUpOrDown)
+                    {
+                        await _userService.UpdateUserRankAsync(tuple.userId, (UserRank) level);
                     }
 
                 }
