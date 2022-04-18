@@ -44,7 +44,7 @@
 
   <ItemGroup>
     <None Update="Data\OverTheBoardDb.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
