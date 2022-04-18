@@ -1,6 +1,6 @@
 # OverTheBoard
 Welcome to OverTheBoard's Github page.
-To play OTB click [here](https://www.otb.com).
+To play OTB click [here](https://overtheboard.mustafi.co.uk/).
 ![Home page](https://github.com/BeedPro/OverTheBoard/blob/mian/otbHomepage.jpg?raw=true)
 OverTheBoard (OTB for short) is a free to play chess web application focused on realtime gameplay and tournament based matchmaking where players are paired up agaisnt eachother in round-robin format tournaments. Players are placed in leagues which reflect their skill in playing chess and can move up and down leagues if they are ranked first after a tournament or ranked last respectivily.
 
