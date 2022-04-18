@@ -43,7 +43,7 @@ namespace OverTheBoard.Infrastructure.Services
             _logger = logger;
         }
 
-        List<ChessGame> _chessGames = new List<ChessGame>();
+        
         public async Task<bool> CreateGameAsync(string identifier, List<GameQueueItem> queueItems, DateTime startTime, int periodInMinutes, GameType type, int roundNumber, int level, string tournamentIdentifier)
         {
             ChessGameEntity game = new ChessGameEntity();
