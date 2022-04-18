@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OverTheBoard.Data.Migrations.ApplicationDb
 {
-    public partial class Initial : Migration
+    public partial class InitCommit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,12 +15,12 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                 schema: "application",
                 columns: table => new
                 {
-                    CompletionQueueId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GameId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false)
+                    CompletionQueueId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    GameId = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,19 +32,19 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                 schema: "application",
                 columns: table => new
                 {
-                    GameId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Identifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Fen = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Period = table.Column<int>(type: "int", nullable: false),
-                    LastMoveAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NextMoveColour = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    TournamentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RoundNumber = table.Column<int>(type: "int", nullable: false)
+                    GameId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Identifier = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Fen = table.Column<string>(type: "TEXT", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Period = table.Column<int>(type: "INTEGER", nullable: false),
+                    LastMoveAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    NextMoveColour = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    TournamentId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    RoundNumber = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,11 +56,11 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                 schema: "application",
                 columns: table => new
                 {
-                    TournamentQueueId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TournamentQueueId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,13 +72,13 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                 schema: "application",
                 columns: table => new
                 {
-                    TournamentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TournamentIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TournamentId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TournamentIdentifier = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,17 +90,17 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                 schema: "application",
                 columns: table => new
                 {
-                    PlayerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConnectionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastConnectedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Colour = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pgn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeRemaining = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Outcome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeltaRating = table.Column<int>(type: "int", nullable: false)
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    GameId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ConnectionId = table.Column<string>(type: "TEXT", nullable: true),
+                    LastConnectedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Colour = table.Column<string>(type: "TEXT", nullable: true),
+                    Pgn = table.Column<string>(type: "TEXT", nullable: true),
+                    TimeRemaining = table.Column<TimeSpan>(type: "TEXT", nullable: false),
+                    Outcome = table.Column<string>(type: "TEXT", nullable: true),
+                    DeltaRating = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,10 +119,10 @@ namespace OverTheBoard.Data.Migrations.ApplicationDb
                 schema: "application",
                 columns: table => new
                 {
-                    TournamentPlayerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TournamentId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TournamentPlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TournamentId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

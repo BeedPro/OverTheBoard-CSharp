@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\uploads\DisplayImages\defaultDisplayPic.jpeg" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\OverTheBoardPublish.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +40,12 @@
   <ItemGroup>
     <Folder Include="Uploads\DisplayImages\Users\" />
     <Folder Include="wwwroot\uploads\DisplayImages\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\OverTheBoardDb.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
