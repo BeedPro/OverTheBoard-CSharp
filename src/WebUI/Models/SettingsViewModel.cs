@@ -10,6 +10,7 @@ namespace OverTheBoard.WebUI.Models
     {
         public string DisplayImagePath { get; set; }
         public string Email { get; set; }
+        [StringLength(50, ErrorMessage = "The Display Name value cannot exceed 50 characters. ")]
         public string DisplayName { get; set; }
         public string DisplayNameId { get; set; }
         [Required]
@@ -17,6 +18,7 @@ namespace OverTheBoard.WebUI.Models
         public string OldPassword { get; set; }
         [DataType(DataType.Password)]
         [Required]
+        [StringLength(100, ErrorMessage = "The new Password value cannot exceed 100 characters. ")]
         public string NewPassword { get; set; }
         [Compare("NewPassword")]
         [DataType(DataType.Password)]
