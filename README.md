@@ -1,7 +1,6 @@
 # OverTheBoard
 Welcome to OverTheBoard's Github page.
-To play OTB click [here](https://www.otb.com).
-![Home page](https://github.com/BeedPro/OverTheBoard/blob/mian/otbHomepage.jpg?raw=true)
+To play OTB click [here](https://overtheboard.mustafi.co.uk/).
 OverTheBoard (OTB for short) is a free to play chess web application focused on realtime gameplay and tournament based matchmaking where players are paired up agaisnt eachother in round-robin format tournaments. Players are placed in leagues which reflect their skill in playing chess and can move up and down leagues if they are ranked first after a tournament or ranked last respectivily.
 
 OTB is written C# and relies on the ASP.NET Core framework. The chess game itself uses a combination of [chess.js](https://github.com/jhlywa/chess.js) and [chessboard.js](https://github.com/oakmac/chessboardjs) in order for the logic and rendering of the board, the chess timer has been implimented as a JQuery plugin. The web application uses [SignalR](https://dotnet.microsoft.com/en-us/apps/aspnet/signalr) in order to allow the players to see the board being updated in real time.
