@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             }
             else
             {
-                services.AddDatabaseSqlLite();
+                services.AddDatabaseSqlLite(option.ConnectionString);
             }
 
 
@@ -55,14 +55,20 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
         
-        private static IServiceCollection AddDatabaseSqlLite(this IServiceCollection services)
+        private static IServiceCollection AddDatabaseSqlLite(this IServiceCollection services, string localPath)
         {
-            
+            var DbPath = string.Empty;
+            if (string.IsNullOrEmpty(localPath))
+            {
                 var path = Environment.CurrentDirectory;
-                var DbPath =
-                    $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
+                DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Data{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
+            }
+            else
+            {
+                DbPath = $"{localPath}{System.IO.Path.DirectorySeparatorChar}OverTheBoardDb.db";
+            }
 
-                services.AddDbContext<SecurityDbContext>(options =>
+            services.AddDbContext<SecurityDbContext>(options =>
                     options.UseSqlite($"Data Source={DbPath}", b =>
                         b.MigrationsAssembly("OverTheBoard.Data")));
 
