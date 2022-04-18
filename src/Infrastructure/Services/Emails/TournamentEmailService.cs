@@ -21,15 +21,16 @@ namespace OverTheBoard.Infrastructure.Services
         public async Task<bool> SendInitialEmailAsync(string userEmail, List<ChessGame> matches)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("all games:");
+            sb.AppendLine("A new tournament has been created. All games have been listed below with their timings:");
+            int i = 1;
             foreach (ChessGame game in matches)
             {
-                sb.AppendLine($"on {game.StartTime}");
+                sb.AppendLine($"Game {i} on {game.StartTime}");
+                i++;
             }
             
-            sb.AppendLine("all games:");
             var body = sb.ToString();
-            var subject = "games";
+            var subject = "Tournament";
             SendEmail(userEmail, subject, body);
 
             return true;
