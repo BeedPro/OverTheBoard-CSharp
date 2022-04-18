@@ -28,9 +28,10 @@ namespace OverTheBoard.Infrastructure.Services
 
                 if (_options.UseSmtpServer)
                 {
+                    _logger.LogInformation("Sending email using SMTP");
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;
                     client.Host = _options.SmtpServer;
-                    client.Port = 25;
+                    client.Port = _options.Port;
                     client.EnableSsl = false;
 
                     if (!string.IsNullOrEmpty(_options.Username) && !string.IsNullOrEmpty(_options.Password))
