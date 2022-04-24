@@ -177,7 +177,7 @@ namespace OverTheBoard.Infrastructure.Services
 
         public async Task<List<ChessGame>> GetGamesNotStartedAndExpiredAsync()
         {
-            var gameEntities = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Status == GameStatus.NotStarted && e.StartTime.AddMinutes(e.Period + 5) <= DateTime.Now);
+            var gameEntities = _repositoryChessGame.Query().Include(i => i.Players).Where(e => e.Status == GameStatus.NotStarted && e.StartTime.AddMinutes(e.Period + 1) <= DateTime.Now);
             var chessGames = await gameEntities.Select(entity => PopulateChessGame(entity)).ToListAsync();
             return chessGames;
         }

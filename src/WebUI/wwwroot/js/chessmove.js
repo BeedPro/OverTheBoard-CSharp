@@ -1,8 +1,8 @@
 ﻿(function ($) {
     $.fn.chessmove = function (options) {
         var $self = $(this);
-        const userRatingDiv = document.getElementById('currRating');
-        const oppRatingDiv = document.getElementById('oppRating');
+        const whiteRatingDiv = document.getElementById('whiteRating');
+        const blackRatingDiv = document.getElementById('blackRating');
 
         $self.settings = $.extend({ Id: '#checkConnection'}, options);
         $self.control = $($self.settings.Id);
@@ -50,8 +50,8 @@
 
         //TODO get a receive from the HUB.
         $self.connection.on("ReceiveRatings", function (gameRatings) {
-            userRatingDiv.textContent = gameRatings.whitePlayerRating.toString();
-            oppRatingDiv.textContent = gameRatings.blackPlayerRating.toString();
+            whiteRatingDiv.textContent = gameRatings.whitePlayerRating.toString();
+            blackRatingDiv.textContent = gameRatings.blackPlayerRating.toString();
             $("#eloChangeOnOutcome").hide();
         });
 

@@ -55,8 +55,7 @@ namespace OverTheBoard.WebUI.SignalR
         {
             var gameId = gameOverStatus.GameId;
             var game = await _gameService.GetChessGameWithPlayersAsync(gameOverStatus.GameId);
-            await _gameService.SaveGameOutcomeAsync(gameId,
-                gameOverStatus.WhiteOutcome, gameOverStatus.BlackOutcome);
+            await _gameService.SaveGameOutcomeAsync(gameId, gameOverStatus.WhiteOutcome, gameOverStatus.BlackOutcome);
             var whitePlayer = await _userService.GetUserAsync(game.Players.FirstOrDefault(e => e.Colour == "white")?.UserId);
             var blackPlayer = await _userService.GetUserAsync(game.Players.FirstOrDefault(e => e.Colour == "black")?.UserId);
             var gameRatings = new GamePlayerRatings()

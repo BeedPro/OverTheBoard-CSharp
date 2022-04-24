@@ -23,7 +23,7 @@
                                 <h3>
                                     @Model.OpponentDisplayName
                                 </h3>
-                                <div id="oppRating">@Model.OpponentRating</div>
+                                <div id="@($"{Model.OpponentColour}Rating")">@Model.OpponentRating</div>
                                 <div id='@($"{Model.OpponentColour}Timercss")'>0</div>
                             </div>
                             
@@ -45,7 +45,7 @@
                             <h3>
                                 @Model.CurrentDisplayName
                             </h3>
-                            <div id="currRating">@Model.CurrentRating</div>
+                            <div id="@($"{Model.CurrentColour}Rating")">@Model.CurrentRating</div>
                             <div id='@($"{Model.CurrentColour}Timercss")'>0</div>
                         </div>
                     </div>
@@ -68,9 +68,9 @@
     <script src="~/lib/chess/chess.js"></script>
 
     <!--Game.js-->
-    <script src="~/js/game.js"></script>
-    <script src="~/js/chessmove.js"></script>
-    <script src="~/js/gameTimer.js"></script>
+    <script src="~/js/game.js" asp-append-version="true"></script>
+    <script src="~/js/chessmove.js" asp-append-version="true"></script>
+    <script src="~/js/gameTimer.js" asp-append-version="true"></script>
 }
 
 @section styles{
