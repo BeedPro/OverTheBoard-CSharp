@@ -67,11 +67,18 @@ namespace OverTheBoard.WebUI.SignalR
            
         }
 
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            _gameQueue.RemoveQueueGame(Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
+        }
+
         private string GetUserId()
         {
             return Context.User
                 .FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
+
         private async Task<int> GetUserRating()
         {
             var userId = GetUserId();

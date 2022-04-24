@@ -50,7 +50,7 @@ namespace OverTheBoard.WebUI.SignalR
            
         }
 
-       
+        
         public async Task SendGameStatus(GameOverStatus gameOverStatus)
         {
             var gameId = gameOverStatus.GameId;
@@ -74,6 +74,8 @@ namespace OverTheBoard.WebUI.SignalR
             var clientId = await _gameService.SaveGameMoveAsync(userId, move);
             await Clients.Client(clientId).SendAsync("Receive", move);
         }
+
+       
 
         private string GetUserId()
         {

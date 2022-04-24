@@ -7,5 +7,6 @@ namespace OverTheBoard.Infrastructure.Queueing
     public interface IUnrankedGameQueue
     {
         List<GameQueueItem> GetQueueGame(UnrankedGameQueueItem queueItem);
+        bool RemoveQueueGame(string connectionId);
     }
 }
